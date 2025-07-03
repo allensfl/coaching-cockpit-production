@@ -77,7 +77,7 @@
             </div>
 
             <div class="signup-link">
-                Noch kein Account? <a href="#">Jetzt registrieren</a>
+                Noch kein Account? <a href="#" onclick="showRegistration()">Jetzt registrieren</a>
             </div>
         </div>
 
