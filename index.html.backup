@@ -116,7 +116,28 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-        // Echter Supabase Login - wird aus login_replacement.js eingefügt            }
+            // Demo-Accounts
+            const demoAccounts = {
+                'coach@demo.de': { password: 'demo123', role: 'coach' },
+                'klient@demo.de': { password: 'demo123', role: 'client' }
+            };
+            
+            if (demoAccounts[email] && demoAccounts[email].password === password) {
+                // Session speichern
+                sessionStorage.setItem('userRole', demoAccounts[email].role);
+                sessionStorage.setItem('userEmail', email);
+                sessionStorage.setItem('isLoggedIn', 'true');
+                
+                // Weiterleitung
+                if (demoAccounts[email].role === 'coach') {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    window.location.href = 'chat.html';
+                }
+            } else {
+                // TODO: Echte Authentifizierung mit Supabase
+                alert('Demo-Accounts:\nCoach: coach@demo.de / demo123\nKlient: klient@demo.de / demo123');
+            }
         });
 
         // Demo-Buttons
