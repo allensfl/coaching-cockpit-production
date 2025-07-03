@@ -27,7 +27,7 @@ export default async function handler(req, res) {
                 headers: {
                     'Authorization': `Bearer ${OPENAI_API_KEY}`,
                     'Content-Type': 'application/json',
-                    'OpenAI-Beta': 'assistants=v1'
+                    'OpenAI-Beta': 'assistants=v2'
                 }
             });
 
@@ -45,7 +45,7 @@ export default async function handler(req, res) {
             headers: {
                 'Authorization': `Bearer ${OPENAI_API_KEY}`,
                 'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v1'
+                'OpenAI-Beta': 'assistants=v2'
             },
             body: JSON.stringify({
                 role: 'user',
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
             headers: {
                 'Authorization': `Bearer ${OPENAI_API_KEY}`,
                 'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v1'
+                'OpenAI-Beta': 'assistants=v2'
             },
             body: JSON.stringify({
                 assistant_id: assistantId,
@@ -92,7 +92,7 @@ export default async function handler(req, res) {
             const statusResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/runs/${runId}`, {
                 headers: {
                     'Authorization': `Bearer ${OPENAI_API_KEY}`,
-                    'OpenAI-Beta': 'assistants=v1'
+                    'OpenAI-Beta': 'assistants=v2'
                 }
             });
 
@@ -119,7 +119,7 @@ export default async function handler(req, res) {
         const messagesResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/messages`, {
             headers: {
                 'Authorization': `Bearer ${OPENAI_API_KEY}`,
-                'OpenAI-Beta': 'assistants=v1'
+                'OpenAI-Beta': 'assistants=v2'
             }
         });
 
