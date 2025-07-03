@@ -1,8 +1,5 @@
 {
-  "version": 2,
   "functions": {
-    "api/openai.js": {
-      "runtime": "@vercel/node@18"
-    }
+    "api/*.js": {}
   }
 }
