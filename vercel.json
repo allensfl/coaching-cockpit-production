@@ -1,18 +1,8 @@
 {
   "version": 2,
   "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x"
+    "api/openai.js": {
+      "runtime": "@vercel/node@18"
     }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ]
+  }
 }
