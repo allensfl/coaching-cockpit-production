@@ -1,169 +1,652 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KI Online Coach - Login</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>KI-Online.Coach - KI + Klient + Coach im perfekten Zusammenspiel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 2rem 80px;
+            text-align: center;
+            color: white;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .hero .description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        /* Target Groups Section */
+        .target-groups {
+            background: white;
+            padding: 80px 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .group-card {
+            background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .group-icon {
+            font-size: 4rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .group-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .group-card p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .group-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .group-features li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: #555;
+        }
+
+        .group-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: #f8f9ff;
+            padding: 80px 2rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .step-card h4 {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        /* Pricing Teaser */
+        .pricing-teaser {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 60px 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pricing-feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .pricing-feature h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact & FAQ */
+        .contact-faq {
+            background: white;
+            padding: 80px 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: #f8f9ff;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        /* DSGVO Notice */
+        .dsgvo-notice {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 2rem;
+            text-align: center;
+        }
+
+        .dsgvo-notice h3 {
+            margin-bottom: 1rem;
+            color: #ecf0f1;
+        }
+
+        .dsgvo-notice p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 2rem 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .groups-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="logo-section">
-                <div class="logo">
-                    <i class="fas fa-brain"></i>
-                    <span>KI Online Coach</span>
-                </div>
-                <p class="tagline">Intelligentes Coaching für maximalen Erfolg</p>
-            </div>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">KI-Online.Coach</div>
+            <ul class="nav-links">
+                <li><a href="#coaches">Für Coaches</a></li>
+                <li><a href="#klienten">Für Klienten</a></li>
+                <li><a href="#preise">Preise</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+            <a href="index.html" class="cta-button">Jetzt starten</a>
+        </nav>
+    </header>
 
-            <form class="login-form" id="loginForm">
-                <div class="input-group">
-                    <label for="email">E-Mail</label>
-                    <input type="email" id="email" name="email" required placeholder="deine@email.de">
-                </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>KI + Klient + Coach</h1>
+        <p class="subtitle">im perfekten Zusammenspiel</p>
+        <p class="description">
+            Revolutioniere dein Coaching mit KI-gestützter Begleitung. Unser System verbindet künstliche Intelligenz mit menschlicher Expertise für maximalen Coaching-Erfolg. Spezialisiert auf Ruhestandscoaching mit einem 8-Phasen-System.
+        </p>
+        <div class="hero-buttons">
+            <a href="dashboard.html" class="btn-primary">
+                <i class="fas fa-rocket"></i> Kostenlos testen
+            </a>
+            <a href="chat.html" class="btn-secondary">
+                <i class="fas fa-play"></i> Demo ansehen
+            </a>
+        </div>
+    </section>
 
-                <div class="input-group">
-                    <label for="password">Passwort</label>
-                    <div class="password-field">
-                        <input type="password" id="password" name="password" required placeholder="••••••••">
-                        <button type="button" class="password-toggle">
-                            <i class="fas fa-eye"></i>
-                        </button>
+    <!-- Target Groups Section -->
+    <section class="target-groups">
+        <div class="container">
+            <h2 class="section-title">Maßgeschneidert für deine Bedürfnisse</h2>
+            
+            <div class="groups-grid">
+                <!-- Für Coaches -->
+                <div class="group-card" id="coaches">
+                    <div class="group-icon">
+                        <i class="fas fa-user-tie"></i>
                     </div>
+                    <h3>Für Coaches</h3>
+                    <p>Erweitere deine Coaching-Praxis mit KI-Power und erreiche mehr Klienten effizienter</p>
+                    
+                    <ul class="group-features">
+                        <li>KI-gestützte Session-Vorbereitung</li>
+                        <li>Automatische Fortschritts-Dokumentation</li>
+                        <li>8-Phasen Ruhestandscoaching-System</li>
+                        <li>Klienten-Dashboard mit Analytics</li>
+                        <li>Flexible Termin- und Aufgabenverwaltung</li>
+                        <li>Upload eigener Coaching-Materialien</li>
+                        <li>DSGVO-konforme Datenverwaltung</li>
+                    </ul>
+                    
+                    <a href="index.html" class="cta-button">
+                        Als Coach starten
+                    </a>
                 </div>
 
-                <div class="form-options">
-                    <label class="remember-me">
-                        <input type="checkbox" id="remember">
-                        <span>Angemeldet bleiben</span>
-                    </label>
-                    <a href="#" class="forgot-password">Passwort vergessen?</a>
+                <!-- Für Klienten -->
+                <div class="group-card" id="klienten">
+                    <div class="group-icon">
+                        <i class="fas fa-user-heart"></i>
+                    </div>
+                    <h3>Für Klienten</h3>
+                    <p>Erhalte 24/7 Coaching-Unterstützung zwischen den Sessions mit deinem Coach</p>
+                    
+                    <ul class="group-features">
+                        <li>Rund-um-die-Uhr KI-Coaching verfügbar</li>
+                        <li>Personalisierte Ruhestandsplanung</li>
+                        <li>Emotionale Unterstützung bei Übergängen</li>
+                        <li>Fortschritts-Tracking und Zielerreichung</li>
+                        <li>Sichere, vertrauliche Kommunikation</li>
+                        <li>Integration mit deinem persönlichen Coach</li>
+                        <li>Lernstil-angepasste Begleitung</li>
+                    </ul>
+                    
+                    <a href="index.html" class="cta-button">
+                        Coaching beginnen
+                    </a>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <button type="submit" class="login-btn">
-                    <span>Anmelden</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </form>
-
-            <div class="demo-section">
-                <div class="demo-divider">
-                    <span>Demo-Zugang</span>
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">So funktioniert's</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 2rem;">
+                Vier einfache Schritte zu deinem erfolgreichen Coaching
+            </p>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Registrierung</h4>
+                    <p>Wähle deinen Account-Typ (Coach oder Klient) und erstelle dein persönliches Profil in unter 2 Minuten.</p>
                 </div>
                 
-                <div class="demo-accounts">
-                    <button class="demo-btn coach-demo" data-role="coach">
-                        <i class="fas fa-user-tie"></i>
-                        <div>
-                            <strong>Als Coach testen</strong>
-                            <small>coach@demo.de</small>
-                        </div>
-                    </button>
-                    
-                    <button class="demo-btn client-demo" data-role="client">
-                        <i class="fas fa-user"></i>
-                        <div>
-                            <strong>Als Klient testen</strong>
-                            <small>klient@demo.de</small>
-                        </div>
-                    </button>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>KI-Setup</h4>
+                    <p>Unsere KI lernt deine Präferenzen, Ziele und deinen Lernstil für eine personalisierte Coaching-Erfahrung.</p>
                 </div>
-            </div>
-
-            <div class="signup-link">
-                Noch kein Account? <a href="#">Jetzt registrieren</a>
-            </div>
-        </div>
-
-        <div class="features-preview">
-            <h3>Warum KI Online Coach?</h3>
-            <div class="features-grid">
-                <div class="feature">
-                    <i class="fas fa-robot"></i>
-                    <h4>KI-gestütztes Coaching</h4>
-                    <p>Intelligente Gesprächsführung mit bewährten Coaching-Methoden</p>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Coaching starten</h4>
+                    <p>Beginne sofort mit dem 8-Phasen-System oder verbinde dich mit deinem Coach für hybride Sessions.</p>
                 </div>
-                <div class="feature">
-                    <i class="fas fa-chart-line"></i>
-                    <h4>Fortschritts-Tracking</h4>
-                    <p>Detaillierte Analyse und Dokumentation des Coaching-Verlaufs</p>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h4>Überall verfügbar</h4>
-                    <p>Coaching-Sessions jederzeit und von jedem Gerät aus</p>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-shield-alt"></i>
-                    <h4>100% sicher</h4>
-                    <p>DSGVO-konforme Datenverarbeitung und -speicherung</p>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4>Erfolg messen</h4>
+                    <p>Verfolge deinen Fortschritt im Dashboard und erhalte datenbasierte Insights für optimale Ergebnisse.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Pricing Teaser -->
+    <section class="pricing-teaser" id="preise">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Transparent, fair, flexibel</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Keine versteckten Kosten, keine Mindestlaufzeit, volle Kostenkontrolle
+            </p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-feature">
+                    <h4><i class="fas fa-eye"></i> Transparent</h4>
+                    <p>Alle Kosten auf einen Blick – du weißt genau, wofür du zahlst</p>
+                </div>
+                
+                <div class="pricing-feature">
+                    <h4><i class="fas fa-handshake"></i> Fair</h4>
+                    <p>Pay-per-Use Modell – zahle nur für das, was du wirklich nutzt</p>
+                </div>
+                
+                <div class="pricing-feature">
+                    <h4><i class="fas fa-arrows-alt"></i> Flexibel</h4>
+                    <p>Jederzeit kündbar, skalierbare Pakete, anpassbare Features</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem;">
+                <a href="#kontakt" class="btn-primary">
+                    Preise & Pakete anfragen
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & FAQ -->
+    <section class="contact-faq" id="kontakt">
+        <div class="container">
+            <h2 class="section-title">Kontakt & Support</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>Email Support</h4>
+                    <p>support@ki-online.coach</p>
+                    <p><small>Antwort innerhalb von 24h</small></p>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h4>Telefon-Beratung</h4>
+                    <p>+41 (0) 123 456 789</p>
+                    <p><small>Mo-Fr 9:00-17:00 Uhr (CH Zeit)</small></p>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h4>FAQ & Hilfe</h4>
+                    <p>Häufige Fragen</p>
+                    <p><small><a href="dashboard.html" style="color: #667eea;">Zum Demo →</a></small></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DSGVO Notice -->
+    <section class="dsgvo-notice">
+        <div class="container">
+            <h3><i class="fas fa-shield-alt"></i> Datenschutz & Sicherheit</h3>
+            <p>
+                Deine Daten sind bei uns sicher. Wir sind vollständig DSGVO-konform und verwenden modernste Verschlüsselungstechnologien. 
+                Du behältst die volle Kontrolle über deine Daten und kannst sie jederzeit exportieren oder löschen.
+            </p>
+            <a href="#kontakt" style="color: #3498db; text-decoration: none;">
+                Mehr zu unserem Datenschutz →
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#kontakt">Impressum</a>
+                <a href="#kontakt">Datenschutz</a>
+                <a href="#kontakt">AGB</a>
+                <a href="dashboard.html">Demo</a>
+                <a href="chat.html">Chat-Demo</a>
+                <a href="#kontakt">Kontakt</a>
+            </div>
+            <p>&copy; 2025 KI-Online.Coach. Alle Rechte vorbehalten.</p>
+            <p><small>Coaching Cockpit SaaS | ki-online.coach</small></p>
+        </div>
+    </footer>
 
     <script>
-        // Login Funktionalität
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Demo-Accounts
-            const demoAccounts = {
-                'coach@demo.de': { password: 'demo123', role: 'coach' },
-                'klient@demo.de': { password: 'demo123', role: 'client' }
-            };
-            
-            if (demoAccounts[email] && demoAccounts[email].password === password) {
-                // Session speichern
-                sessionStorage.setItem('userRole', demoAccounts[email].role);
-                sessionStorage.setItem('userEmail', email);
-                sessionStorage.setItem('isLoggedIn', 'true');
-                
-                // Weiterleitung
-                if (demoAccounts[email].role === 'coach') {
-                    window.location.href = 'dashboard.html';
-                } else {
-                    window.location.href = 'chat.html';
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-            } else {
-                // TODO: Echte Authentifizierung mit Supabase
-                alert('Demo-Accounts:\nCoach: coach@demo.de / demo123\nKlient: klient@demo.de / demo123');
-            }
-        });
-
-        // Demo-Buttons
-        document.querySelectorAll('.demo-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const role = this.dataset.role;
-                const email = role === 'coach' ? 'coach@demo.de' : 'klient@demo.de';
-                
-                document.getElementById('email').value = email;
-                document.getElementById('password').value = 'demo123';
-                
-                // Auto-Login
-                setTimeout(() => {
-                    document.getElementById('loginForm').dispatchEvent(new Event('submit'));
-                }, 500);
             });
         });
 
-        // Passwort anzeigen/verstecken
-        document.querySelector('.password-toggle').addEventListener('click', function() {
-            const passwordField = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                passwordField.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
+        // Simple analytics event tracking
+        function trackEvent(eventName, elementName) {
+            console.log(`Event: ${eventName}, Element: ${elementName}`);
+            // Hier später echte Analytics einbauen
+        }
+
+        // Track button clicks
+        document.querySelectorAll('.cta-button, .btn-primary, .btn-secondary').forEach(button => {
+            button.addEventListener('click', function() {
+                trackEvent('button_click', this.textContent.trim());
+            });
         });
     </script>
 </body>
