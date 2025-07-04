@@ -921,6 +921,869 @@
             }
         }
     </style>
+    <!-- Dashboard Screenshots Section -->
+    <section class="dashboard-preview">
+        <div class="container">
+            <h2 class="section-title">Einblick in die Plattform</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 3rem;">
+                Erlebe das Interface, mit dem Coaches und Klienten täglich arbeiten
+            </p>
+
+            <!-- Dashboard Tabs -->
+            <div class="dashboard-tabs">
+                <button class="tab-button active" onclick="showDashboard('coach')">
+                    <i class="fas fa-user-tie"></i> Coach-Dashboard
+                </button>
+                <button class="tab-button" onclick="showDashboard('client')">
+                    <i class="fas fa-user-heart"></i> Klient-Dashboard
+                </button>
+                <button class="tab-button" onclick="showDashboard('chat')">
+                    <i class="fas fa-robot"></i> KI-Chat Interface
+                </button>
+            </div>
+
+            <!-- Coach Dashboard Mock-up -->
+            <div id="coach-dashboard" class="dashboard-mockup active">
+                <div class="mockup-container">
+                    <div class="browser-frame">
+                        <div class="browser-header">
+                            <div class="browser-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="browser-url">ki-online.coach/dashboard</div>
+                        </div>
+                        
+                        <div class="dashboard-content">
+                            <!-- Header -->
+                            <div class="dashboard-header">
+                                <div class="welcome-section">
+                                    <h3>Willkommen zurück, Sandra! 👋</h3>
+                                    <p>Du hast 3 aktive Klienten und 2 anstehende Sessions</p>
+                                </div>
+                                <div class="quick-actions">
+                                    <button class="quick-btn">
+                                        <i class="fas fa-plus"></i> Neuer Klient
+                                    </button>
+                                    <button class="quick-btn">
+                                        <i class="fas fa-calendar"></i> Session planen
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Stats Cards -->
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-icon blue">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4>12</h4>
+                                        <p>Aktive Klienten</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon green">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4>89%</h4>
+                                        <p>Erfolgsrate</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon orange">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4>24/7</h4>
+                                        <p>KI-Betreuung</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Client List -->
+                            <div class="dashboard-section">
+                                <h4>Aktuelle Klienten</h4>
+                                <div class="client-list">
+                                    <div class="client-item">
+                                        <div class="client-avatar">RK</div>
+                                        <div class="client-info">
+                                            <h5>Robert K.</h5>
+                                            <p>Phase 3: Zielvision • Letzte Aktivität: vor 2h</p>
+                                        </div>
+                                        <div class="client-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 65%"></div>
+                                            </div>
+                                            <span>65%</span>
+                                        </div>
+                                    </div>
+                                    <div class="client-item">
+                                        <div class="client-avatar">ES</div>
+                                        <div class="client-info">
+                                            <h5>Elisabeth S.</h5>
+                                            <p>Phase 6: Erfolgsimagination • Letzte Aktivität: vor 1h</p>
+                                        </div>
+                                        <div class="client-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 85%"></div>
+                                            </div>
+                                            <span>85%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Dashboard Mock-up -->
+            <div id="client-dashboard" class="dashboard-mockup">
+                <div class="mockup-container">
+                    <div class="browser-frame">
+                        <div class="browser-header">
+                            <div class="browser-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="browser-url">ki-online.coach/mein-coaching</div>
+                        </div>
+                        
+                        <div class="dashboard-content">
+                            <!-- Client Header -->
+                            <div class="dashboard-header">
+                                <div class="welcome-section">
+                                    <h3>Hallo Robert! 🌅</h3>
+                                    <p>Du bist in Phase 3 deines Ruhestandscoachings</p>
+                                </div>
+                                <div class="coach-info">
+                                    <div class="coach-avatar">SM</div>
+                                    <div>
+                                        <p><strong>Dein Coach</strong></p>
+                                        <p>Sandra M.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Progress Journey -->
+                            <div class="journey-progress">
+                                <h4>Deine Coaching-Reise</h4>
+                                <div class="phase-timeline">
+                                    <div class="phase completed">
+                                        <div class="phase-dot"></div>
+                                        <span>Standortbestimmung</span>
+                                    </div>
+                                    <div class="phase completed">
+                                        <div class="phase-dot"></div>
+                                        <span>Emotionale Vertiefung</span>
+                                    </div>
+                                    <div class="phase active">
+                                        <div class="phase-dot"></div>
+                                        <span>Zielvision</span>
+                                    </div>
+                                    <div class="phase">
+                                        <div class="phase-dot"></div>
+                                        <span>Systemanalyse</span>
+                                    </div>
+                                    <div class="phase">
+                                        <div class="phase-dot"></div>
+                                        <span>Komplementärkräfte</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Today's Tasks -->
+                            <div class="dashboard-section">
+                                <h4>Heutige Aufgaben</h4>
+                                <div class="task-list">
+                                    <div class="task-item">
+                                        <i class="fas fa-circle-check"></i>
+                                        <span>Reflexion: Was motiviert mich wirklich?</span>
+                                        <span class="task-time">15 Min</span>
+                                    </div>
+                                    <div class="task-item pending">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Vision Board erstellen</span>
+                                        <span class="task-time">30 Min</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interface Mock-up -->
+            <div id="chat-dashboard" class="dashboard-mockup">
+                <div class="mockup-container">
+                    <div class="browser-frame">
+                        <div class="browser-header">
+                            <div class="browser-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="browser-url">ki-online.coach/chat</div>
+                        </div>
+                        
+                        <div class="chat-interface">
+                            <div class="chat-header">
+                                <div class="ai-avatar">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="chat-info">
+                                    <h4>KI-Coaching Assistent</h4>
+                                    <p>🟢 Immer für dich da • Phase 3: Zielvision</p>
+                                </div>
+                            </div>
+
+                            <div class="chat-messages">
+                                <div class="message ai-message">
+                                    <div class="message-avatar">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="message-content">
+                                        <p>«Hallo Robert! Ich habe gesehen, dass du heute über deine Zukunftsvision nachgedacht hast. Das ist ein wichtiger Schritt. Welcher Aspekt deines zukünftigen Lebens beschäftigt dich am meisten?»</p>
+                                        <span class="message-time">vor 2 Minuten</span>
+                                    </div>
+                                </div>
+
+                                <div class="message user-message">
+                                    <div class="message-content">
+                                        <p>Ich bin unsicher, ob ich noch produktiv sein kann ohne meinen Beruf.</p>
+                                        <span class="message-time">vor 1 Minute</span>
+                                    </div>
+                                </div>
+
+                                <div class="message ai-message">
+                                    <div class="message-avatar">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="message-content">
+                                        <p>«Diese Sorge ist völlig verständlich und zeigt, wie wichtig dir deine Wirksamkeit ist. Produktivität kann viele Formen haben – von ehrenamtlicher Arbeit bis hin zur Weitergabe deiner Erfahrungen. Welche deiner beruflichen Stärken möchtest du gerne weiter einsetzen?»</p>
+                                        <span class="message-time">gerade eben</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="chat-input">
+                                <input type="text" placeholder="Schreibe deine Antwort..." disabled>
+                                <button><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Highlight -->
+            <div class="features-highlight">
+                <h3>Warum das Interface überzeugt</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-eye"></i>
+                        <h4>Intuitive Bedienung</h4>
+                        <p>Auch ohne technische Vorkenntnisse sofort nutzbar</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-bar"></i>
+                        <h4>Transparente Fortschritte</h4>
+                        <p>Jederzeit den Überblick über Coaching-Erfolge behalten</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h4>Überall verfügbar</h4>
+                        <p>Desktop, Tablet, Smartphone – immer synchronisiert</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-comments"></i>
+                        <h4>Natürliche Kommunikation</h4>
+                        <p>KI versteht deutsche Sprache und Coaching-Kontext</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* Dashboard Preview Section */
+        .dashboard-preview {
+            background: white;
+            padding: 80px 2rem;
+        }
+
+        .dashboard-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: #f8f9ff;
+            border: 2px solid #e1e5e9;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-button:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .dashboard-mockup {
+            display: none;
+            margin-bottom: 4rem;
+        }
+
+        .dashboard-mockup.active {
+            display: block;
+        }
+
+        .mockup-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .browser-frame {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .browser-header {
+            background: #f5f5f5;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ff5f57; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #28ca42; }
+
+        .browser-url {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: #666;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            max-width: 300px;
+        }
+
+        .dashboard-content {
+            padding: 2rem;
+            background: #fafbfc;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .welcome-section h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .welcome-section p {
+            margin: 0;
+            color: #666;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .quick-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-icon.blue { background: #667eea; }
+        .stat-icon.green { background: #27ae60; }
+        .stat-icon.orange { background: #f39c12; }
+
+        .stat-info h4 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .stat-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .dashboard-section h4 {
+            margin: 0 0 1rem 0;
+            color: #333;
+        }
+
+        .client-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .client-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+
+        .client-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .client-info {
+            flex-grow: 1;
+        }
+
+        .client-info h5 {
+            margin: 0 0 0.3rem 0;
+            color: #333;
+        }
+
+        .client-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .client-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 80px;
+            height: 6px;
+            background: #e1e5e9;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #27ae60;
+            transition: width 0.3s ease;
+        }
+
+        /* Coach Info */
+        .coach-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .coach-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e74c3c;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Journey Progress */
+        .journey-progress {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .phase-timeline {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .phase {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .phase-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e1e5e9;
+            position: relative;
+        }
+
+        .phase.completed .phase-dot {
+            background: #27ae60;
+        }
+
+        .phase.active .phase-dot {
+            background: #667eea;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+        }
+
+        .phase span {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .phase.completed span {
+            color: #27ae60;
+        }
+
+        .phase.active span {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Tasks */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+
+        .task-item i {
+            color: #27ae60;
+            font-size: 1.2rem;
+        }
+
+        .task-item.pending i {
+            color: #e1e5e9;
+        }
+
+        .task-time {
+            margin-left: auto;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Chat Interface */
+        .chat-interface {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            background: white;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ai-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 1rem;
+            background: #fafbfc;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 0.8rem;
+            max-width: 80%;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .user-message .message-content {
+            background: #667eea;
+            color: white;
+        }
+
+        .message-content p {
+            margin: 0 0 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .chat-input {
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 0.8rem;
+            border: 1px solid #e1e5e9;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Features Highlight */
+        .features-highlight {
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .features-highlight h3 {
+            margin-bottom: 2rem;
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-item h4 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                justify-content: center;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .quick-actions {
+                justify-content: center;
+            }
+            
+            .phase-timeline {
+                gap: 1rem;
+            }
+            
+            .phase {
+                min-width: 80px;
+            }
+        }
+    </style>
+
+    <script>
+        function showDashboard(type) {
+            // Hide all dashboards
+            document.querySelectorAll('.dashboard-mockup').forEach(d => {
+                d.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-button').forEach(t => {
+                t.classList.remove('active');
+            });
+            
+            // Show selected dashboard
+            document.getElementById(type + '-dashboard').classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
 
     <!-- Pricing Teaser -->
     <section class="pricing-teaser" id="preise">
