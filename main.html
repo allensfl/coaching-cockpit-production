@@ -2094,429 +2094,503 @@
             </div>
         </div>
     </section>
+    <!-- KI-Methoden erklärt Section - Redesigned -->
+    <section class="ki-methods-new">
+        <div class="container">
+            <h2 class="section-title">Wie unsere KI wirklich funktioniert</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 3rem;">
+                Keine Black Box, sondern transparente Technologie im Dienst des Menschen
+            </p>
+
+            <!-- Interactive Process Flow -->
+            <div class="process-flow">
+                <h3>Der KI-Prozess in 5 Schritten</h3>
+                <p class="process-subtitle">Klicke auf einen Schritt, um mehr zu erfahren</p>
+                
+                <div class="steps-container">
+                    <div class="step-card active" onclick="showStepDetails(1)">
+                        <div class="step-visual">
+                            <div class="step-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="step-number">1</div>
+                        </div>
+                        <h4>Verstehen</h4>
+                        <p>Sprache & Emotion analysieren</p>
+                    </div>
+
+                    <div class="flow-arrow">→</div>
+
+                    <div class="step-card" onclick="showStepDetails(2)">
+                        <div class="step-visual">
+                            <div class="step-icon">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <div class="step-number">2</div>
+                        </div>
+                        <h4>Kontext</h4>
+                        <p>Deine Geschichte einbeziehen</p>
+                    </div>
+
+                    <div class="flow-arrow">→</div>
+
+                    <div class="step-card" onclick="showStepDetails(3)">
+                        <div class="step-visual">
+                            <div class="step-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="step-number">3</div>
+                        </div>
+                        <h4>Wissen</h4>
+                        <p>Coaching-Expertise abrufen</p>
+                    </div>
+
+                    <div class="flow-arrow">→</div>
+
+                    <div class="step-card" onclick="showStepDetails(4)">
+                        <div class="step-visual">
+                            <div class="step-icon">
+                                <i class="fas fa-shield-check"></i>
+                            </div>
+                            <div class="step-number">4</div>
+                        </div>
+                        <h4>Sicherheit</h4>
+                        <p>Grenzen prüfen</p>
+                    </div>
+
+                    <div class="flow-arrow">→</div>
+
+                    <div class="step-card" onclick="showStepDetails(5)">
+                        <div class="step-visual">
+                            <div class="step-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="step-number">5</div>
+                        </div>
+                        <h4>Antworten</h4>
+                        <p>Personalisiert ausgeben</p>
+                    </div>
+                </div>
+
+                <!-- Detailed Explanations -->
+                <div class="step-details">
+                    <div id="step-1" class="detail-card active">
+                        <div class="detail-header">
+                            <i class="fas fa-search"></i>
+                            <h4>Schritt 1: Verstehen & Analysieren</h4>
+                        </div>
+                        <p class="detail-description">
+                            Die KI analysiert deine Eingabe auf mehreren Ebenen: <strong>Was sagst du?</strong> (Inhalt), 
+                            <strong>Wie sagst du es?</strong> (Emotion) und <strong>Was steckt dahinter?</strong> (Intention).
+                        </p>
+                        <div class="tech-explanation">
+                            <div class="tech-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Spracherkennung erfasst Worte und Bedeutung</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Emotionserkennung identifiziert Gefühle (Sorge, Hoffnung, Unsicherheit)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step-2" class="detail-card">
+                        <div class="detail-header">
+                            <i class="fas fa-puzzle-piece"></i>
+                            <h4>Schritt 2: Kontext einbeziehen</h4>
+                        </div>
+                        <p class="detail-description">
+                            Die KI «erinnert» sich an eure bisherigen Gespräche, deine aktuelle Phase im 8-Phasen-System 
+                            und deine persönlichen Präferenzen und Ziele.
+                        </p>
+                        <div class="tech-explanation">
+                            <div class="tech-item">
+                                <i class="fas fa-history"></i>
+                                <span>Gesprächsverlauf wird berücksichtigt</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-map-marked"></i>
+                                <span>Aktuelle Coaching-Phase bestimmt Fokus</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step-3" class="detail-card">
+                        <div class="detail-header">
+                            <i class="fas fa-book"></i>
+                            <h4>Schritt 3: Coaching-Wissen abrufen</h4>
+                        </div>
+                        <p class="detail-description">
+                            Aus einer umfangreichen Wissensbasis mit Coaching-Methoden, Frankls Sinnmodellen 
+                            und Ruhestandsforschung wird die passende Antwort zusammengestellt.
+                        </p>
+                        <div class="tech-explanation">
+                            <div class="tech-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Bewährte Coaching-Techniken werden angewendet</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-microscope"></i>
+                                <span>Aktuelle Forschung fließt ein</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step-4" class="detail-card">
+                        <div class="detail-header">
+                            <i class="fas fa-shield-check"></i>
+                            <h4>Schritt 4: Sicherheit prüfen</h4>
+                        </div>
+                        <p class="detail-description">
+                            Bevor geantwortet wird, prüft die KI: <strong>Ist das noch Coaching?</strong> 
+                            Bei Anzeichen für therapeutischen Bedarf wird an Fachpersonen verwiesen.
+                        </p>
+                        <div class="tech-explanation">
+                            <div class="tech-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Warnsignale werden automatisch erkannt</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-hand-holding-medical"></i>
+                                <span>Verweis an Therapeuten wenn nötig</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step-5" class="detail-card">
+                        <div class="detail-header">
+                            <i class="fas fa-user-check"></i>
+                            <h4>Schritt 5: Personalisiert antworten</h4>
+                        </div>
+                        <p class="detail-description">
+                            Die finale Antwort wird an deinen Lernstil angepasst: <strong>Visuell</strong> mit Bildern, 
+                            <strong>auditiv</strong> mit Geschichten oder <strong>kinästhetisch</strong> mit Übungen.
+                        </p>
+                        <div class="tech-explanation">
+                            <div class="tech-item">
+                                <i class="fas fa-eye"></i>
+                                <span>Lernstil bestimmt Art der Antwort</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-language"></i>
+                                <span>Deutsche Typografie mit Guillemets « »</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scientific Foundation -->
+            <div class="scientific-foundation">
+                <div class="research-highlight">
+                    <div class="research-content">
+                        <h3>Wissenschaftlich fundiert</h3>
+                        <p>Unsere KI-Methoden basieren auf aktueller Forschung und bewährten Coaching-Prinzipien. Die Wirksamkeit von KI-gestütztem Coaching wurde in mehreren Studien belegt.</p>
+                        
+                        <div class="research-paper">
+                            <div class="paper-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="paper-info">
+                                <h4>Aktuelle Forschung:</h4>
+                                <p><strong>«Künstliche Intelligenz im Coaching»</strong><br>
+                                Springer-Veröffentlichung zu KI-gestützten Coaching-Methoden und deren praktischer Anwendung</p>
+                                <a href="https://link.springer.com/epdf/10.1007/s11613-025-00947-w?sharing_token=ixTOPjI_ojwLxD5XC1rcKve4RwlQNchNByi7wbcMAY5--FTzC0Qu_zcKNq5XNWbsTz6y8D55Ma9Q1kNQ9EsM5lcOWTEDiZ3EDGl7twrlz0qh8CIk-bHzFhMj7nobRVkg7CRiejt9hSJGqMd4aYviEhJRyLWAa-KbC2lFZQ2k0MQ%3D" 
+                                   target="_blank" 
+                                   class="research-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Fachartikel lesen
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="research-stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">87%</div>
+                                <div class="stat-label">Effizienz-Steigerung</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Verfügbarkeit</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">92%</div>
+                                <div class="stat-label">Zufriedenheit</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What makes it special - Simplified -->
+            <div class="special-features-simple">
+                <h3>Was macht unsere KI besonders?</h3>
+                
+                <div class="features-grid-simple">
+                    <div class="feature-simple">
+                        <i class="fas fa-heart"></i>
+                        <h4>Empathisch</h4>
+                        <p>Versteht Emotionen und reagiert angemessen</p>
+                    </div>
+                    <div class="feature-simple">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Sicher</h4>
+                        <p>Kennt therapeutische Grenzen</p>
+                    </div>
+                    <div class="feature-simple">
+                        <i class="fas fa-user-friends"></i>
+                        <h4>Ergänzend</h4>
+                        <p>Partner, nicht Ersatz für Coaches</p>
+                    </div>
+                    <div class="feature-simple">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Spezialisiert</h4>
+                        <p>Trainiert für Ruhestandscoaching</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Preview -->
+            <div class="faq-preview-simple">
+                <h3>Schnelle Antworten</h3>
+                <div class="faq-accordion">
+                    <div class="faq-item-simple" onclick="toggleFaq(1)">
+                        <div class="faq-question">
+                            <span>🤖 Kann die KI menschliche Coaches ersetzen?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-1">
+                            <p>Nein, unsere KI ist ein Ergänzungspartner. Bei wichtigen Lebensentscheidungen wird immer dein menschlicher Coach einbezogen.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item-simple" onclick="toggleFaq(2)">
+                        <div class="faq-question">
+                            <span>🔒 Sind meine Daten sicher?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-2">
+                            <p>Ja, alle Gespräche sind verschlüsselt und DSGVO-konform. Du kannst deine Daten jederzeit exportieren oder löschen.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item-simple" onclick="toggleFaq(3)">
+                        <div class="faq-question">
+                            <span>⚡ Wie schnell antwortet die KI?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-3">
+                            <p>Normalerweise binnen Sekunden. Bei komplexen Anfragen kann es bis zu einer Minute dauern – aber sie ist 24/7 verfügbar.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-cta">
+                    <a href="#kontakt" class="btn-secondary">
+                        <i class="fas fa-question-circle"></i> Mehr Fragen? Kontaktiere uns
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <style>
-        /* KI-Methoden Section */
-        .ki-methods {
+        /* KI-Methoden New Section - Mobile First */
+        .ki-methods-new {
             background: #f8f9ff;
-            padding: 80px 2rem;
+            padding: 60px 1rem;
         }
 
-        .main-explanation {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 4rem;
-            margin-bottom: 4rem;
-            align-items: center;
+        .ki-methods-new .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .explanation-content h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-
-        .explanation-content p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #555;
-            margin-bottom: 2rem;
-        }
-
-        .key-principles {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .principle {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
+        /* Process Flow */
+        .process-flow {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .principle i {
-            font-size: 2rem;
-            color: #667eea;
-        }
-
-        .principle h4 {
-            margin: 0 0 0.5rem 0;
-            color: #333;
-        }
-
-        .principle p {
-            margin: 0;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* AI Brain Animation */
-        .explanation-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .ai-brain {
-            position: relative;
-            width: 200px;
-            height: 200px;
-        }
-
-        .brain-core {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            animation: pulse 3s infinite;
-        }
-
-        .neural-connections {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .connection {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #667eea, transparent);
-            transform-origin: left center;
-            transform: translate(-50%, -50%) rotate(var(--angle));
-            animation: neural-pulse 4s infinite;
-            animation-delay: var(--delay);
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        @keyframes neural-pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Detailed Steps */
-        .how-it-works-detailed {
-            background: white;
-            padding: 3rem;
+            padding: 2rem;
             border-radius: 20px;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        .how-it-works-detailed h3 {
+        .process-flow h3 {
             text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
             color: #333;
         }
 
-        .steps-detailed {
+        .process-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .steps-container {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .step-detailed {
-            display: grid;
-            grid-template-columns: 60px 1fr 60px;
-            gap: 2rem;
-            align-items: center;
-            padding: 2rem;
+        .step-card {
             background: #f8f9ff;
+            border: 2px solid #e1e5e9;
             border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
         }
 
-        .step-detailed:hover {
-            transform: translateX(10px);
+        .step-card:hover, .step-card.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+            transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
         }
 
-        .step-number {
-            width: 60px;
-            height: 60px;
+        .step-visual {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
             background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            background: #667eea;
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
             font-weight: bold;
-        }
-
-        .step-content h4 {
-            margin: 0 0 1rem 0;
-            color: #333;
-            font-size: 1.3rem;
-        }
-
-        .step-content p {
-            margin: 0 0 1rem 0;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .technical-detail {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #667eea;
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-
-        .step-icon {
-            font-size: 2rem;
-            color: #667eea;
-            text-align: center;
-        }
-
-        /* Special Features Comparison */
-        .special-features {
-            margin-bottom: 4rem;
-        }
-
-        .special-features h3 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: #333;
-        }
-
-        .features-comparison {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
-
-        .feature-card.highlight {
-            background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
-            border: 2px solid #667eea;
-            transform: scale(1.02);
-        }
-
-        .feature-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-header i {
-            font-size: 1.5rem;
-            color: #667eea;
-        }
-
-        .feature-header h4 {
-            margin: 0;
-            color: #333;
-            font-size: 1.3rem;
-        }
-
-        .feature-card ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .feature-card li {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.5rem 0;
-        }
-
-        .feature-card li i {
             font-size: 1.1rem;
         }
 
-        .fa-check {
-            color: #27ae60;
-        }
-
-        .fa-times {
-            color: #e74c3c;
-        }
-
-        /* Ethics Section */
-        .ethics-section {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            margin-bottom: 4rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .ethics-content {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .ethics-text h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+        .step-card h4 {
+            margin: 0 0 0.5rem 0;
             color: #333;
-        }
-
-        .ethics-text p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #555;
-            margin-bottom: 2rem;
-        }
-
-        .ethics-principles {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .ethics-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .ethics-item i {
             font-size: 1.2rem;
-            color: #667eea;
         }
 
-        .human-ai-balance {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            text-align: center;
-        }
-
-        .human-side, .ai-side, .result {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .human-side i {
-            font-size: 2.5rem;
-            color: #e74c3c;
-        }
-
-        .ai-side i {
-            font-size: 2.5rem;
-            color: #667eea;
-        }
-
-        .result i {
-            font-size: 2.5rem;
-            color: #27ae60;
-        }
-
-        .plus-sign, .equals-sign {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        /* FAQ Preview */
-        .faq-preview h3 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: #333;
-        }
-
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .faq-item {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .faq-item h4 {
-            margin: 0 0 1rem 0;
-            color: #333;
-            font-size: 1.1rem;
-        }
-
-        .faq-item p {
+        .step-card p {
             margin: 0;
             color: #666;
+            font-size: 0.95rem;
+        }
+
+        .flow-arrow {
+            display: none; /* Hidden on mobile */
+        }
+
+        /* Step Details */
+        .step-details {
+            margin-top: 2rem;
+        }
+
+        .detail-card {
+            display: none;
+            background: rgba(102, 126, 234, 0.05);
+            border-left: 4px solid #667eea;
+            border-radius: 0 15px 15px 0;
+            padding: 2rem;
+        }
+
+        .detail-card.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-header i {
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        .detail-header h4 {
+            margin: 0;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        .detail-description {
+            color: #555;
             line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
         }
 
-        .faq-cta {
-            text-align: center;
+        .tech-explanation {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        /* Scientific Foundation */
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .tech-item i {
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        /* Scientific Foundation - Simplified */
         .scientific-foundation {
             background: linear-gradient(135deg, #667eea, #764ba2);
-            padding: 4rem 3rem;
+            padding: 3rem 2rem;
             border-radius: 20px;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             color: white;
-        }
-
-        .research-highlight {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 3rem;
-            align-items: center;
+            text-align: center;
         }
 
         .research-content h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
             color: white;
         }
 
         .research-content p {
-            font-size: 1.1rem;
-            line-height: 1.7;
+            font-size: 1.05rem;
+            line-height: 1.6;
             color: rgba(255,255,255,0.9);
             margin-bottom: 2rem;
         }
@@ -2527,19 +2601,20 @@
             padding: 2rem;
             border-radius: 15px;
             margin-bottom: 2rem;
-            border: 1px solid rgba(255,255,255,0.2);
+            text-align: left;
         }
 
         .research-paper {
             display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1rem;
         }
 
         .paper-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: rgba(255,255,255,0.9);
-            flex-shrink: 0;
         }
 
         .paper-info h4 {
@@ -2551,7 +2626,7 @@
         .paper-info p {
             margin: 0 0 1.5rem 0;
             color: rgba(255,255,255,0.9);
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .research-link {
@@ -2560,148 +2635,255 @@
             gap: 0.5rem;
             background: white;
             color: #667eea;
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 2rem;
             border-radius: 25px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
         }
 
         .research-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            background: #f8f9ff;
         }
 
-        .research-benefits {
-            display: flex;
-            flex-direction: column;
+        .research-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
+            margin-top: 2rem;
         }
 
-        .benefit-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: rgba(255,255,255,0.9);
-        }
-
-        .benefit-item i {
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.8);
-        }
-
-        .research-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .research-stats {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .stat-circle {
-            width: 120px;
-            height: 120px;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .stat-item {
             text-align: center;
-            border: 2px solid rgba(255,255,255,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-circle:hover {
-            transform: scale(1.05);
         }
 
         .stat-number {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
             color: white;
-            margin-bottom: 0.5rem;
+            display: block;
         }
 
         .stat-label {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: rgba(255,255,255,0.8);
-            line-height: 1.2;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .research-highlight {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+        /* Special Features - Simplified */
+        .special-features-simple {
+            margin-bottom: 3rem;
+        }
+
+        .special-features-simple h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .features-grid-simple {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-simple {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-simple:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-simple i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-simple h4 {
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .feature-simple p {
+            color: #666;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* FAQ Preview - Accordion */
+        .faq-preview-simple h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .faq-accordion {
+            margin-bottom: 2rem;
+        }
+
+        .faq-item-simple {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8f9ff;
+        }
+
+        .faq-question span {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .faq-question i {
+            color: #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item-simple.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #f8f9ff;
+        }
+
+        .faq-answer.open {
+            max-height: 200px;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .faq-answer p {
+            margin: 0;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .faq-cta {
+            text-align: center;
+        }
+
+        /* Desktop Improvements */
+        @media (min-width: 768px) {
+            .ki-methods-new {
+                padding: 80px 2rem;
             }
-            
-            .research-paper {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
+
+            .process-flow {
+                padding: 3rem;
             }
-            
-            .research-stats {
+
+            .steps-container {
                 flex-direction: row;
+                align-items: center;
                 gap: 1rem;
             }
-            
-            .stat-circle {
-                width: 90px;
-                height: 90px;
+
+            .step-card {
+                flex: 1;
+                min-height: 140px;
             }
-            
-            .stat-number {
-                font-size: 1.4rem;
+
+            .flow-arrow {
+                display: block;
+                font-size: 1.5rem;
+                color: #667eea;
+                font-weight: bold;
+                flex-shrink: 0;
             }
-            
-            .stat-label {
-                font-size: 0.7rem;
+
+            .research-paper {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .paper-icon {
+                font-size: 2.5rem;
+                flex-shrink: 0;
             }
         }
-        @media (max-width: 768px) {
-            .main-explanation {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+
+        @media (min-width: 1024px) {
+            .detail-card {
+                padding: 3rem;
             }
-            
-            .ethics-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .step-detailed {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 1rem;
-            }
-            
-            .features-comparison {
-                grid-template-columns: 1fr;
-            }
-            
-            .ai-brain {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .brain-core {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
+
+            .tech-explanation {
+                flex-direction: row;
             }
         }
     </style>
 
-    <!-- Pricing Teaser -->
+    <script>
+        function showStepDetails(stepNumber) {
+            // Remove active class from all step cards
+            document.querySelectorAll('.step-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Hide all detail cards
+            document.querySelectorAll('.detail-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Activate clicked step
+            event.currentTarget.classList.add('active');
+            document.getElementById(`step-${stepNumber}`).classList.add('active');
+        }
+
+        function toggleFaq(faqNumber) {
+            const faqItem = event.currentTarget;
+            const faqAnswer = document.getElementById(`faq-${faqNumber}`);
+            
+            // Toggle active class on question
+            faqItem.classList.toggle('active');
+            
+            // Toggle answer visibility
+            if (faqAnswer.classList.contains('open')) {
+                faqAnswer.classList.remove('open');
+            } else {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer').forEach(answer => {
+                    answer.classList.remove('open');
+                });
+                document.querySelectorAll('.faq-item-simple').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open this FAQ
+                faqAnswer.classList.add('open');
+                faqItem.classList.add('active');
+            }
+        }
+    </script>
+<!-- Pricing Teaser -->
     <section class="pricing-teaser" id="preise">
         <div class="container">
             <h2 class="section-title" style="color: white;">Transparent, fair, flexibel</h2>
