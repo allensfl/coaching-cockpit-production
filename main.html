@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -277,2050 +277,6 @@
             font-size: 1.3rem;
         }
 
-        /* Pricing Teaser */
-        .pricing-teaser {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            padding: 60px 2rem;
-            text-align: center;
-            color: white;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .pricing-feature {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        .pricing-feature h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Contact & FAQ */
-        .contact-faq {
-            background: white;
-            padding: 80px 2rem;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .contact-card {
-            background: #f8f9ff;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .contact-icon {
-            font-size: 3rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        /* DSGVO Notice */
-        .dsgvo-notice {
-            background: #2c3e50;
-            color: white;
-            padding: 40px 2rem;
-            text-align: center;
-        }
-
-        .dsgvo-notice h3 {
-            margin-bottom: 1rem;
-            color: #ecf0f1;
-        }
-
-        .dsgvo-notice p {
-            margin-bottom: 1rem;
-            opacity: 0.9;
-        }
-
-        /* Footer */
-        .footer {
-            background: #1a1a1a;
-            color: white;
-            padding: 40px 2rem 20px;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #667eea;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .groups-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav">
-            <div class="logo">KI-Online.Coach</div>
-            <ul class="nav-links">
-                <li><a href="#coaches">Für Coaches</a></li>
-                <li><a href="#klienten">Für Klienten</a></li>
-                <li><a href="#preise">Preise</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
-            </ul>
-            <a href="index.html" class="cta-button">Jetzt starten</a>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>KI + Klient + Coach</h1>
-        <p class="subtitle">im perfekten Zusammenspiel</p>
-        <p class="description">
-            Revolutioniere dein Coaching mit KI-gestützter Begleitung. Unser System verbindet künstliche Intelligenz mit menschlicher Expertise für maximalen Coaching-Erfolg. Spezialisiert auf Ruhestandscoaching mit einem 8-Phasen-System.
-        </p>
-        <div class="hero-buttons">
-            <a href="dashboard.html" class="btn-primary">
-                <i class="fas fa-rocket"></i> Kostenlos testen
-            </a>
-            <a href="chat.html" class="btn-secondary">
-                <i class="fas fa-play"></i> Demo ansehen
-            </a>
-        </div>
-    </section>
-
-    <!-- Target Groups Section -->
-    <section class="target-groups">
-        <div class="container">
-            <h2 class="section-title">Maßgeschneidert für deine Bedürfnisse</h2>
-            
-            <div class="groups-grid">
-                <!-- Für Coaches -->
-                <div class="group-card" id="coaches">
-                    <div class="group-icon">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h3>Für Coaches</h3>
-                    <p>Erweitere deine Coaching-Praxis mit KI-Power und erreiche mehr Klienten effizienter</p>
-                    
-                    <ul class="group-features">
-                        <li>KI-gestützte Session-Vorbereitung</li>
-                        <li>Automatische Fortschritts-Dokumentation</li>
-                        <li>8-Phasen Ruhestandscoaching-System</li>
-                        <li>Klienten-Dashboard mit Analytics</li>
-                        <li>Flexible Termin- und Aufgabenverwaltung</li>
-                        <li>Upload eigener Coaching-Materialien</li>
-                        <li>DSGVO-konforme Datenverwaltung</li>
-                    </ul>
-                    
-                    <a href="index.html" class="cta-button">
-                        Als Coach starten
-                    </a>
-                </div>
-
-                <!-- Für Klienten -->
-                <div class="group-card" id="klienten">
-                    <div class="group-icon">
-                        <i class="fas fa-user-heart"></i>
-                    </div>
-                    <h3>Für Klienten</h3>
-                    <p>Erhalte 24/7 Coaching-Unterstützung zwischen den Sessions mit deinem Coach</p>
-                    
-                    <ul class="group-features">
-                        <li>Rund-um-die-Uhr KI-Coaching verfügbar</li>
-                        <li>Personalisierte Ruhestandsplanung</li>
-                        <li>Emotionale Unterstützung bei Übergängen</li>
-                        <li>Fortschritts-Tracking und Zielerreichung</li>
-                        <li>Sichere, vertrauliche Kommunikation</li>
-                        <li>Integration mit deinem persönlichen Coach</li>
-                        <li>Lernstil-angepasste Begleitung</li>
-                    </ul>
-                    
-                    <a href="index.html" class="cta-button">
-                        Coaching beginnen
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="how-it-works">
-        <div class="container">
-            <h2 class="section-title">So funktioniert's</h2>
-            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 2rem;">
-                Vier einfache Schritte zu deinem erfolgreichen Coaching
-            </p>
-            
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h4>Registrierung</h4>
-                    <p>Wähle deinen Account-Typ (Coach oder Klient) und erstelle dein persönliches Profil in unter 2 Minuten.</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h4>KI-Setup</h4>
-                    <p>Unsere KI lernt deine Präferenzen, Ziele und deinen Lernstil für eine personalisierte Coaching-Erfahrung.</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h4>Coaching starten</h4>
-                    <p>Beginne sofort mit dem 8-Phasen-System oder verbinde dich mit deinem Coach für hybride Sessions.</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h4>Erfolg messen</h4>
-                    <p>Verfolge deinen Fortschritt im Dashboard und erhalte datenbasierte Insights für optimale Ergebnisse.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="container">
-            <h2 class="section-title">Was unsere Nutzer sagen</h2>
-            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 3rem;">
-                Echte Erfahrungen von Coaches und Klienten, die bereits mit KI-Online.Coach arbeiten
-            </p>
-            
-            <div class="testimonials-grid">
-                <!-- Coach Testimonial 1 -->
-                <div class="testimonial-card coach-testimonial">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <div class="testimonial-info">
-                            <h4>Sandra M.</h4>
-                            <p>Systemischer Coach</p>
-                            <div class="testimonial-badge coach-badge">
-                                <i class="fas fa-star"></i> Coach
-                            </div>
-                        </div>
-                    </div>
-                    <blockquote>
-                        «Die KI-Integration hat meine Coaching-Praxis revolutioniert. Zwischen den Sessions bleiben meine Klienten durch die 24/7 Begleitung am Ball. Das 8-Phasen-System strukturiert meine Arbeit perfekt und die automatische Dokumentation spart mir Stunden pro Woche.»
-                    </blockquote>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <!-- Klient Testimonial 1 -->
-                <div class="testimonial-card client-testimonial">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user-heart"></i>
-                        </div>
-                        <div class="testimonial-info">
-                            <h4>Robert K., 63</h4>
-                            <p>Pensionierter Abteilungsleiter</p>
-                            <div class="testimonial-badge client-badge">
-                                <i class="fas fa-heart"></i> Klient
-                            </div>
-                        </div>
-                    </div>
-                    <blockquote>
-                        «Nach 40 Jahren im Beruf hatte ich Angst vor der Leere. Das KI-Coaching half mir, meine Stärken neu zu entdecken. Die emotionale Unterstützung zwischen den Terminen mit meinem Coach war unbezahlbar. Heute leite ich ehrenamtlich Projekte und fühle mich erfüllt.»
-                    </blockquote>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <!-- Coach Testimonial 2 -->
-                <div class="testimonial-card coach-testimonial">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                        <div class="testimonial-info">
-                            <h4>Dr. Michael H.</h4>
-                            <p>Organisationsberater</p>
-                            <div class="testimonial-badge coach-badge">
-                                <i class="fas fa-star"></i> Coach
-                            </div>
-                        </div>
-                    </div>
-                    <blockquote>
-                        «Die KI versteht deutsche Typografie perfekt und passt sich an jeden Lernstil an. Meine Klienten sind begeistert von der personalisierten Betreuung. Das System erkennt sogar, wann therapeutische Grenzen erreicht sind – beeindruckende Sicherheit.»
-                    </blockquote>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <!-- Klient Testimonial 2 -->
-                <div class="testimonial-card client-testimonial">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user-smile"></i>
-                        </div>
-                        <div class="testimonial-info">
-                            <h4>Elisabeth S., 59</h4>
-                            <p>Lehrerin vor Pensionierung</p>
-                            <div class="testimonial-badge client-badge">
-                                <i class="fas fa-heart"></i> Klient
-                            </div>
-                        </div>
-                    </div>
-                    <blockquote>
-                        «Die Vorbereitung auf den Ruhestand war überwältigend. Das 8-Phasen-System half mir Schritt für Schritt. Besonders die Zielvision-Phase öffnete mir völlig neue Perspektiven. Jetzt freue ich mich auf meinen Ruhestand statt davor zu fürchten.»
-                    </blockquote>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <!-- Hybrid Testimonial -->
-                <div class="testimonial-card hybrid-testimonial">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="testimonial-info">
-                            <h4>Coaching-Duo</h4>
-                            <p>Anna (Coach) & Peter (Klient)</p>
-                            <div class="testimonial-badge hybrid-badge">
-                                <i class="fas fa-handshake"></i> Team
-                            </div>
-                        </div>
-                    </div>
-                    <blockquote>
-                        «Die Dreier-Konstellation KI + Klient + Coach funktioniert perfekt. Peter hat zwischen unseren Sessions kontinuierliche Unterstützung und ich kann seine Fortschritte in Echtzeit verfolgen. Das ist die Zukunft des Coachings.»
-                    </blockquote>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <!-- Success Story -->
-                <div class="testimonial-card success-story">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div class="testimonial-info">
-                            <h4>6 Monate später</h4>
-                            <p>Langzeit-Erfolgsgeschichte</p>
-                            <div class="testimonial-badge success-badge">
-                                <i class="fas fa-chart-line"></i> Erfolg
-                            </div>
-                        </div>
-                    </div>
-                    <blockquote>
-                        «Von der Krise zur Chance: Heinrich (64) fand durch unser System seine Berufung als Mentor für Startup-Gründer. Seine Coach Sarah begleitete ihn 8 Monate – heute verdient er mehr als vor der Pensionierung und ist glücklicher denn je.»
-                    </blockquote>
-                    <div class="testimonial-metrics">
-                        <div class="metric">
-                            <strong>94%</strong>
-                            <span>Zufriedenheit</span>
-                        </div>
-                        <div class="metric">
-                            <strong>8 Monate</strong>
-                            <span>Begleitung</span>
-                        </div>
-                        <div class="metric">
-                            <strong>127%</strong>
-                            <span>Gehaltssteigerung</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trust Indicators -->
-            <div class="trust-indicators">
-                <div class="trust-item">
-                    <i class="fas fa-shield-check"></i>
-                    <span>DSGVO-konform</span>
-                </div>
-                <div class="trust-item">
-                    <i class="fas fa-certificate"></i>
-                    <span>Zertifizierte Coaches</span>
-                </div>
-                <div class="trust-item">
-                    <i class="fas fa-lock"></i>
-                    <span>Ende-zu-Ende verschlüsselt</span>
-                </div>
-                <div class="trust-item">
-                    <i class="fas fa-star"></i>
-                    <span>4.9/5 Bewertung</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <style>
-        /* Testimonials Section */
-        .testimonials {
-            background: #f8f9ff;
-            padding: 80px 2rem;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .testimonial-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-            border-left: 4px solid #667eea;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-        }
-
-        .coach-testimonial {
-            border-left-color: #667eea;
-        }
-
-        .client-testimonial {
-            border-left-color: #e74c3c;
-        }
-
-        .hybrid-testimonial {
-            border-left-color: #f39c12;
-        }
-
-        .success-story {
-            border-left-color: #27ae60;
-            background: linear-gradient(135deg, #f8fff9, #e8f5e8);
-        }
-
-        .testimonial-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .testimonial-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .client-testimonial .testimonial-avatar {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-        }
-
-        .hybrid-testimonial .testimonial-avatar {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-        }
-
-        .success-story .testimonial-avatar {
-            background: linear-gradient(135deg, #27ae60, #229954);
-        }
-
-        .testimonial-info h4 {
-            margin: 0 0 0.3rem 0;
-            font-size: 1.1rem;
-            color: #333;
-        }
-
-        .testimonial-info p {
-            margin: 0;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .testimonial-badge {
-            display: inline-block;
-            padding: 0.2rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-top: 0.5rem;
-        }
-
-        .coach-badge {
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
-        }
-
-        .client-badge {
-            background: rgba(231, 76, 60, 0.1);
-            color: #e74c3c;
-        }
-
-        .hybrid-badge {
-            background: rgba(243, 156, 18, 0.1);
-            color: #f39c12;
-        }
-
-        .success-badge {
-            background: rgba(39, 174, 96, 0.1);
-            color: #27ae60;
-        }
-
-        .testimonial-card blockquote {
-            font-style: italic;
-            margin: 0 0 1.5rem 0;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: #444;
-            quotes: "«" "»";
-        }
-
-        .testimonial-card blockquote::before {
-            content: open-quote;
-            font-size: 2rem;
-            color: #667eea;
-            line-height: 0;
-            margin-right: 0.5rem;
-            vertical-align: -0.4rem;
-        }
-
-        .testimonial-rating {
-            color: #f39c12;
-            font-size: 1.1rem;
-        }
-
-        .testimonial-rating i {
-            margin-right: 0.2rem;
-        }
-
-        .testimonial-metrics {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-        }
-
-        .metric {
-            text-align: center;
-        }
-
-        .metric strong {
-            display: block;
-            font-size: 1.3rem;
-            color: #27ae60;
-            margin-bottom: 0.2rem;
-        }
-
-        .metric span {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        /* Trust Indicators */
-        .trust-indicators {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 3rem;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #ddd;
-        }
-
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #667eea;
-            font-weight: 500;
-        }
-
-        .trust-item i {
-            font-size: 1.2rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .trust-indicators {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-        }
-    </style>
-    <!-- Dashboard Screenshots Section -->
-    <section class="dashboard-preview">
-        <div class="container">
-            <h2 class="section-title">Einblick in die Plattform</h2>
-            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 3rem;">
-                Erlebe das Interface, mit dem Coaches und Klienten täglich arbeiten
-            </p>
-
-            <!-- Dashboard Tabs -->
-            <div class="dashboard-tabs">
-                <button class="tab-button active" onclick="showDashboard('coach')">
-                    <i class="fas fa-user-tie"></i> Coach-Dashboard
-                </button>
-                <button class="tab-button" onclick="showDashboard('client')">
-                    <i class="fas fa-user-heart"></i> Klient-Dashboard
-                </button>
-                <button class="tab-button" onclick="showDashboard('chat')">
-                    <i class="fas fa-robot"></i> KI-Chat Interface
-                </button>
-            </div>
-
-            <!-- Coach Dashboard Mock-up -->
-            <div id="coach-dashboard" class="dashboard-mockup active">
-                <div class="mockup-container">
-                    <div class="browser-frame">
-                        <div class="browser-header">
-                            <div class="browser-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                            </div>
-                            <div class="browser-url">ki-online.coach/dashboard</div>
-                        </div>
-                        
-                        <div class="dashboard-content">
-                            <!-- Header -->
-                            <div class="dashboard-header">
-                                <div class="welcome-section">
-                                    <h3>Willkommen zurück, Sandra! 👋</h3>
-                                    <p>Du hast 3 aktive Klienten und 2 anstehende Sessions</p>
-                                </div>
-                                <div class="quick-actions">
-                                    <button class="quick-btn">
-                                        <i class="fas fa-plus"></i> Neuer Klient
-                                    </button>
-                                    <button class="quick-btn">
-                                        <i class="fas fa-calendar"></i> Session planen
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Stats Cards -->
-                            <div class="stats-grid">
-                                <div class="stat-card">
-                                    <div class="stat-icon blue">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h4>12</h4>
-                                        <p>Aktive Klienten</p>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <div class="stat-icon green">
-                                        <i class="fas fa-chart-line"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h4>89%</h4>
-                                        <p>Erfolgsrate</p>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <div class="stat-icon orange">
-                                        <i class="fas fa-clock"></i>
-                                    </div>
-                                    <div class="stat-info">
-                                        <h4>24/7</h4>
-                                        <p>KI-Betreuung</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Client List -->
-                            <div class="dashboard-section">
-                                <h4>Aktuelle Klienten</h4>
-                                <div class="client-list">
-                                    <div class="client-item">
-                                        <div class="client-avatar">RK</div>
-                                        <div class="client-info">
-                                            <h5>Robert K.</h5>
-                                            <p>Phase 3: Zielvision • Letzte Aktivität: vor 2h</p>
-                                        </div>
-                                        <div class="client-progress">
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 65%"></div>
-                                            </div>
-                                            <span>65%</span>
-                                        </div>
-                                    </div>
-                                    <div class="client-item">
-                                        <div class="client-avatar">ES</div>
-                                        <div class="client-info">
-                                            <h5>Elisabeth S.</h5>
-                                            <p>Phase 6: Erfolgsimagination • Letzte Aktivität: vor 1h</p>
-                                        </div>
-                                        <div class="client-progress">
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 85%"></div>
-                                            </div>
-                                            <span>85%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Client Dashboard Mock-up -->
-            <div id="client-dashboard" class="dashboard-mockup">
-                <div class="mockup-container">
-                    <div class="browser-frame">
-                        <div class="browser-header">
-                            <div class="browser-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                            </div>
-                            <div class="browser-url">ki-online.coach/mein-coaching</div>
-                        </div>
-                        
-                        <div class="dashboard-content">
-                            <!-- Client Header -->
-                            <div class="dashboard-header">
-                                <div class="welcome-section">
-                                    <h3>Hallo Robert! 🌅</h3>
-                                    <p>Du bist in Phase 3 deines Ruhestandscoachings</p>
-                                </div>
-                                <div class="coach-info">
-                                    <div class="coach-avatar">SM</div>
-                                    <div>
-                                        <p><strong>Dein Coach</strong></p>
-                                        <p>Sandra M.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Progress Journey -->
-                            <div class="journey-progress">
-                                <h4>Deine Coaching-Reise</h4>
-                                <div class="phase-timeline">
-                                    <div class="phase completed">
-                                        <div class="phase-dot"></div>
-                                        <span>Standortbestimmung</span>
-                                    </div>
-                                    <div class="phase completed">
-                                        <div class="phase-dot"></div>
-                                        <span>Emotionale Vertiefung</span>
-                                    </div>
-                                    <div class="phase active">
-                                        <div class="phase-dot"></div>
-                                        <span>Zielvision</span>
-                                    </div>
-                                    <div class="phase">
-                                        <div class="phase-dot"></div>
-                                        <span>Systemanalyse</span>
-                                    </div>
-                                    <div class="phase">
-                                        <div class="phase-dot"></div>
-                                        <span>Komplementärkräfte</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Today's Tasks -->
-                            <div class="dashboard-section">
-                                <h4>Heutige Aufgaben</h4>
-                                <div class="task-list">
-                                    <div class="task-item">
-                                        <i class="fas fa-circle-check"></i>
-                                        <span>Reflexion: Was motiviert mich wirklich?</span>
-                                        <span class="task-time">15 Min</span>
-                                    </div>
-                                    <div class="task-item pending">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Vision Board erstellen</span>
-                                        <span class="task-time">30 Min</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chat Interface Mock-up -->
-            <div id="chat-dashboard" class="dashboard-mockup">
-                <div class="mockup-container">
-                    <div class="browser-frame">
-                        <div class="browser-header">
-                            <div class="browser-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                            </div>
-                            <div class="browser-url">ki-online.coach/chat</div>
-                        </div>
-                        
-                        <div class="chat-interface">
-                            <div class="chat-header">
-                                <div class="ai-avatar">
-                                    <i class="fas fa-robot"></i>
-                                </div>
-                                <div class="chat-info">
-                                    <h4>KI-Coaching Assistent</h4>
-                                    <p>🟢 Immer für dich da • Phase 3: Zielvision</p>
-                                </div>
-                            </div>
-
-                            <div class="chat-messages">
-                                <div class="message ai-message">
-                                    <div class="message-avatar">
-                                        <i class="fas fa-robot"></i>
-                                    </div>
-                                    <div class="message-content">
-                                        <p>«Hallo Robert! Ich habe gesehen, dass du heute über deine Zukunftsvision nachgedacht hast. Das ist ein wichtiger Schritt. Welcher Aspekt deines zukünftigen Lebens beschäftigt dich am meisten?»</p>
-                                        <span class="message-time">vor 2 Minuten</span>
-                                    </div>
-                                </div>
-
-                                <div class="message user-message">
-                                    <div class="message-content">
-                                        <p>Ich bin unsicher, ob ich noch produktiv sein kann ohne meinen Beruf.</p>
-                                        <span class="message-time">vor 1 Minute</span>
-                                    </div>
-                                </div>
-
-                                <div class="message ai-message">
-                                    <div class="message-avatar">
-                                        <i class="fas fa-robot"></i>
-                                    </div>
-                                    <div class="message-content">
-                                        <p>«Diese Sorge ist völlig verständlich und zeigt, wie wichtig dir deine Wirksamkeit ist. Produktivität kann viele Formen haben – von ehrenamtlicher Arbeit bis hin zur Weitergabe deiner Erfahrungen. Welche deiner beruflichen Stärken möchtest du gerne weiter einsetzen?»</p>
-                                        <span class="message-time">gerade eben</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="chat-input">
-                                <input type="text" placeholder="Schreibe deine Antwort..." disabled>
-                                <button><i class="fas fa-paper-plane"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Features Highlight -->
-            <div class="features-highlight">
-                <h3>Warum das Interface überzeugt</h3>
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <i class="fas fa-eye"></i>
-                        <h4>Intuitive Bedienung</h4>
-                        <p>Auch ohne technische Vorkenntnisse sofort nutzbar</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-chart-bar"></i>
-                        <h4>Transparente Fortschritte</h4>
-                        <p>Jederzeit den Überblick über Coaching-Erfolge behalten</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <h4>Überall verfügbar</h4>
-                        <p>Desktop, Tablet, Smartphone – immer synchronisiert</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-comments"></i>
-                        <h4>Natürliche Kommunikation</h4>
-                        <p>KI versteht deutsche Sprache und Coaching-Kontext</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <style>
-        /* Dashboard Preview Section */
-        .dashboard-preview {
-            background: white;
-            padding: 80px 2rem;
-        }
-
-        .dashboard-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .tab-button {
-            background: #f8f9ff;
-            border: 2px solid #e1e5e9;
-            padding: 1rem 2rem;
-            border-radius: 15px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .tab-button:hover {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-        }
-
-        .tab-button.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-color: #667eea;
-        }
-
-        .dashboard-mockup {
-            display: none;
-            margin-bottom: 4rem;
-        }
-
-        .dashboard-mockup.active {
-            display: block;
-        }
-
-        .mockup-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .browser-frame {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            overflow: hidden;
-        }
-
-        .browser-header {
-            background: #f5f5f5;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .browser-dots {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .dot.red { background: #ff5f57; }
-        .dot.yellow { background: #ffbd2e; }
-        .dot.green { background: #28ca42; }
-
-        .browser-url {
-            background: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            color: #666;
-            font-size: 0.9rem;
-            flex-grow: 1;
-            max-width: 300px;
-        }
-
-        .dashboard-content {
-            padding: 2rem;
-            background: #fafbfc;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .welcome-section h3 {
-            margin: 0 0 0.5rem 0;
-            color: #333;
-            font-size: 1.5rem;
-        }
-
-        .welcome-section p {
-            margin: 0;
-            color: #666;
-        }
-
-        .quick-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .quick-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .quick-btn:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .stat-icon.blue { background: #667eea; }
-        .stat-icon.green { background: #27ae60; }
-        .stat-icon.orange { background: #f39c12; }
-
-        .stat-info h4 {
-            margin: 0;
-            font-size: 1.8rem;
-            color: #333;
-        }
-
-        .stat-info p {
-            margin: 0;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .dashboard-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .dashboard-section h4 {
-            margin: 0 0 1rem 0;
-            color: #333;
-        }
-
-        .client-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .client-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: #f8f9ff;
-            border-radius: 10px;
-        }
-
-        .client-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: #667eea;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .client-info {
-            flex-grow: 1;
-        }
-
-        .client-info h5 {
-            margin: 0 0 0.3rem 0;
-            color: #333;
-        }
-
-        .client-info p {
-            margin: 0;
-            color: #666;
-            font-size: 0.85rem;
-        }
-
-        .client-progress {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .progress-bar {
-            width: 80px;
-            height: 6px;
-            background: #e1e5e9;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #27ae60;
-            transition: width 0.3s ease;
-        }
-
-        /* Coach Info */
-        .coach-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .coach-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #e74c3c;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        /* Journey Progress */
-        .journey-progress {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .phase-timeline {
-            display: flex;
-            gap: 2rem;
-            margin-top: 1rem;
-            overflow-x: auto;
-            padding-bottom: 1rem;
-        }
-
-        .phase {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            min-width: 120px;
-            text-align: center;
-        }
-
-        .phase-dot {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #e1e5e9;
-            position: relative;
-        }
-
-        .phase.completed .phase-dot {
-            background: #27ae60;
-        }
-
-        .phase.active .phase-dot {
-            background: #667eea;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
-        }
-
-        .phase span {
-            font-size: 0.8rem;
-            color: #666;
-            font-weight: 500;
-        }
-
-        .phase.completed span {
-            color: #27ae60;
-        }
-
-        .phase.active span {
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        /* Tasks */
-        .task-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: #f8f9ff;
-            border-radius: 10px;
-        }
-
-        .task-item i {
-            color: #27ae60;
-            font-size: 1.2rem;
-        }
-
-        .task-item.pending i {
-            color: #e1e5e9;
-        }
-
-        .task-time {
-            margin-left: auto;
-            color: #666;
-            font-size: 0.85rem;
-        }
-
-        /* Chat Interface */
-        .chat-interface {
-            height: 500px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chat-header {
-            padding: 1rem;
-            background: white;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .ai-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .chat-messages {
-            flex-grow: 1;
-            padding: 1rem;
-            background: #fafbfc;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .message {
-            display: flex;
-            gap: 0.8rem;
-            max-width: 80%;
-        }
-
-        .user-message {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-
-        .message-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .message-content {
-            background: white;
-            padding: 1rem;
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .user-message .message-content {
-            background: #667eea;
-            color: white;
-        }
-
-        .message-content p {
-            margin: 0 0 0.5rem 0;
-            line-height: 1.4;
-        }
-
-        .message-time {
-            font-size: 0.75rem;
-            opacity: 0.7;
-        }
-
-        .chat-input {
-            padding: 1rem;
-            background: white;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .chat-input input {
-            flex-grow: 1;
-            padding: 0.8rem;
-            border: 1px solid #e1e5e9;
-            border-radius: 25px;
-            outline: none;
-        }
-
-        .chat-input button {
-            background: #667eea;
-            color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Features Highlight */
-        .features-highlight {
-            margin-top: 4rem;
-            text-align: center;
-        }
-
-        .features-highlight h3 {
-            margin-bottom: 2rem;
-            color: #333;
-            font-size: 1.8rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-item {
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .feature-item i {
-            font-size: 2.5rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .feature-item h4 {
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .feature-item p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .dashboard-tabs {
-                flex-direction: column;
-            }
-            
-            .tab-button {
-                justify-content: center;
-            }
-            
-            .dashboard-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .quick-actions {
-                justify-content: center;
-            }
-            
-            .phase-timeline {
-                gap: 1rem;
-            }
-            
-            .phase {
-                min-width: 80px;
-            }
-        }
-    </style>
-
-    <script>
-        function showDashboard(type) {
-            // Hide all dashboards
-            document.querySelectorAll('.dashboard-mockup').forEach(d => {
-                d.classList.remove('active');
-            });
-            
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab-button').forEach(t => {
-                t.classList.remove('active');
-            });
-            
-            // Show selected dashboard
-            document.getElementById(type + '-dashboard').classList.add('active');
-            
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-        }
-    </script>
-    <!-- KI-Methoden erklärt Section -->
-    <section class="ki-methods-clean">
-        <div class="container">
-            <h2 class="section-title">Wie unsere KI wirklich funktioniert</h2>
-            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 3rem;">
-                Keine Black Box, sondern transparente Technologie im Dienst des Menschen
-            </p>
-
-            <!-- Main Explanation -->
-            <div class="main-explanation">
-                <div class="explanation-content">
-                    <h3>KI als intelligenter Coaching-Partner</h3>
-                    <p>Unsere KI ist kein Ersatz für menschliche Coaches, sondern ein intelligenter Assistent, der rund um die Uhr verfügbar ist. Sie wurde speziell für Ruhestandscoaching trainiert und versteht die emotionalen und praktischen Herausforderungen dieser Lebensphase.</p>
-                    
-                    <div class="key-principles">
-                        <div class="principle">
-                            <i class="fas fa-heart"></i>
-                            <div>
-                                <h4>Empathisch</h4>
-                                <p>Erkennt emotionale Nuancen und reagiert angemessen</p>
-                            </div>
-                        </div>
-                        <div class="principle">
-                            <i class="fas fa-shield-alt"></i>
-                            <div>
-                                <h4>Sicher</h4>
-                                <p>Kennt therapeutische Grenzen und verweist bei Bedarf</p>
-                            </div>
-                        </div>
-                        <div class="principle">
-                            <i class="fas fa-graduation-cap"></i>
-                            <div>
-                                <h4>Lernend</h4>
-                                <p>Passt sich an deinen individuellen Lernstil an</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="explanation-visual">
-                    <div class="ai-brain">
-                        <div class="brain-core">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <div class="neural-connections">
-                            <div class="connection" style="--delay: 0s; --angle: 0deg;"></div>
-                            <div class="connection" style="--delay: 0.5s; --angle: 45deg;"></div>
-                            <div class="connection" style="--delay: 1s; --angle: 90deg;"></div>
-                            <div class="connection" style="--delay: 1.5s; --angle: 135deg;"></div>
-                            <div class="connection" style="--delay: 2s; --angle: 180deg;"></div>
-                            <div class="connection" style="--delay: 2.5s; --angle: 225deg;"></div>
-                            <div class="connection" style="--delay: 3s; --angle: 270deg;"></div>
-                            <div class="connection" style="--delay: 3.5s; --angle: 315deg;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- How it Works Steps -->
-            <div class="how-it-works-detailed">
-                <h3>So arbeitet unsere KI in 5 Schritten</h3>
-                
-                <div class="steps-detailed">
-                    <div class="step-detailed">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h4>Verstehen & Analysieren</h4>
-                            <p>Die KI analysiert deine Eingabe nicht nur sprachlich, sondern auch emotional. Sie erkennt Sorgen, Hoffnungen und den aktuellen emotionalen Zustand.</p>
-                            <div class="technical-detail">
-                                <i class="fas fa-cog"></i>
-                                <span>Natural Language Processing + Sentiment-Analyse</span>
-                            </div>
-                        </div>
-                        <div class="step-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-
-                    <div class="step-detailed">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>Kontext einbeziehen</h4>
-                            <p>Sie berücksichtigt deine bisherige Coaching-Geschichte, deine aktuelle Phase im 8-Phasen-System und deine persönlichen Präferenzen.</p>
-                            <div class="technical-detail">
-                                <i class="fas fa-cog"></i>
-                                <span>Kontextuelles Gedächtnis + Personalisierung</span>
-                            </div>
-                        </div>
-                        <div class="step-icon">
-                            <i class="fas fa-puzzle-piece"></i>
-                        </div>
-                    </div>
-
-                    <div class="step-detailed">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h4>Coaching-Wissen abrufen</h4>
-                            <p>Aus einem riesigen Fundus an Coaching-Methoden, Frankls Sinnmodellen und Ruhestandsforschung wählt sie die passende Antwort.</p>
-                            <div class="technical-detail">
-                                <i class="fas fa-cog"></i>
-                                <span>Spezialisierte Wissensdatenbank + Retrieval</span>
-                            </div>
-                        </div>
-                        <div class="step-icon">
-                            <i class="fas fa-book"></i>
-                        </div>
-                    </div>
-
-                    <div class="step-detailed">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h4>Sicherheit prüfen</h4>
-                            <p>Bevor sie antwortet, prüft sie automatisch: Ist das noch Coaching oder wird therapeutische Hilfe benötigt? Sicherheit geht vor.</p>
-                            <div class="technical-detail">
-                                <i class="fas fa-cog"></i>
-                                <span>Sicherheitsfilter + Grenzenerkennung</span>
-                            </div>
-                        </div>
-                        <div class="step-icon">
-                            <i class="fas fa-shield-check"></i>
-                        </div>
-                    </div>
-
-                    <div class="step-detailed">
-                        <div class="step-number">5</div>
-                        <div class="step-content">
-                            <h4>Personalisiert antworten</h4>
-                            <p>Die finale Antwort wird an deinen Lernstil angepasst: visuell mit Metaphern, auditiv mit Geschichten oder kinästhetisch mit Übungen.</p>
-                            <div class="technical-detail">
-                                <i class="fas fa-cog"></i>
-                                <span>Adaptive Ausgabe + Lernstil-Optimierung</span>
-                            </div>
-                        </div>
-                        <div class="step-icon">
-                            <i class="fas fa-user-check"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- What makes it special -->
-            <div class="special-features">
-                <h3>Was macht unsere KI besonders?</h3>
-                
-                <div class="features-comparison">
-                    <div class="feature-card highlight">
-                        <div class="feature-header">
-                            <i class="fas fa-star"></i>
-                            <h4>Unsere KI</h4>
-                        </div>
-                        <ul>
-                            <li><i class="fas fa-check"></i> Speziell für Ruhestandscoaching trainiert</li>
-                            <li><i class="fas fa-check"></i> Versteht deutsche Kulturkonzepte</li>
-                            <li><i class="fas fa-check"></i> Kennt therapeutische Grenzen</li>
-                            <li><i class="fas fa-check"></i> 8-Phasen-System integriert</li>
-                            <li><i class="fas fa-check"></i> Arbeitet mit menschlichen Coaches</li>
-                            <li><i class="fas fa-check"></i> DSGVO-konform entwickelt</li>
-                        </ul>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-header">
-                            <i class="fas fa-robot"></i>
-                            <h4>Standard-KI</h4>
-                        </div>
-                        <ul>
-                            <li><i class="fas fa-times"></i> Allgemeine Antworten</li>
-                            <li><i class="fas fa-times"></i> Keine kulturelle Sensibilität</li>
-                            <li><i class="fas fa-times"></i> Keine Sicherheitsgrenzen</li>
-                            <li><i class="fas fa-times"></i> Keine Coaching-Struktur</li>
-                            <li><i class="fas fa-times"></i> Ersetzt menschliche Coaches</li>
-                            <li><i class="fas fa-times"></i> Datenschutz unklar</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Technology Ethics -->
-            <div class="ethics-section">
-                <div class="ethics-content">
-                    <div class="ethics-text">
-                        <h3>Unsere Technologie-Ethik</h3>
-                        <p>Wir glauben an <strong>Augmented Coaching</strong> – KI verstärkt menschliche Fähigkeiten, ersetzt sie nicht. Transparenz, Datenschutz und menschliche Kontrolle stehen im Zentrum unserer Entwicklung.</p>
-                        
-                        <div class="ethics-principles">
-                            <div class="ethics-item">
-                                <i class="fas fa-eye"></i>
-                                <span><strong>Transparenz:</strong> Du weißt immer, dass du mit KI sprichst</span>
-                            </div>
-                            <div class="ethics-item">
-                                <i class="fas fa-hand-holding-heart"></i>
-                                <span><strong>Menschlichkeit:</strong> Bei wichtigen Entscheidungen wird dein Coach einbezogen</span>
-                            </div>
-                            <div class="ethics-item">
-                                <i class="fas fa-user-cog"></i>
-                                <span><strong>Kontrolle:</strong> Du bestimmst, wie viel KI-Unterstützung du möchtest</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="ethics-visual">
-                        <div class="human-ai-balance">
-                            <div class="human-side">
-                                <i class="fas fa-user"></i>
-                                <span>Mensch</span>
-                            </div>
-                            <div class="plus-sign">+</div>
-                            <div class="ai-side">
-                                <i class="fas fa-robot"></i>
-                                <span>KI</span>
-                            </div>
-                            <div class="equals-sign">=</div>
-                            <div class="result">
-                                <i class="fas fa-heart"></i>
-                                <span>Besseres Coaching</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scientific Foundation -->
-            <div class="scientific-foundation">
-                <div class="research-highlight">
-                    <div class="research-content">
-                        <h3>Wissenschaftlich fundiert</h3>
-                        <p>Unsere KI-Methoden basieren auf aktueller Forschung und bewährten Coaching-Prinzipien. Die Wirksamkeit von KI-gestütztem Coaching wurde in mehreren Studien belegt.</p>
-                        
-                        <div class="research-paper">
-                            <div class="paper-icon">
-                                <i class="fas fa-file-alt"></i>
-                            </div>
-                            <div class="paper-info">
-                                <h4>Aktuelle Forschung:</h4>
-                                <p><strong>«Künstliche Intelligenz im Coaching»</strong><br>
-                                Springer-Veröffentlichung zu KI-gestützten Coaching-Methoden und deren praktischer Anwendung</p>
-                                <a href="https://link.springer.com/epdf/10.1007/s11613-025-00947-w?sharing_token=ixTOPjI_ojwLxD5XC1rcKve4RwlQNchNByi7wbcMAY5--FTzC0Qu_zcKNq5XNWbsTz6y8D55Ma9Q1kNQ9EsM5lcOWTEDiZ3EDGl7twrlz0qh8CIk-bHzFhMj7nobRVkg7CRiejt9hSJGqMd4aYviEhJRyLWAa-KbC2lFZQ2k0MQ%3D" 
-                                   target="_blank" 
-                                   class="research-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Fachartikel lesen (Springer)
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="research-benefits">
-                            <div class="benefit-item">
-                                <i class="fas fa-microscope"></i>
-                                <span><strong>Evidenzbasiert:</strong> Methoden durch Studien belegt</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-university"></i>
-                                <span><strong>Akademisch:</strong> Entwickelt mit Coaching-Experten</span>
-                            </div>
-                            <div class="benefit-item">
-                                <i class="fas fa-chart-line"></i>
-                                <span><strong>Kontinuierlich:</strong> Ständige Weiterentwicklung durch Forschung</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="research-visual">
-                        <div class="research-stats">
-                            <div class="stat-circle">
-                                <div class="stat-number">87%</div>
-                                <div class="stat-label">Verbesserung der Coaching-Effizienz</div>
-                            </div>
-                            <div class="stat-circle">
-                                <div class="stat-number">24/7</div>
-                                <div class="stat-label">Verfügbarkeit steigert Erfolgsrate</div>
-                            </div>
-                            <div class="stat-circle">
-                                <div class="stat-number">92%</div>
-                                <div class="stat-label">Klienten-Zufriedenheit</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FAQ Preview -->
-            <div class="faq-preview">
-                <h3>Häufige Fragen zur KI</h3>
-                <div class="faq-grid">
-                    <div class="faq-item">
-                        <h4>🤖 Kann die KI menschliche Coaches ersetzen?</h4>
-                        <p>Nein, unsere KI ist ein Ergänzungspartner. Bei wichtigen Lebensentscheidungen wird immer dein menschlicher Coach einbezogen.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h4>🔒 Sind meine Daten sicher?</h4>
-                        <p>Ja, alle Gespräche sind verschlüsselt und DSGVO-konform. Du kannst deine Daten jederzeit exportieren oder löschen.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h4>🎯 Versteht die KI meine individuelle Situation?</h4>
-                        <p>Die KI lernt deine Präferenzen und passt sich an deinen Lernstil an. Je mehr ihr interagiert, desto passender werden die Antworten.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h4>⚡ Wie schnell antwortet die KI?</h4>
-                        <p>Normalerweise binnen Sekunden. Bei komplexen Anfragen kann es bis zu einer Minute dauern – aber sie ist 24/7 verfügbar.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-cta">
-                    <a href="#kontakt" class="btn-secondary">
-                        <i class="fas fa-question-circle"></i> Mehr Fragen? Kontaktiere uns
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-<!-- KI-Methoden erklärt Section - Clean Fix -->
-    <section class="ki-methods-clean">
-        <div class="container">
-            <h2 class="section-title">Wie unsere KI wirklich funktioniert</h2>
-            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 4rem;">
-                Keine Black Box, sondern transparente Technologie im Dienst des Menschen
-            </p>
-
-            <!-- Main Introduction -->
-            <div class="ki-intro">
-                <div class="intro-content">
-                    <h3>KI als intelligenter Coaching-Partner</h3>
-                    <p>Unsere KI ist kein Ersatz für menschliche Coaches, sondern ein intelligenter Assistent, der rund um die Uhr verfügbar ist. Sie wurde speziell für Ruhestandscoaching trainiert und versteht die emotionalen und praktischen Herausforderungen dieser Lebensphase.</p>
-                </div>
-                
-                <div class="ki-principles">
-                    <div class="principle-card">
-                        <i class="fas fa-heart"></i>
-                        <h4>Empathisch</h4>
-                        <p>Erkennt emotionale Nuancen und reagiert angemessen</p>
-                    </div>
-                    <div class="principle-card">
-                        <i class="fas fa-shield-alt"></i>
-                        <h4>Sicher</h4>
-                        <p>Kennt therapeutische Grenzen und verweist bei Bedarf</p>
-                    </div>
-                    <div class="principle-card">
-                        <i class="fas fa-graduation-cap"></i>
-                        <h4>Lernend</h4>
-                        <p>Passt sich an deinen individuellen Lernstil an</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5 Steps Process -->
-            <div class="process-section">
-                <h3>So arbeitet unsere KI in 5 Schritten</h3>
-                
-                <div class="steps-flow">
-                    <div class="step-item">
-                        <div class="step-header">
-                            <div class="step-number">1</div>
-                            <div class="step-icon">
-                                <i class="fas fa-search"></i>
-                            </div>
-                        </div>
-                        <h4>Verstehen & Analysieren</h4>
-                        <p>Die KI analysiert deine Eingabe sprachlich und emotional. Sie erkennt Sorgen, Hoffnungen und den aktuellen emotionalen Zustand.</p>
-                    </div>
-
-                    <div class="step-item">
-                        <div class="step-header">
-                            <div class="step-number">2</div>
-                            <div class="step-icon">
-                                <i class="fas fa-puzzle-piece"></i>
-                            </div>
-                        </div>
-                        <h4>Kontext einbeziehen</h4>
-                        <p>Sie berücksichtigt deine bisherige Coaching-Geschichte, deine aktuelle Phase im 8-Phasen-System und deine persönlichen Präferenzen.</p>
-                    </div>
-
-                    <div class="step-item">
-                        <div class="step-header">
-                            <div class="step-number">3</div>
-                            <div class="step-icon">
-                                <i class="fas fa-book"></i>
-                            </div>
-                        </div>
-                        <h4>Coaching-Wissen abrufen</h4>
-                        <p>Aus einem umfangreichen Fundus an Coaching-Methoden, Frankls Sinnmodellen und Ruhestandsforschung wählt sie die passende Antwort.</p>
-                    </div>
-
-                    <div class="step-item">
-                        <div class="step-header">
-                            <div class="step-number">4</div>
-                            <div class="step-icon">
-                                <i class="fas fa-shield-check"></i>
-                            </div>
-                        </div>
-                        <h4>Sicherheit prüfen</h4>
-                        <p>Bevor sie antwortet, prüft sie automatisch: Ist das noch Coaching oder wird therapeutische Hilfe benötigt? Sicherheit geht vor.</p>
-                    </div>
-
-                    <div class="step-item">
-                        <div class="step-header">
-                            <div class="step-number">5</div>
-                            <div class="step-icon">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                        </div>
-                        <h4>Personalisiert antworten</h4>
-                        <p>Die finale Antwort wird an deinen Lernstil angepasst: visuell mit Metaphern, auditiv mit Geschichten oder kinästhetisch mit Übungen.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scientific Foundation -->
-            <div class="research-section">
-                <div class="research-content">
-                    <div class="research-text">
-                        <h3>Wissenschaftlich fundiert</h3>
-                        <p>Unsere KI-Methoden basieren auf aktueller Forschung und bewährten Coaching-Prinzipien. Die Wirksamkeit von KI-gestütztem Coaching wurde in mehreren Studien belegt.</p>
-                        
-                        <div class="research-link-container">
-                            <a href="https://link.springer.com/epdf/10.1007/s11613-025-00947-w?sharing_token=ixTOPjI_ojwLxD5XC1rcKve4RwlQNchNByi7wbcMAY5--FTzC0Qu_zcKNq5XNWbsTz6y8D55Ma9Q1kNQ9EsM5lcOWTEDiZ3EDGl7twrlz0qh8CIk-bHzFhMj7nobRVkg7CRiejt9hSJGqMd4aYviEhJRyLWAa-KbC2lFZQ2k0MQ%3D" 
-                               target="_blank" 
-                               class="research-button">
-                                <i class="fas fa-external-link-alt"></i>
-                                Springer-Fachartikel lesen
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="research-stats">
-                        <div class="stat-box">
-                            <div class="stat-number">87%</div>
-                            <div class="stat-label">Effizienz-Steigerung</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">Verfügbarkeit</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-number">92%</div>
-                            <div class="stat-label">Zufriedenheit</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- What makes it special - 2 Column Comparison -->
-            <div class="comparison-section">
-                <h3>Was macht unsere KI besonders?</h3>
-                
-                <div class="comparison-grid">
-                    <div class="our-ki-column">
-                        <div class="column-header">
-                            <i class="fas fa-star"></i>
-                            <h4>Unsere KI</h4>
-                        </div>
-                        <div class="features-list">
-                            <div class="feature-item">
-                                <i class="fas fa-check"></i>
-                                <span>Speziell für Ruhestandscoaching trainiert</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-check"></i>
-                                <span>Versteht deutsche Kulturkonzepte</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-check"></i>
-                                <span>Kennt therapeutische Grenzen</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-check"></i>
-                                <span>8-Phasen-System integriert</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-check"></i>
-                                <span>Arbeitet mit menschlichen Coaches</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-check"></i>
-                                <span>DSGVO-konform entwickelt</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="standard-ki-column">
-                        <div class="column-header">
-                            <i class="fas fa-robot"></i>
-                            <h4>Standard-KI</h4>
-                        </div>
-                        <div class="features-list">
-                            <div class="feature-item">
-                                <i class="fas fa-times"></i>
-                                <span>Allgemeine Antworten</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-times"></i>
-                                <span>Keine kulturelle Sensibilität</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-times"></i>
-                                <span>Keine Sicherheitsgrenzen</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-times"></i>
-                                <span>Keine Coaching-Struktur</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-times"></i>
-                                <span>Ersetzt menschliche Coaches</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-times"></i>
-                                <span>Datenschutz unklar</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="simple-faq">
-                <h3>Häufige Fragen</h3>
-                <div class="faq-grid">
-                    <div class="faq-card">
-                        <h4>🤖 Ersetzt die KI menschliche Coaches?</h4>
-                        <p>Nein, unsere KI ist ein Ergänzungspartner. Bei wichtigen Entscheidungen wird immer dein menschlicher Coach einbezogen.</p>
-                    </div>
-                    <div class="faq-card">
-                        <h4>🔒 Sind meine Daten sicher?</h4>
-                        <p>Ja, alle Gespräche sind verschlüsselt und DSGVO-konform. Du kannst deine Daten jederzeit exportieren oder löschen.</p>
-                    </div>
-                    <div class="faq-card">
-                        <h4>⚡ Wie schnell antwortet die KI?</h4>
-                        <p>Normalerweise binnen Sekunden. Bei komplexen Anfragen kann es bis zu einer Minute dauern.</p>
-                    </div>
-                    <div class="faq-card">
-                        <h4>🎯 Versteht die KI meine Situation?</h4>
-                        <p>Die KI lernt deine Präferenzen und passt sich an deinen Lernstil an. Je mehr ihr interagiert, desto passender werden die Antworten.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <style>
         /* KI-Methoden Clean Section */
         .ki-methods-clean {
             background: white;
@@ -2691,14 +647,128 @@
             margin: 0;
         }
 
+        /* Pricing Teaser */
+        .pricing-teaser {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 60px 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pricing-feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .pricing-feature h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact & FAQ */
+        .contact-faq {
+            background: white;
+            padding: 80px 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: #f8f9ff;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        /* DSGVO Notice */
+        .dsgvo-notice {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 2rem;
+            text-align: center;
+        }
+
+        .dsgvo-notice h3 {
+            margin-bottom: 1rem;
+            color: #ecf0f1;
+        }
+
+        .dsgvo-notice p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 2rem 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
-            .ki-methods-clean {
-                padding: 60px 1rem;
+            .hero h1 {
+                font-size: 2.5rem;
             }
             
-            .ki-intro {
-                padding: 2rem 1rem;
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .groups-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
             }
             
             .research-content {
@@ -2710,14 +780,361 @@
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            
-            .comparison-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
         }
     </style>
-<!-- Pricing Teaser -->
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">KI-Online.Coach</div>
+            <ul class="nav-links">
+                <li><a href="#coaches">Für Coaches</a></li>
+                <li><a href="#klienten">Für Klienten</a></li>
+                <li><a href="#preise">Preise</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+            <a href="index.html" class="cta-button">Jetzt starten</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>KI + Klient + Coach</h1>
+        <p class="subtitle">im perfekten Zusammenspiel</p>
+        <p class="description">
+            Revolutioniere dein Coaching mit KI-gestützter Begleitung. Unser System verbindet künstliche Intelligenz mit menschlicher Expertise für maximalen Coaching-Erfolg. Spezialisiert auf Ruhestandscoaching mit einem 8-Phasen-System.
+        </p>
+        <div class="hero-buttons">
+            <a href="dashboard.html" class="btn-primary">
+                <i class="fas fa-rocket"></i> Kostenlos testen
+            </a>
+            <a href="chat.html" class="btn-secondary">
+                <i class="fas fa-play"></i> Demo ansehen
+            </a>
+        </div>
+    </section>
+
+    <!-- Target Groups Section -->
+    <section class="target-groups">
+        <div class="container">
+            <h2 class="section-title">Maßgeschneidert für deine Bedürfnisse</h2>
+            
+            <div class="groups-grid">
+                <!-- Für Coaches -->
+                <div class="group-card" id="coaches">
+                    <div class="group-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Für Coaches</h3>
+                    <p>Erweitere deine Coaching-Praxis mit KI-Power und erreiche mehr Klienten effizienter</p>
+                    
+                    <ul class="group-features">
+                        <li>KI-gestützte Session-Vorbereitung</li>
+                        <li>Automatische Fortschritts-Dokumentation</li>
+                        <li>8-Phasen Ruhestandscoaching-System</li>
+                        <li>Klienten-Dashboard mit Analytics</li>
+                        <li>Flexible Termin- und Aufgabenverwaltung</li>
+                        <li>Upload eigener Coaching-Materialien</li>
+                        <li>DSGVO-konforme Datenverwaltung</li>
+                    </ul>
+                    
+                    <a href="index.html" class="cta-button">
+                        Als Coach starten
+                    </a>
+                </div>
+
+                <!-- Für Klienten -->
+                <div class="group-card" id="klienten">
+                    <div class="group-icon">
+                        <i class="fas fa-user-heart"></i>
+                    </div>
+                    <h3>Für Klienten</h3>
+                    <p>Erhalte 24/7 Coaching-Unterstützung zwischen den Sessions mit deinem Coach</p>
+                    
+                    <ul class="group-features">
+                        <li>Rund-um-die-Uhr KI-Coaching verfügbar</li>
+                        <li>Personalisierte Ruhestandsplanung</li>
+                        <li>Emotionale Unterstützung bei Übergängen</li>
+                        <li>Fortschritts-Tracking und Zielerreichung</li>
+                        <li>Sichere, vertrauliche Kommunikation</li>
+                        <li>Integration mit deinem persönlichen Coach</li>
+                        <li>Lernstil-angepasste Begleitung</li>
+                    </ul>
+                    
+                    <a href="index.html" class="cta-button">
+                        Coaching beginnen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">So funktioniert's</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 2rem;">
+                Vier einfache Schritte zu deinem erfolgreichen Coaching
+            </p>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Registrierung</h4>
+                    <p>Wähle deinen Account-Typ (Coach oder Klient) und erstelle dein persönliches Profil in unter 2 Minuten.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>KI-Setup</h4>
+                    <p>Unsere KI lernt deine Präferenzen, Ziele und deinen Lernstil für eine personalisierte Coaching-Erfahrung.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Coaching starten</h4>
+                    <p>Beginne sofort mit dem 8-Phasen-System oder verbinde dich mit deinem Coach für hybride Sessions.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4>Erfolg messen</h4>
+                    <p>Verfolge deinen Fortschritt im Dashboard und erhalte datenbasierte Insights für optimale Ergebnisse.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KI-Methoden erklärt Section -->
+    <section class="ki-methods-clean">
+        <div class="container">
+            <h2 class="section-title">Wie unsere KI wirklich funktioniert</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 4rem;">
+                Keine Black Box, sondern transparente Technologie im Dienst des Menschen
+            </p>
+
+            <!-- Main Introduction -->
+            <div class="ki-intro">
+                <div class="intro-content">
+                    <h3>KI als intelligenter Coaching-Partner</h3>
+                    <p>Unsere KI ist kein Ersatz für menschliche Coaches, sondern ein intelligenter Assistent, der rund um die Uhr verfügbar ist. Sie wurde speziell für Ruhestandscoaching trainiert und versteht die emotionalen und praktischen Herausforderungen dieser Lebensphase.</p>
+                </div>
+                
+                <div class="ki-principles">
+                    <div class="principle-card">
+                        <i class="fas fa-heart"></i>
+                        <h4>Empathisch</h4>
+                        <p>Erkennt emotionale Nuancen und reagiert angemessen</p>
+                    </div>
+                    <div class="principle-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Sicher</h4>
+                        <p>Kennt therapeutische Grenzen und verweist bei Bedarf</p>
+                    </div>
+                    <div class="principle-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Lernend</h4>
+                        <p>Passt sich an deinen individuellen Lernstil an</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 Steps Process -->
+            <div class="process-section">
+                <h3>So arbeitet unsere KI in 5 Schritten</h3>
+                
+                <div class="steps-flow">
+                    <div class="step-item">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                        <h4>Verstehen & Analysieren</h4>
+                        <p>Die KI analysiert deine Eingabe sprachlich und emotional. Sie erkennt Sorgen, Hoffnungen und den aktuellen emotionalen Zustand.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-icon">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                        </div>
+                        <h4>Kontext einbeziehen</h4>
+                        <p>Sie berücksichtigt deine bisherige Coaching-Geschichte, deine aktuelle Phase im 8-Phasen-System und deine persönlichen Präferenzen.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <h4>Coaching-Wissen abrufen</h4>
+                        <p>Aus einem umfangreichen Fundus an Coaching-Methoden, Frankls Sinnmodellen und Ruhestandsforschung wählt sie die passende Antwort.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-header">
+                            <div class="step-number">4</div>
+                            <div class="step-icon">
+                                <i class="fas fa-shield-check"></i>
+                            </div>
+                        </div>
+                        <h4>Sicherheit prüfen</h4>
+                        <p>Bevor sie antwortet, prüft sie automatisch: Ist das noch Coaching oder wird therapeutische Hilfe benötigt? Sicherheit geht vor.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-header">
+                            <div class="step-number">5</div>
+                            <div class="step-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                        </div>
+                        <h4>Personalisiert antworten</h4>
+                        <p>Die finale Antwort wird an deinen Lernstil angepasst: visuell mit Metaphern, auditiv mit Geschichten oder kinästhetisch mit Übungen.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scientific Foundation -->
+            <div class="research-section">
+                <div class="research-content">
+                    <div class="research-text">
+                        <h3>Wissenschaftlich fundiert</h3>
+                        <p>Unsere KI-Methoden basieren auf aktueller Forschung und bewährten Coaching-Prinzipien. Die Wirksamkeit von KI-gestütztem Coaching wurde in mehreren Studien belegt.</p>
+                        
+                        <div class="research-link-container">
+                            <a href="https://link.springer.com/epdf/10.1007/s11613-025-00947-w?sharing_token=ixTOPjI_ojwLxD5XC1rcKve4RwlQNchNByi7wbcMAY5--FTzC0Qu_zcKNq5XNWbsTz6y8D55Ma9Q1kNQ9EsM5lcOWTEDiZ3EDGl7twrlz0qh8CIk-bHzFhMj7nobRVkg7CRiejt9hSJGqMd4aYviEhJRyLWAa-KbC2lFZQ2k0MQ%3D" 
+                               target="_blank" 
+                               class="research-button">
+                                <i class="fas fa-external-link-alt"></i>
+                                Springer-Fachartikel lesen
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="research-stats">
+                        <div class="stat-box">
+                            <div class="stat-number">87%</div>
+                            <div class="stat-label">Effizienz-Steigerung</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Verfügbarkeit</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">92%</div>
+                            <div class="stat-label">Zufriedenheit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What makes it special - 2 Column Comparison -->
+            <div class="comparison-section">
+                <h3>Was macht unsere KI besonders?</h3>
+                
+                <div class="comparison-grid">
+                    <div class="our-ki-column">
+                        <div class="column-header">
+                            <i class="fas fa-star"></i>
+                            <h4>Unsere KI</h4>
+                        </div>
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Speziell für Ruhestandscoaching trainiert</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Versteht deutsche Kulturkonzepte</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Kennt therapeutische Grenzen</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>8-Phasen-System integriert</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Arbeitet mit menschlichen Coaches</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>DSGVO-konform entwickelt</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="standard-ki-column">
+                        <div class="column-header">
+                            <i class="fas fa-robot"></i>
+                            <h4>Standard-KI</h4>
+                        </div>
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-times"></i>
+                                <span>Allgemeine Antworten</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-times"></i>
+                                <span>Keine kulturelle Sensibilität</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-times"></i>
+                                <span>Keine Sicherheitsgrenzen</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-times"></i>
+                                <span>Keine Coaching-Struktur</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-times"></i>
+                                <span>Ersetzt menschliche Coaches</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-times"></i>
+                                <span>Datenschutz unklar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simple FAQ -->
+            <div class="simple-faq">
+                <h3>Häufige Fragen</h3>
+                <div class="faq-grid">
+                    <div class="faq-card">
+                        <h4>🤖 Ersetzt die KI menschliche Coaches?</h4>
+                        <p>Nein, unsere KI ist ein Ergänzungspartner. Bei wichtigen Entscheidungen wird immer dein menschlicher Coach einbezogen.</p>
+                    </div>
+                    <div class="faq-card">
+                        <h4>🔒 Sind meine Daten sicher?</h4>
+                        <p>Ja, alle Gespräche sind verschlüsselt und DSGVO-konform. Du kannst deine Daten jederzeit exportieren oder löschen.</p>
+                    </div>
+                    <div class="faq-card">
+                        <h4>⚡ Wie schnell antwortet die KI?</h4>
+                        <p>Normalerweise binnen Sekunden. Bei komplexen Anfragen kann es bis zu einer Minute dauern.</p>
+                    </div>
+                    <div class="faq-card">
+                        <h4>🎯 Versteht die KI meine Situation?</h4>
+                        <p>Die KI lernt deine Präferenzen und passt sich an deinen Lernstil an. Je mehr ihr interagiert, desto passender werden die Antworten.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Teaser -->
     <section class="pricing-teaser" id="preise">
         <div class="container">
             <h2 class="section-title" style="color: white;">Transparent, fair, flexibel</h2>
@@ -2761,7 +1178,7 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <h4>Email Support</h4>
-                    <p>support@ki-online.coach</p>
+                    <p>info@allenspach-coaching.ch</p>
                     <p><small>Antwort innerhalb von 24h</small></p>
                 </div>
                 
@@ -2770,7 +1187,7 @@
                         <i class="fas fa-phone"></i>
                     </div>
                     <h4>Telefon-Beratung</h4>
-                    <p>+41 (0) 123 456 789</p>
+                    <p>+41 79 336 54 27</p>
                     <p><small>Mo-Fr 9:00-17:00 Uhr (CH Zeit)</small></p>
                 </div>
                 
