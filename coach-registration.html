@@ -3,25 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coach Registrierung - KI-Online.Coach</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Supabase Integration -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // Warte bis Supabase geladen ist
-        window.addEventListener('DOMContentLoaded', function() {
-            // WICHTIG: Ersetze DEIN_ECHTER_ANON_KEY_HIER mit deinem echten anon key
-            const SUPABASE_URL = 'https://xbdtbgqimwpjpfxuzsxt.supabase.co'
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZHRiZ3FpbXdwanBmeHV6c3h0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1MTY3MjQsImV4cCI6MjA2NzA5MjcyNH0.7EwZ5Eo61b4op-OZ2IN3YMv1NQ3CP_F8QegGLNDDbRg'
-            
-            // Supabase Client global verfügbar machen
-            window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-            
-            console.log('✅ Supabase initialized:', window.supabase)
-        })
-    </script>
-    
+    <title>Coach Registrierung - Coaching Cockpit</title>
     <style>
         * {
             margin: 0;
@@ -34,294 +16,200 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-        
+
         .registration-container {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            padding: 3rem;
-            border-radius: 25px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
             width: 100%;
-            animation: slideIn 0.6s ease-out;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
         }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
+
         .header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 40px;
         }
-        
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
+
+        .header h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
-        
-        .subtitle {
+
+        .header p {
             color: #666;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
+            font-size: 16px;
         }
-        
-        .benefit-badge {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.4rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-block;
+
+        .form-group {
+            margin-bottom: 25px;
         }
-        
-        .form-section {
-            margin-bottom: 2rem;
-        }
-        
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 1rem;
+
+        .form-row {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            gap: 20px;
         }
-        
-        .input-group {
-            position: relative;
-            margin-bottom: 1.5rem;
+
+        .form-row .form-group {
+            flex: 1;
         }
-        
-        .input-label {
+
+        label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: #555;
-            font-weight: 500;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid #e1e5e9;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .input-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #667eea;
-            font-size: 1.1rem;
-        }
-        
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        
-        .form-select {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid #e1e5e9;
-            border-radius: 12px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.9);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .form-select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .checkbox {
-            margin-top: 0.2rem;
-        }
-        
-        .checkbox-label {
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.5;
-            cursor: pointer;
-        }
-        
-        .checkbox-label a {
-            color: #667eea;
-            text-decoration: none;
-        }
-        
-        .checkbox-label a:hover {
-            text-decoration: underline;
-        }
-        
-        .benefits-list {
-            background: rgba(102, 126, 234, 0.05);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-        }
-        
-        .benefits-title {
-            font-weight: 600;
+            margin-bottom: 8px;
             color: #333;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 14px;
         }
-        
-        .benefit-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.95rem;
-            color: #555;
+
+        .required {
+            color: #e74c3c;
         }
-        
-        .benefit-icon {
-            color: #667eea;
-            font-size: 0.9rem;
-        }
-        
-        .register-button {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 1.3rem 2rem;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
+
+        input, textarea, select {
             width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            font-family: inherit;
         }
-        
-        .register-button:hover:not(:disabled) {
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
-        
-        .register-button:disabled {
+
+        .submit-button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
-        
-        .login-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #eee;
-            color: #666;
-        }
-        
-        .login-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .login-link a:hover {
-            text-decoration: underline;
-        }
-        
-        .error-message {
-            background: rgba(231, 76, 60, 0.1);
-            color: #e74c3c;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-            display: none;
-            border-left: 4px solid #e74c3c;
-        }
-        
-        .success-message {
-            background: rgba(46, 204, 113, 0.1);
-            color: #27ae60;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-            display: none;
-            border-left: 4px solid #27ae60;
-        }
-        
-        .loading {
-            display: none;
-            text-align: center;
-            margin-top: 1rem;
-        }
-        
+
         .loading-spinner {
+            display: none;
             width: 20px;
             height: 20px;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #667eea;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 0.5rem;
+            margin-right: 10px;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .trial-info {
+            background: #e7f3ff;
+            border: 1px solid #b8daff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .trial-info h3 {
+            color: #004085;
+            margin-bottom: 10px;
+        }
+
+        .trial-info p {
+            color: #004085;
+            margin: 0;
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+
+        .strength-weak { color: #e74c3c; }
+        .strength-medium { color: #f39c12; }
+        .strength-strong { color: #27ae60; }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .registration-container {
-                padding: 2rem;
-                margin: 1rem;
+                padding: 30px 20px;
+                margin: 10px;
             }
             
-            .two-column {
-                grid-template-columns: 1fr;
+            .form-row {
+                flex-direction: column;
+                gap: 0;
             }
             
-            .logo {
-                font-size: 1.6rem;
+            .header h1 {
+                font-size: 24px;
             }
         }
     </style>
@@ -329,419 +217,261 @@
 <body>
     <div class="registration-container">
         <div class="header">
-            <div class="logo">
-                <i class="fas fa-robot"></i> KI-Online.Coach
-            </div>
-            <div class="subtitle">Erweitere deine Coaching-Praxis mit KI-Power</div>
-            <div class="benefit-badge">
-                <i class="fas fa-star"></i> 14 Tage kostenlos testen
-            </div>
+            <h1>🎯 Coach Registrierung</h1>
+            <p>Starten Sie Ihre Reise als zertifizierter Ruhestandscoach</p>
+        </div>
+
+        <div class="trial-info">
+            <h3>✨ 14 Tage kostenlos testen</h3>
+            <p>Keine Kreditkarte erforderlich • Jederzeit kündbar • Voller Funktionsumfang</p>
         </div>
 
         <form id="registrationForm">
-            <!-- Persönliche Informationen -->
-            <div class="form-section">
-                <div class="section-title">
-                    <i class="fas fa-user"></i>
-                    Persönliche Informationen
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">Vorname <span class="required">*</span></label>
+                    <input type="text" id="firstName" name="firstName" required>
                 </div>
-                
-                <div class="two-column">
-                    <div class="input-group">
-                        <label class="input-label">Vorname *</label>
-                        <i class="fas fa-user input-icon"></i>
-                        <input type="text" 
-                               class="form-input" 
-                               id="firstName" 
-                               name="firstName"
-                               required 
-                               placeholder="Dein Vorname">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label class="input-label">Nachname *</label>
-                        <i class="fas fa-user input-icon"></i>
-                        <input type="text" 
-                               class="form-input" 
-                               id="lastName" 
-                               name="lastName"
-                               required 
-                               placeholder="Dein Nachname">
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label class="input-label">E-Mail-Adresse *</label>
-                    <i class="fas fa-envelope input-icon"></i>
-                    <input type="email" 
-                           class="form-input" 
-                           id="email" 
-                           name="email"
-                           required 
-                           placeholder="deine@email.com">
-                </div>
-                
-                <div class="input-group">
-                    <label class="input-label">Passwort erstellen *</label>
-                    <i class="fas fa-lock input-icon"></i>
-                    <input type="password" 
-                           class="form-input" 
-                           id="password" 
-                           name="password"
-                           required 
-                           placeholder="Mindestens 8 Zeichen"
-                           minlength="8">
+                <div class="form-group">
+                    <label for="lastName">Nachname <span class="required">*</span></label>
+                    <input type="text" id="lastName" name="lastName" required>
                 </div>
             </div>
 
-            <!-- Coaching-Informationen -->
-            <div class="form-section">
-                <div class="section-title">
-                    <i class="fas fa-briefcase"></i>
-                    Deine Coaching-Praxis
-                </div>
-                
-                <div class="input-group">
-                    <label class="input-label">Coaching-Schwerpunkt *</label>
-                    <i class="fas fa-heart input-icon"></i>
-                    <select class="form-select" id="coachingFocus" name="coachingFocus" required>
-                        <option value="">Wähle deinen Schwerpunkt...</option>
-                        <option value="ruhestand">Ruhestandscoaching</option>
-                        <option value="karriere">Karrierecoaching</option>
-                        <option value="life">Life Coaching</option>
-                        <option value="business">Business Coaching</option>
-                        <option value="gesundheit">Gesundheitscoaching</option>
-                        <option value="beziehung">Beziehungscoaching</option>
-                        <option value="sonstiges">Sonstiges</option>
+            <div class="form-group">
+                <label for="email">E-Mail-Adresse <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Passwort <span class="required">*</span></label>
+                <input type="password" id="password" name="password" required minlength="8">
+                <div class="password-strength" id="passwordStrength"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Telefonnummer</label>
+                <input type="tel" id="phone" name="phone" placeholder="+41 XX XXX XX XX">
+            </div>
+
+            <div class="form-group">
+                <label for="companyName">Unternehmen / Praxis</label>
+                <input type="text" id="companyName" name="companyName" placeholder="Optional">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="coachingExperience">Coaching-Erfahrung (Jahre)</label>
+                    <select id="coachingExperience" name="coachingExperience">
+                        <option value="0">Neu im Coaching</option>
+                        <option value="1">1-2 Jahre</option>
+                        <option value="3">3-5 Jahre</option>
+                        <option value="6">6-10 Jahre</option>
+                        <option value="11">Über 10 Jahre</option>
                     </select>
                 </div>
-                
-                <div class="two-column">
-                    <div class="input-group">
-                        <label class="input-label">Jahre Erfahrung</label>
-                        <i class="fas fa-calendar input-icon"></i>
-                        <select class="form-select" id="experience" name="experience">
-                            <option value="">Wähle...</option>
-                            <option value="0-1">Neu im Coaching</option>
-                            <option value="1-3">1-3 Jahre</option>
-                            <option value="3-5">3-5 Jahre</option>
-                            <option value="5-10">5-10 Jahre</option>
-                            <option value="10+">10+ Jahre</option>
-                        </select>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label class="input-label">Anzahl Klienten/Monat</label>
-                        <i class="fas fa-users input-icon"></i>
-                        <select class="form-select" id="clientVolume" name="clientVolume">
-                            <option value="">Wähle...</option>
-                            <option value="1-5">1-5 Klienten</option>
-                            <option value="6-15">6-15 Klienten</option>
-                            <option value="16-30">16-30 Klienten</option>
-                            <option value="30+">30+ Klienten</option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label for="coachingStyle">Coaching-Stil</label>
+                    <select id="coachingStyle" name="coachingStyle">
+                        <option value="balanced">Ausgewogen</option>
+                        <option value="direct">Direkt & Zielorientiert</option>
+                        <option value="supportive">Unterstützend & Einfühlsam</option>
+                        <option value="analytical">Analytisch & Strukturiert</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- Vorteile für Coaches -->
-            <div class="benefits-list">
-                <div class="benefits-title">
-                    <i class="fas fa-crown"></i>
-                    Das bekommst du als Coach:
-                </div>
-                
-                <div class="benefit-item">
-                    <i class="fas fa-check benefit-icon"></i>
-                    KI-gestützte Session-Vorbereitung und Follow-ups
-                </div>
-                
-                <div class="benefit-item">
-                    <i class="fas fa-check benefit-icon"></i>
-                    Automatische Fortschritts-Dokumentation
-                </div>
-                
-                <div class="benefit-item">
-                    <i class="fas fa-check benefit-icon"></i>
-                    8-Phasen Ruhestandscoaching-System
-                </div>
-                
-                <div class="benefit-item">
-                    <i class="fas fa-check benefit-icon"></i>
-                    Klienten-Dashboard mit Analytics
-                </div>
-                
-                <div class="benefit-item">
-                    <i class="fas fa-check benefit-icon"></i>
-                    Unbegrenzte Klienten-Accounts
-                </div>
-                
-                <div class="benefit-item">
-                    <i class="fas fa-check benefit-icon"></i>
-                    DSGVO-konforme Datenverwaltung
-                </div>
+            <div class="form-group">
+                <label for="bio">Kurze Beschreibung Ihrer Coaching-Philosophie</label>
+                <textarea id="bio" name="bio" placeholder="Was zeichnet Sie als Coach aus? Was ist Ihr Ansatz beim Ruhestandscoaching?" maxlength="500"></textarea>
             </div>
 
-            <!-- Zustimmung -->
-            <div class="checkbox-group">
-                <input type="checkbox" 
-                       id="terms" 
-                       name="terms" 
-                       class="checkbox"
-                       required>
-                <label for="terms" class="checkbox-label">
-                    Ich stimme den <a href="#" target="_blank">Nutzungsbedingungen</a> und der 
-                    <a href="#" target="_blank">Datenschutzerklärung</a> zu. *
-                </label>
-            </div>
-            
-            <div class="checkbox-group">
-                <input type="checkbox" 
-                       id="newsletter" 
-                       name="newsletter" 
-                       class="checkbox">
-                <label for="newsletter" class="checkbox-label">
-                    Ich möchte Updates über neue Features und Coaching-Tipps erhalten (optional)
-                </label>
-            </div>
-
-            <button type="submit" class="register-button" id="registerBtn">
-                <i class="fas fa-rocket"></i>
-                Jetzt 14 Tage kostenlos starten
+            <button type="submit" class="submit-button" id="submitButton">
+                <span class="loading-spinner" id="loadingSpinner"></span>
+                <span id="buttonText">Jetzt registrieren</span>
             </button>
-            
-            <div class="loading" id="loadingMsg">
-                <div class="loading-spinner"></div>
-                Account wird erstellt...
-            </div>
-            
-            <div class="error-message" id="errorMsg"></div>
-            <div class="success-message" id="successMsg"></div>
         </form>
 
-        <div class="login-link">
-            Bereits registriert? 
-            <a href="login.html">Hier einloggen</a>
+        <div class="success-message" id="successMessage">
+            <h3>🎉 Registrierung erfolgreich!</h3>
+            <p>Willkommen im Coaching Cockpit! Sie werden in Kürze zu Ihrem Dashboard weitergeleitet.</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            <h3>❌ Registrierung fehlgeschlagen</h3>
+            <p id="errorText">Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.</p>
+        </div>
+
+        <div class="back-link">
+            <a href="main.html">← Zurück zur Startseite</a>
         </div>
     </div>
 
     <script>
-        class CoachRegistration {
-            constructor() {
-                this.form = document.getElementById('registrationForm');
-                this.loadingMsg = document.getElementById('loadingMsg');
-                this.errorMsg = document.getElementById('errorMsg');
-                this.successMsg = document.getElementById('successMsg');
-                this.registerBtn = document.getElementById('registerBtn');
-                
-                this.attachEventListeners();
-            }
-            
-            attachEventListeners() {
-                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-                
-                // Real-time Validation
-                const inputs = this.form.querySelectorAll('input, select');
-                inputs.forEach(input => {
-                    input.addEventListener('blur', () => this.validateField(input));
-                });
-            }
-            
-            async handleSubmit(e) {
-                e.preventDefault();
-                
-                // Reset messages
-                this.hideMessages();
-                
-                // Validate form
-                if (!this.validateForm()) {
-                    return;
-                }
-                
-                // Show loading
-                this.showLoading();
-                
-                // Collect form data
-                const formData = new FormData(this.form);
-                const userData = Object.fromEntries(formData.entries());
-                
-                try {
-                    const result = await this.registerWithSupabase(userData);
-                    
-                    // Success
-                    this.showSuccess(`Willkommen ${userData.firstName}! Bestätigungs-E-Mail wurde an ${userData.email} versendet.`);
-                    
-                    // Store basic info für Dashboard (ohne sensible Daten)
-                    localStorage.setItem('coachSession', JSON.stringify({
-                        id: result.coach.id,
-                        firstName: result.coach.first_name,
-                        lastName: result.coach.last_name,
-                        email: result.coach.email,
-                        coachingFocus: result.coach.coaching_focus,
-                        trialEndsAt: result.coach.trial_ends_at,
-                        subscriptionStatus: result.coach.subscription_status
-                    }));
-                    
-                    // Redirect nach delay
-                    setTimeout(() => {
-                        window.location.href = 'coach-dashboard.html';
-                    }, 3000);
-                    
-                } catch (error) {
-                    this.showError(error.message);
-                } finally {
-                    this.hideLoading();
-                }
-            }
-            
-            async registerWithSupabase(userData) {
-                try {
-                    // 1. Auth Registrierung mit Supabase
-                    const { data: authData, error: authError } = await window.supabase.auth.signUp({
-                        email: userData.email,
-                        password: userData.password,
-                        options: {
-                            data: {
-                                first_name: userData.firstName,
-                                last_name: userData.lastName
-                            }
-                        }
-                    });
+        // Form validation and submission
+        const form = document.getElementById('registrationForm');
+        const submitButton = document.getElementById('submitButton');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const buttonText = document.getElementById('buttonText');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const passwordInput = document.getElementById('password');
+        const passwordStrength = document.getElementById('passwordStrength');
 
-                    if (authError) {
-                        throw new Error(authError.message);
-                    }
+        // Password strength indicator
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            const strength = checkPasswordStrength(password);
+            
+            passwordStrength.textContent = strength.text;
+            passwordStrength.className = `password-strength ${strength.class}`;
+        });
 
-                    // 2. Coach-Profil in der coaches Tabelle erstellen
-                    const { data: coachData, error: coachError } = await window.supabase
-                        .from('coaches')
-                        .insert([
-                            {
-                                id: authData.user.id,  // Gleiche ID wie in auth.users
-                                first_name: userData.firstName,
-                                last_name: userData.lastName,
-                                email: userData.email,
-                                coaching_focus: userData.coachingFocus,
-                                experience: userData.experience || null,
-                                client_volume: userData.clientVolume || null,
-                                terms_accepted: userData.terms === 'on',
-                                newsletter_subscribed: userData.newsletter === 'on',
-                                password_hash: 'managed_by_supabase_auth' // Placeholder, da Supabase Auth das verwaltet
-                            }
-                        ])
-                        .select();
-
-                    if (coachError) {
-                        console.error('Coach insert error:', coachError);
-                        throw new Error(coachError.message);
-                    }
-
-                    console.log('✅ Coach erfolgreich registriert:', coachData);
-                    
-                    return {
-                        success: true,
-                        user: authData.user,
-                        coach: coachData[0]
-                    };
-
-                } catch (error) {
-                    console.error('❌ Registrierung fehlgeschlagen:', error);
-                    
-                    // Benutzerfreundliche Fehlermeldungen
-                    let userMessage = 'Registrierung fehlgeschlagen. Bitte versuche es erneut.';
-                    
-                    if (error.message.includes('already registered')) {
-                        userMessage = 'Diese E-Mail-Adresse ist bereits registriert.';
-                    } else if (error.message.includes('Password')) {
-                        userMessage = 'Das Passwort entspricht nicht den Anforderungen.';
-                    } else if (error.message.includes('Invalid email')) {
-                        userMessage = 'Bitte gib eine gültige E-Mail-Adresse ein.';
-                    }
-                    
-                    throw new Error(userMessage);
-                }
+        function checkPasswordStrength(password) {
+            if (password.length < 6) {
+                return { text: 'Zu kurz (mindestens 8 Zeichen)', class: 'strength-weak' };
+            }
+            if (password.length < 8) {
+                return { text: 'Schwach (mindestens 8 Zeichen)', class: 'strength-weak' };
             }
             
-            validateForm() {
-                const requiredFields = this.form.querySelectorAll('[required]');
-                let isValid = true;
-                
-                requiredFields.forEach(field => {
-                    if (!this.validateField(field)) {
-                        isValid = false;
-                    }
-                });
-                
-                return isValid;
-            }
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^A-Za-z0-9]/.test(password)) score++;
             
-            validateField(field) {
-                const value = field.value.trim();
-                let isValid = true;
-                let message = '';
-                
-                // Required field check
-                if (field.hasAttribute('required') && !value) {
-                    isValid = false;
-                    message = 'Dieses Feld ist erforderlich';
-                }
-                
-                // Email validation
-                if (field.type === 'email' && value) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(value)) {
-                        isValid = false;
-                        message = 'Bitte gib eine gültige E-Mail-Adresse ein';
-                    }
-                }
-                
-                // Password validation
-                if (field.type === 'password' && value) {
-                    if (value.length < 8) {
-                        isValid = false;
-                        message = 'Passwort muss mindestens 8 Zeichen haben';
-                    }
-                }
-                
-                // Visual feedback
-                if (isValid) {
-                    field.style.borderColor = '#e1e5e9';
-                } else {
-                    field.style.borderColor = '#e74c3c';
-                }
-                
-                return isValid;
-            }
-            
-            showLoading() {
-                this.loadingMsg.style.display = 'block';
-                this.registerBtn.disabled = true;
-            }
-            
-            hideLoading() {
-                this.loadingMsg.style.display = 'none';
-                this.registerBtn.disabled = false;
-            }
-            
-            showError(message) {
-                this.errorMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
-                this.errorMsg.style.display = 'block';
-            }
-            
-            showSuccess(message) {
-                this.successMsg.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-                this.successMsg.style.display = 'block';
-            }
-            
-            hideMessages() {
-                this.errorMsg.style.display = 'none';
-                this.successMsg.style.display = 'none';
+            if (score < 3) {
+                return { text: 'Schwach - Verwenden Sie Groß-/Kleinbuchstaben und Zahlen', class: 'strength-weak' };
+            } else if (score < 4) {
+                return { text: 'Mittel - Fügen Sie Sonderzeichen hinzu für mehr Sicherheit', class: 'strength-medium' };
+            } else {
+                return { text: 'Stark - Gutes Passwort!', class: 'strength-strong' };
             }
         }
-        
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            new CoachRegistration();
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Hide previous messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Show loading state
+            submitButton.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            buttonText.textContent = 'Registrierung läuft...';
+            
+            // Collect form data
+            const formData = new FormData(form);
+            const registrationData = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+                phone: formData.get('phone') || '',
+                companyName: formData.get('companyName') || '',
+                coachingExperience: parseInt(formData.get('coachingExperience')) || 0,
+                coachingStyle: formData.get('coachingStyle'),
+                bio: formData.get('bio') || ''
+            };
+
+            try {
+                console.log('🚀 Sending registration request...');
+                
+                // Call our new Supabase API
+                const response = await fetch('/api/coach-registration', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(registrationData)
+                });
+
+                const result = await response.json();
+                console.log('📝 Registration response:', result);
+
+                if (response.ok && result.success) {
+                    // Success!
+                    console.log('✅ Registration successful!');
+                    
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    form.style.display = 'none';
+                    
+                    // Store user data temporarily for redirect
+                    sessionStorage.setItem('coachData', JSON.stringify({
+                        firstName: result.data.firstName,
+                        lastName: result.data.lastName,
+                        email: result.data.email,
+                        coachId: result.data.coachId,
+                        trialEndsAt: result.data.trialEndsAt
+                    }));
+                    
+                    // Redirect to dashboard after 3 seconds
+                    setTimeout(() => {
+                        if (result.redirectUrl) {
+                            window.location.href = result.redirectUrl;
+                        } else {
+                            // Fallback - for now redirect to main page
+                            window.location.href = 'main.html?registered=true';
+                        }
+                    }, 3000);
+                    
+                } else {
+                    // Error from API
+                    console.error('❌ Registration failed:', result);
+                    throw new Error(result.error || 'Registrierung fehlgeschlagen');
+                }
+                
+            } catch (error) {
+                console.error('❌ Registration error:', error);
+                
+                // Show error message
+                errorText.textContent = error.message || 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
+                errorMessage.style.display = 'block';
+                
+                // Reset button state
+                submitButton.disabled = false;
+                loadingSpinner.style.display = 'none';
+                buttonText.textContent = 'Jetzt registrieren';
+            }
+        });
+
+        // Input validation helpers
+        document.getElementById('email').addEventListener('blur', function() {
+            const email = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !emailRegex.test(email)) {
+                this.style.borderColor = '#e74c3c';
+            } else {
+                this.style.borderColor = '#e9ecef';
+            }
+        });
+
+        document.getElementById('firstName').addEventListener('input', function() {
+            if (this.value.length < 2) {
+                this.style.borderColor = '#e74c3c';
+            } else {
+                this.style.borderColor = '#e9ecef';
+            }
+        });
+
+        document.getElementById('lastName').addEventListener('input', function() {
+            if (this.value.length < 2) {
+                this.style.borderColor = '#e74c3c';
+            } else {
+                this.style.borderColor = '#e9ecef';
+            }
+        });
+
+        // Auto-focus first field
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('firstName').focus();
         });
     </script>
 </body>
