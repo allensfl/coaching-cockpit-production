@@ -1,7 +1,12 @@
-// Syntax-sichere System Instructions - Step 1
-// Nur die wichtigsten Verbesserungen, keine komplexen Template-Strings
+import OpenAI from 'openai';
 
-const SYSTEM_INSTRUCTIONS = `Du bist ein achtsamer, tiefgründiger KI-Coach mit Spezialisierung auf den Übergang in den Ruhestand.
+// Initialize OpenAI
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+// Fallback System Instructions (falls kein dynamischer Prompt gesendet wird)
+const FALLBACK_SYSTEM_INSTRUCTIONS = `Du bist ein achtsamer, tiefgründiger KI-Coach mit Spezialisierung auf den Übergang in den Ruhestand.
 
 LERNSTIL-ABFRAGE:
 Zu Beginn jeder Session frage nach dem bevorzugten Lernstil:
@@ -60,22 +65,41 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message, conversationHistory = [] } = req.body;
+    // Enhanced parameter extraction
+    const { 
+      message, 
+      conversationHistory = [], 
+      systemPrompt = null,
+      chatState = null 
+    } = req.body;
 
     if (!message) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
+    console.log('🎯 Processing enhanced request:', {
+      messageLength: message.length,
+      historyLength: conversationHistory.length,
+      hasSystemPrompt: !!systemPrompt,
+      hasChatState: !!chatState,
+      currentPhase: chatState?.currentPhase || 'unknown',
+      learningStyle: chatState?.learningStyle || 'unknown',
+      emotionalState: chatState?.userProfile?.emotionalState || 'unknown'
+    });
+
+    // Use dynamic system prompt if available, otherwise fallback
+    const systemInstructions = systemPrompt || FALLBACK_SYSTEM_INSTRUCTIONS;
+
     // Prepare messages for OpenAI
     const messages = [
       {
         role: 'system',
-        content: SYSTEM_INSTRUCTIONS
+        content: systemInstructions
       }
     ];
 
-    // Add conversation history (max 10 messages)
-    const recentHistory = conversationHistory.slice(-10);
+    // Add conversation history (limit to last 12 messages for better context)
+    const recentHistory = conversationHistory.slice(-12);
     messages.push(...recentHistory);
 
     // Add current user message
@@ -84,37 +108,58 @@ export default async function handler(req, res) {
       content: message
     });
 
-    console.log('🚀 Sending request to OpenAI...');
+    console.log('🚀 Sending enhanced request to OpenAI...');
+    console.log('📊 System prompt preview:', systemInstructions.substring(0, 200) + '...');
 
-    // Call OpenAI API
+    // Enhanced OpenAI API call
     const completion = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: messages,
-      temperature: 0.7,  // Leicht erhöht für mehr Kreativität
-      max_tokens: 600,   // Erhöht für längere Antworten
-      presence_penalty: 0,
-      frequency_penalty: 0.3, // Reduziert Wiederholungen
+      temperature: 0.75,  // Optimiert für Kreativität und Konsistenz
+      max_tokens: 500,    // Angepasst für qualitative Antworten
+      presence_penalty: 0.1,   // Fördert neue Themen
+      frequency_penalty: 0.4,  // Reduziert Wiederholungen stark
+      top_p: 0.9         // Fokussierte aber kreative Antworten
     });
 
     const response = completion.choices[0].message.content;
 
-    console.log('✅ OpenAI response received');
+    console.log('✅ Enhanced OpenAI response received');
+    console.log('📝 Response preview:', response.substring(0, 100) + '...');
 
+    // Enhanced response with metadata
     return res.status(200).json({
       response: response,
       conversationHistory: [
         ...recentHistory,
         { role: 'user', content: message },
         { role: 'assistant', content: response }
-      ]
+      ],
+      metadata: {
+        systemPromptUsed: !!systemPrompt,
+        chatStateProcessed: !!chatState,
+        currentPhase: chatState?.currentPhase || null,
+        tokensUsed: completion.usage?.total_tokens || 0,
+        timestamp: new Date().toISOString()
+      }
     });
 
   } catch (error) {
-    console.error('❌ OpenAI API error:', error);
+    console.error('❌ Enhanced API error:', error);
+    
+    // More helpful error messages
+    let errorMessage = 'Es gab ein technisches Problem. Können Sie Ihre Nachricht bitte wiederholen?';
+    
+    if (error.message?.includes('API key')) {
+      errorMessage = 'API-Konfigurationsproblem. Bitte kontaktieren Sie den Support.';
+    } else if (error.message?.includes('rate limit')) {
+      errorMessage = 'Zu viele Anfragen. Bitte warten Sie einen Moment.';
+    }
     
     return res.status(500).json({ 
-      error: 'Internal server error',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      timestamp: new Date().toISOString()
     });
   }
 }
