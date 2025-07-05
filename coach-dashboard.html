@@ -15,31 +15,44 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            padding: 20px;
         }
 
         .dashboard-container {
-            display: flex;
-            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .sidebar {
-            width: 280px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
-            padding: 30px 20px;
-            overflow-y: auto;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            width: 250px;
+            height: calc(100vh - 40px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px 0;
+            z-index: 100;
         }
 
         .logo {
             text-align: center;
             margin-bottom: 40px;
+            padding: 0 20px;
         }
 
         .logo h1 {
-            color: #667eea;
-            font-size: 24px;
-            font-weight: bold;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
         }
 
         .nav-menu {
@@ -47,69 +60,96 @@
         }
 
         .nav-item {
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 15px 20px;
+            padding: 15px 30px;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            color: #4a5568;
-            border-radius: 12px;
             transition: all 0.3s ease;
-            font-weight: 500;
+            border-left: 3px solid transparent;
         }
 
         .nav-link:hover, .nav-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
-            transform: translateX(5px);
+            border-left-color: white;
         }
 
-        .trial-badge {
-            background: linear-gradient(135deg, #ff6b6b, #ffa500);
-            color: white;
+        .nav-link span {
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .trial-notice {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 15px;
             padding: 15px;
-            border-radius: 12px;
             text-align: center;
-            margin-top: 30px;
+            color: white;
+        }
+
+        .trial-notice h4 {
+            margin-bottom: 5px;
             font-size: 14px;
-            font-weight: 600;
+        }
+
+        .trial-notice p {
+            font-size: 12px;
+            opacity: 0.9;
         }
 
         .main-content {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
+            margin-left: 290px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-height: calc(100vh - 40px);
         }
 
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .welcome-section {
+            padding: 30px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
         }
 
-        .welcome-text h1 {
-            color: #2d3748;
+        .welcome {
+            color: white;
+        }
+
+        .welcome h2 {
             font-size: 32px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .btn {
+        .welcome p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
             padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
+            border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -117,147 +157,185 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
         }
 
         .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-secondary {
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
-            border: 2px solid rgba(102, 126, 234, 0.2);
+        .content {
+            padding: 40px;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
 
         .stat-number {
-            font-size: 36px;
-            font-weight: bold;
-            color: #2d3748;
-            margin-bottom: 8px;
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
         }
 
         .stat-label {
-            color: #718096;
-            font-size: 14px;
-            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
         }
 
-        .section {
-            background: rgba(255, 255, 255, 0.95);
+        .content-section {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
         }
 
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
         .section-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2d3748;
-            margin-bottom: 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
-            color: #718096;
+            padding: 60px 20px;
         }
 
-        .empty-state .icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-            opacity: 0.5;
+        .empty-icon {
+            font-size: 80px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .empty-title {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .empty-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            margin-bottom: 30px;
         }
 
         /* Modal Styles */
-        .modal {
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
+            animation: modalFadeIn 0.3s ease-out;
         }
 
-        .modal-content {
+        .modal-container {
             background: white;
             border-radius: 20px;
-            padding: 40px;
-            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 500px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease-out;
         }
 
         .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 20px 20px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
         }
 
         .modal-header h2 {
-            color: #2d3748;
-            font-size: 24px;
             margin: 0;
+            font-size: 24px;
+            font-weight: 600;
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 24px;
+            color: white;
+            font-size: 30px;
             cursor: pointer;
-            color: #718096;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-content {
+            padding: 30px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
-        .form-label {
+        .form-group label {
             display: block;
-            color: #2d3748;
-            font-weight: 600;
             margin-bottom: 8px;
-            font-size: 14px;
+            font-weight: 600;
+            color: #333;
         }
 
         .form-input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
             border-radius: 10px;
             font-size: 16px;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
         }
 
         .form-input:focus {
@@ -266,431 +344,411 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
         .form-actions {
             display: flex;
             gap: 15px;
             justify-content: flex-end;
             margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e5e9;
         }
 
-        .client-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            background: rgba(102, 126, 234, 0.05);
-            border-radius: 12px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .client-avatar {
-            width: 50px;
-            height: 50px;
+        .btn-modal-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: white;
-            font-weight: bold;
-            margin-right: 20px;
-            font-size: 18px;
-        }
-
-        .status-badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
             font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .status-active {
-            background: #c6f6d5;
-            color: #22543d;
+        .btn-modal-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
 
-        .status-pending {
-            background: #feebc8;
-            color: #744210;
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: 2px solid #e1e5e9;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
+        .btn-secondary:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+        .status-message {
+            margin: 20px 30px;
+            padding: 15px;
             border-radius: 10px;
-            color: white;
             font-weight: 600;
-            z-index: 10000;
-            animation: slideInRight 0.3s ease;
         }
 
-        .notification-success {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
 
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlideIn {
+            from { 
                 opacity: 0;
+                transform: translateY(-50px) scale(0.9);
             }
-            to {
-                transform: translateX(0);
+            to { 
                 opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-container {
+                width: 95%;
+                margin: 20px;
+            }
+            
+            .modal-header, .modal-content {
+                padding: 20px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn-modal-primary, .btn-secondary {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <aside class="sidebar">
+        <!-- Sidebar -->
+        <div class="sidebar">
             <div class="logo">
                 <h1>🎯 Coaching Cockpit</h1>
                 <p>Professional Dashboard</p>
             </div>
-
+            
             <nav>
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="#dashboard" class="nav-link active">
-                            📊 Dashboard
+                        <a href="#" class="nav-link active">
+                            <span>📊</span> Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#clients" class="nav-link">
-                            👥 Klienten
+                        <a href="#" class="nav-link">
+                            <span>👥</span> Klienten
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#sessions" class="nav-link">
-                            💬 Sessions
+                        <a href="#" class="nav-link">
+                            <span>💬</span> Sessions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span>📈</span> Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span>⚙️</span> Einstellungen
                         </a>
                     </li>
                 </ul>
             </nav>
-
-            <div class="trial-badge">
-                <div>⏰ Trial läuft noch</div>
-                <div style="font-size: 18px; margin-top: 5px;">14 Tage</div>
+            
+            <div class="trial-notice">
+                <h4>🔥 Trial läuft noch</h4>
+                <h4>14 Tage</h4>
+                <p>Keine Kreditkarte erforderlich • Jederzeit kündbar • Voller Funktionsumfang</p>
             </div>
-        </aside>
+        </div>
 
-        <main class="main-content">
-            <header class="header">
-                <div class="welcome-section">
-                    <div class="welcome-text">
-                        <h1>Willkommen zurück! 👋</h1>
-                        <p>Hier ist Ihre Coach-Übersicht für heute</p>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary" onclick="inviteClient()">
-                            👤 Klient einladen
-                        </button>
-                    </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="welcome">
+                    <h2>Willkommen zurück! 👋</h2>
+                    <p>Hier ist Ihre Coach-Übersicht für heute</p>
                 </div>
-            </header>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Aktive Klienten</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Sessions diese Woche</div>
+                <div class="header-actions">
+                    <button class="btn-primary" onclick="openClientModal()">
+                        🎯 Klient einladen
+                    </button>
                 </div>
             </div>
 
-            <div class="section">
-                <h2 class="section-title">👥 Meine Klienten</h2>
-                <div id="clientList">
+            <!-- Content -->
+            <div class="content">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Aktive Klienten</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Sessions diese Woche</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Abgeschlossene Programme</div>
+                    </div>
+                </div>
+
+                <!-- Client List Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            👥 Meine Klienten
+                        </h3>
+                    </div>
+                    
                     <div class="empty-state">
-                        <div class="icon">👤</div>
-                        <h3>Noch keine Klienten</h3>
-                        <p>Laden Sie Ihren ersten Klienten ein!</p>
-                        <button class="btn btn-primary" onclick="inviteClient()">
-                            Klient einladen
+                        <div class="empty-icon">👤</div>
+                        <h4 class="empty-title">Noch keine Klienten</h4>
+                        <p class="empty-description">Laden Sie Ihren ersten Klienten ein</p>
+                        <button class="btn-primary" onclick="openClientModal()">
+                            🎯 Klient einladen
                         </button>
                     </div>
                 </div>
+
+                <!-- Recent Activity Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            📋 Letzte Aktivitäten
+                        </h3>
+                    </div>
+                    
+                    <div class="empty-state">
+                        <div class="empty-icon">📊</div>
+                        <h4 class="empty-title">Keine Aktivitäten</h4>
+                        <p class="empty-description">Hier erscheinen Ihre letzten Coaching-Sessions und Fortschritte</p>
+                    </div>
+                </div>
             </div>
-        </main>
+        </div>
     </div>
 
-    <!-- Modal -->
-    <div id="inviteModal" class="modal">
-        <div class="modal-content">
+    <!-- Client Invitation Modal -->
+    <div id="clientInvitationModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
             <div class="modal-header">
-                <h2>👤 Klient einladen</h2>
-                <button class="modal-close" onclick="hideInviteModal()">×</button>
+                <h2>🎯 Neuen Klienten einladen</h2>
+                <button class="modal-close" onclick="closeClientModal()">&times;</button>
             </div>
             
-            <form onsubmit="handleInviteSubmission(event)">
+            <form id="clientInvitationForm" class="modal-content">
                 <div class="form-group">
-                    <label class="form-label">Name des Klienten *</label>
-                    <input type="text" name="clientName" class="form-input" required 
-                           placeholder="z.B. Max Mustermann">
+                    <label for="clientFirstName">Vorname *</label>
+                    <input type="text" id="clientFirstName" name="clientFirstName" required 
+                           placeholder="Max" class="form-input">
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">E-Mail-Adresse *</label>
-                    <input type="email" name="clientEmail" class="form-input" required 
-                           placeholder="max@example.com">
+                    <label for="clientLastName">Nachname *</label>
+                    <input type="text" id="clientLastName" name="clientLastName" required 
+                           placeholder="Mustermann" class="form-input">
                 </div>
-
+                
                 <div class="form-group">
-                    <label class="form-label">Telefonnummer *</label>
-                    <input type="tel" name="clientPhone" class="form-input" required 
-                           placeholder="+41 XX XXX XX XX">
+                    <label for="clientEmail">Email-Adresse *</label>
+                    <input type="email" id="clientEmail" name="clientEmail" required 
+                           placeholder="max.mustermann@email.com" class="form-input">
                 </div>
-
+                
                 <div class="form-group">
-                    <label class="form-label">Coaching-Ziel *</label>
-                    <select name="coachingGoal" class="form-input" required>
+                    <label for="clientPhone">Telefon</label>
+                    <input type="tel" id="clientPhone" name="clientPhone" 
+                           placeholder="+41 79 123 45 67" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientAge">Alter</label>
+                    <input type="number" id="clientAge" name="clientAge" min="45" max="85"
+                           placeholder="62" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientSituation">Aktuelle Situation</label>
+                    <select id="clientSituation" name="clientSituation" class="form-input">
                         <option value="">Bitte wählen...</option>
-                        <option value="ruhestand">Ruhestandsplanung</option>
-                        <option value="career-transition">Beruflicher Übergang</option>
-                        <option value="life-planning">Lebensplanung</option>
-                        <option value="financial">Finanzielle Vorbereitung</option>
-                        <option value="health-wellness">Gesundheit & Wohlbefinden</option>
-                        <option value="relationships">Beziehungen & Familie</option>
-                        <option value="purpose">Sinn & Erfüllung finden</option>
-                        <option value="other">Sonstiges</option>
+                        <option value="vor_ruhestand">Vor dem Ruhestand (1-2 Jahre)</option>
+                        <option value="im_ruhestand">Bereits im Ruhestand</option>
+                        <option value="teilzeit">Teilzeit/Übergang</option>
+                        <option value="fruehpensionierung">Frühpensionierung geplant</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Erstnotizen & Besonderheiten</label>
-                    <textarea name="clientNotes" class="form-input form-textarea" 
-                              placeholder="Besondere Anliegen, Vorerfahrungen, wichtige Hintergrundinformationen..."></textarea>
+                    <label for="coachingGoals">Coaching-Ziele</label>
+                    <textarea id="coachingGoals" name="coachingGoals" rows="3" 
+                              placeholder="Was möchte der Klient durch das Coaching erreichen?" 
+                              class="form-input"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="personalMessage">Persönliche Nachricht (optional)</label>
+                    <textarea id="personalMessage" name="personalMessage" rows="3" 
+                              placeholder="Persönliche Nachricht für die Einladungs-Email..." 
+                              class="form-input"></textarea>
                 </div>
                 
                 <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="hideInviteModal()">
+                    <button type="button" onclick="closeClientModal()" class="btn-secondary">
                         Abbrechen
                     </button>
-                    <button type="submit" class="btn btn-primary">
-                        📤 Klient hinzufügen
+                    <button type="submit" class="btn-modal-primary">
+                        🎯 Klient einladen
                     </button>
                 </div>
             </form>
+            
+            <!-- Success/Error Messages -->
+            <div id="invitationStatus" class="status-message" style="display: none;"></div>
         </div>
     </div>
 
     <script>
-        // Dashboard data
-        let clients = [];
-
-        // Load clients from localStorage on page load
-        function loadClients() {
-            const stored = localStorage.getItem('coachClients');
-            if (stored) {
-                try {
-                    clients = JSON.parse(stored);
-                    updateClientList();
-                    updateStats();
-                } catch (error) {
-                    console.error('Error loading clients:', error);
-                }
-            }
+        // Modal Funktionen
+        function openClientModal() {
+            document.getElementById('clientInvitationModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Scroll sperren
         }
 
-        // Initialize dashboard
-        document.addEventListener('DOMContentLoaded', function() {
-            loadClients();
+        function closeClientModal() {
+            document.getElementById('clientInvitationModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Scroll entsperren
+            document.getElementById('clientInvitationForm').reset();
+            hideStatus();
+        }
+
+        // Status-Nachrichten
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('invitationStatus');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.style.display = 'block';
+        }
+
+        function hideStatus() {
+            document.getElementById('invitationStatus').style.display = 'none';
+        }
+
+        // Form-Submission
+        document.getElementById('clientInvitationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            // Loading State
+            submitBtn.textContent = '⏳ Einladung wird versendet...';
+            submitBtn.disabled = true;
+            hideStatus();
+            
+            try {
+                const formData = new FormData(e.target);
+                const clientData = Object.fromEntries(formData);
+                
+                console.log('🎯 Sending client invitation:', clientData);
+                
+                const response = await fetch('/api/invite-client', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(clientData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus('🎉 Klient erfolgreich eingeladen! Einladungs-Link wurde generiert.', 'success');
+                    console.log('✅ Client invitation successful:', result);
+                    
+                    // Form zurücksetzen nach 2 Sekunden
+                    setTimeout(() => {
+                        closeClientModal();
+                        // Dashboard aktualisieren
+                        location.reload();
+                    }, 2000);
+                    
+                } else {
+                    throw new Error(result.error || 'Einladung fehlgeschlagen');
+                }
+                
+            } catch (error) {
+                console.error('❌ Client invitation error:', error);
+                showStatus(`❌ Fehler: ${error.message}`, 'error');
+            } finally {
+                // Button zurücksetzen
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
         });
 
-        // Show invite modal
-        function inviteClient() {
-            console.log('inviteClient called');
-            const modal = document.getElementById('inviteModal');
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Hide invite modal
-        function hideInviteModal() {
-            const modal = document.getElementById('inviteModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Handle form submission
-        function handleInviteSubmission(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(event.target);
-            const clientData = {
-                name: formData.get('clientName'),
-                email: formData.get('clientEmail'),
-                phone: formData.get('clientPhone'),
-                coachingGoal: formData.get('coachingGoal'),
-                notes: formData.get('clientNotes') || '',
-                sessionNotes: [], // Array für Sitzungsnotizen
-                id: Date.now(),
-                status: 'pending',
-                invitedAt: new Date().toISOString(),
-                totalSessions: 0,
-                lastSession: null
-            };
-
-            // Add to clients array
-            clients.push(clientData);
-            
-            // Update UI
-            updateClientList();
-            updateStats();
-            
-            // Show success message
-            showNotification(`${clientData.name} erfolgreich hinzugefügt! 🎉`);
-            
-            // Hide modal
-            hideInviteModal();
-            
-            // Reset form
-            event.target.reset();
-        }
-
-        // Update client list
-        function updateClientList() {
-            const clientList = document.getElementById('clientList');
-            
-            if (clients.length === 0) {
-                clientList.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">👤</div>
-                        <h3>Noch keine Klienten</h3>
-                        <p>Laden Sie Ihren ersten Klienten ein!</p>
-                        <button class="btn btn-primary" onclick="inviteClient()">
-                            Klient einladen
-                        </button>
-                    </div>
-                `;
-                return;
+        // Modal bei Escape schließen
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeClientModal();
             }
+        });
 
-            clientList.innerHTML = clients.map(client => {
-                const initials = client.name.split(' ').map(n => n[0]).join('').toUpperCase();
-                const statusText = client.status === 'active' ? 'Aktiv' : 'Einladung ausstehend';
-                const statusClass = client.status === 'active' ? 'status-active' : 'status-pending';
-                
-                // Coaching-Ziel übersetzen
-                const goalTranslations = {
-                    'ruhestand': 'Ruhestandsplanung',
-                    'career-transition': 'Beruflicher Übergang', 
-                    'life-planning': 'Lebensplanung',
-                    'financial': 'Finanzielle Vorbereitung',
-                    'health-wellness': 'Gesundheit & Wohlbefinden',
-                    'relationships': 'Beziehungen & Familie',
-                    'purpose': 'Sinn & Erfüllung',
-                    'other': 'Sonstiges'
-                };
-                const goalText = goalTranslations[client.coachingGoal] || client.coachingGoal;
-                
-                return `
-                    <div class="client-item">
-                        <div style="display: flex; align-items: center; flex: 1;">
-                            <div class="client-avatar">${initials}</div>
-                            <div style="flex: 1;">
-                                <h4 style="margin-bottom: 5px; color: #2d3748;">${client.name}</h4>
-                                <p style="color: #718096; font-size: 13px; margin-bottom: 3px;">📧 ${client.email}</p>
-                                <p style="color: #718096; font-size: 13px; margin-bottom: 3px;">📱 ${client.phone}</p>
-                                <p style="color: #667eea; font-size: 13px; font-weight: 600; margin-bottom: 3px;">🎯 ${goalText}</p>
-                                <p style="color: #718096; font-size: 12px;">📅 ${client.totalSessions} Sessions</p>
-                                ${client.notes ? `<p style="color: #718096; font-size: 12px; margin-top: 5px;">📝 ${client.notes}</p>` : ''}
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span class="status-badge ${statusClass}">${statusText}</span>
-                            <button class="btn btn-primary" style="padding: 8px 12px; font-size: 12px;" onclick="startSession('${client.id}')">
-                                💬 Session
-                            </button>
-                            <button class="btn btn-secondary" style="padding: 8px 12px; font-size: 12px;" onclick="addSessionNote('${client.id}')">
-                                📝 Notiz
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Update stats
-        function updateStats() {
-            const totalClients = clients.length;
-            const totalSessions = clients.reduce((sum, client) => sum + client.totalSessions, 0);
-            
-            document.querySelector('.stats-grid .stat-card:first-child .stat-number').textContent = totalClients;
-            document.querySelector('.stats-grid .stat-card:last-child .stat-number').textContent = totalSessions;
-        }
-
-        // Start session with client
-        function startSession(clientId) {
-            const client = clients.find(c => c.id == clientId);
-            if (client) {
-                // Update session count
-                client.totalSessions++;
-                client.lastSession = new Date().toISOString();
-                client.status = 'active'; // Mark as active after first session
-                
-                // Save to localStorage
-                localStorage.setItem('coachClients', JSON.stringify(clients));
-                
-                updateClientList();
-                updateStats();
-                
-                showNotification(`Session mit ${client.name} gestartet! 💬`);
-                
-                // TODO: Redirect to chat with client context
-                // window.location.href = '../chat.html?client=' + clientId;
-            }
-        }
-
-        // Add session note
-        function addSessionNote(clientId) {
-            const client = clients.find(c => c.id == clientId);
-            if (client) {
-                const note = prompt(`Sitzungsnotiz für ${client.name}:`, '');
-                if (note && note.trim()) {
-                    client.sessionNotes.push({
-                        note: note.trim(),
-                        date: new Date().toISOString(),
-                        id: Date.now()
-                    });
-                    
-                    // Save to localStorage
-                    localStorage.setItem('coachClients', JSON.stringify(clients));
-                    
-                    showNotification(`Notiz für ${client.name} hinzugefügt! 📝`);
-                }
-            }
-        }
-
-        // Show notification
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification notification-success';
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.remove();
-                }
-            }, 5000);
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('inviteModal').addEventListener('click', function(e) {
+        // Modal bei Klick außerhalb schließen
+        document.getElementById('clientInvitationModal').addEventListener('click', function(e) {
             if (e.target === this) {
-                hideInviteModal();
+                closeClientModal();
             }
         });
     </script>
