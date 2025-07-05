@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coaching Cockpit - Test Version</title>
+    <title>KI-Ruhestandscoaching</title>
     <style>
         * {
             margin: 0;
@@ -16,296 +16,308 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .chat-container {
-            width: 90%;
-            max-width: 800px;
-            height: 90vh;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .chat-header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .chat-header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
+            gap: 0.5rem;
         }
 
         .phase-indicator {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
             border-radius: 20px;
-            font-size: 14px;
-            margin-top: 10px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .chat-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(15px);
+            min-height: 400px;
+            max-height: 600px;
             overflow-y: auto;
-            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .message {
-            margin-bottom: 20px;
-            animation: fadeInUp 0.3s ease;
+            padding: 1.5rem;
+            border-radius: 15px;
+            max-width: 85%;
+            line-height: 1.6;
+            font-size: 1rem;
+            animation: fadeIn 0.5s ease-out;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .message.user {
-            text-align: right;
+        .ai-message {
+            background: linear-gradient(135deg, #f8f9ff, #e3e7ff);
+            border: 1px solid #d1d9ff;
+            align-self: flex-start;
+            border-left: 4px solid #667eea;
         }
 
-        .message.assistant {
-            text-align: left;
-        }
-
-        .message-content {
-            display: inline-block;
-            max-width: 80%;
-            padding: 15px 20px;
-            border-radius: 20px;
-            line-height: 1.5;
-        }
-
-        .message.user .message-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .user-message {
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            border-bottom-right-radius: 5px;
+            align-self: flex-end;
+            border-left: 4px solid rgba(255,255,255,0.3);
         }
 
-        .message.assistant .message-content {
-            background: white;
-            color: #333;
-            border: 1px solid #e0e0e0;
-            border-bottom-left-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .chat-input-container {
-            padding: 20px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .chat-input-wrapper {
+        .input-container {
             display: flex;
-            gap: 10px;
-            align-items: center;
+            gap: 1rem;
+            align-items: flex-end;
         }
 
         .chat-input {
             flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #e0e0e0;
+            padding: 1rem 1.5rem;
+            border: none;
             border-radius: 25px;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            resize: none;
+            min-height: 50px;
+            max-height: 120px;
+            font-family: inherit;
         }
 
         .chat-input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            background: white;
         }
 
         .send-button {
-            padding: 15px 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
             border-radius: 25px;
             cursor: pointer;
+            font-size: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-width: 100px;
         }
 
         .send-button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
         }
 
         .send-button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
 
         .typing-indicator {
             display: none;
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .typing-indicator .message-content {
-            background: white;
-            border: 1px solid #e0e0e0;
-            padding: 15px 20px;
-            border-radius: 20px;
-            border-bottom-left-radius: 5px;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            font-style: italic;
+            padding: 1rem;
         }
 
         .typing-dots {
-            display: inline-flex;
-            gap: 3px;
+            display: flex;
+            gap: 0.3rem;
         }
 
-        .typing-dots span {
+        .typing-dot {
             width: 8px;
             height: 8px;
-            background: #999;
+            background: #667eea;
             border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out;
+            animation: typing 1.5s infinite;
         }
 
-        .typing-dots span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes typing {
-            0%, 80%, 100% {
-                opacity: 0.3;
-                transform: scale(0.8);
-            }
-            40% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
         }
 
-        .status-bar {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            font-size: 12px;
-            color: #666;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .api-status {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
-            padding: 10px 15px;
+        .error-message {
+            background: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+            padding: 1rem;
             border-radius: 10px;
-            margin: 10px 20px;
+            border-left: 4px solid #e74c3c;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .learning-style-selector {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .learning-style-selector h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .style-option {
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-align: center;
         }
 
-        .test-mode {
-            background: #d1ecf1;
-            border: 1px solid #bee5eb;
-            color: #0c5460;
-            padding: 10px 15px;
-            border-radius: 10px;
-            margin: 10px 20px;
-            text-align: center;
+        .style-option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .style-option.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .input-container {
+                flex-direction: column;
+            }
+            
+            .send-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>
+            <span>🌟</span>
+            KI-Ruhestandscoaching
+        </h1>
+        <div class="phase-indicator" id="phaseIndicator">
+            Bereite dich auf dein Coaching vor...
+        </div>
+    </div>
+
     <div class="chat-container">
-        <div class="chat-header">
-            <h1>🌟 Ruhestandscoaching</h1>
-            <div class="phase-indicator" id="phaseIndicator">
-                Phase 1: Standortbestimmung
-            </div>
-        </div>
-
-        <div class="test-mode">
-            <strong>TEST-MODUS:</strong> Diese Version verwendet echte Coaching-Antworten zur Demonstration
-        </div>
-
-        <div class="chat-messages" id="chatMessages">
-            <!-- Messages werden hier dynamisch eingefügt -->
-        </div>
-
-        <div class="typing-indicator" id="typingIndicator">
-            <div class="message-content">
-                <div class="typing-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+        <div class="learning-style-selector" id="learningStyleSelector">
+            <h3>Wie lernst du am liebsten?</h3>
+            <div class="style-options">
+                <div class="style-option" data-style="visual">
+                    <strong>👁️ Visuell</strong><br>
+                    Bilder, Diagramme, Mindmaps
+                </div>
+                <div class="style-option" data-style="auditory">
+                    <strong>👂 Auditiv</strong><br>
+                    Gespräche, Erklärungen, Audio
+                </div>
+                <div class="style-option" data-style="kinesthetic">
+                    <strong>✋ Kinästhetisch</strong><br>
+                    Übungen, Bewegung, Ausprobieren
                 </div>
             </div>
         </div>
 
-        <div class="chat-input-container">
-            <div class="chat-input-wrapper">
-                <input 
-                    type="text" 
-                    id="chatInput" 
-                    class="chat-input" 
-                    placeholder="Schreibe deine Nachricht..."
-                    autocomplete="off"
-                >
-                <button id="sendButton" class="send-button">Senden</button>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added here dynamically -->
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <span>KI denkt nach</span>
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
             </div>
         </div>
 
-        <div class="status-bar">
-            <span id="sessionInfo">Test-Session gestartet</span>
-            <span id="messageCount">Nachrichten: 0</span>
+        <div class="error-message" id="errorMessage">
+            <strong>Fehler:</strong> <span id="errorText"></span>
+        </div>
+
+        <div class="input-container">
+            <textarea 
+                id="chatInput" 
+                class="chat-input" 
+                placeholder="Schreibe deine Nachricht..."
+                rows="1"></textarea>
+            <button id="sendButton" class="send-button">Senden</button>
         </div>
     </div>
 
     <script>
-        class CoachingChatDemo {
+        class AICoachingSystem {
             constructor() {
-                this.currentPhase = 1;
-                this.messageCount = 0;
-                this.conversationContext = "";
-                this.learningStyle = "";
+                this.conversationHistory = [];
+                this.learningStyle = null;
+                this.currentPhase = 0;
+                this.isTyping = false;
                 
                 this.initElements();
                 this.attachEventListeners();
                 this.startSession();
-                
-                // Coaching-Antworten basierend auf deinen System Instructions
-                this.coachingResponses = {
-                    welcome: "«Herzlich willkommen! Der Ruhestand eröffnet dir neue Möglichkeiten für Erfüllung und Sinnhaftigkeit. Bevor wir beginnen: Wie lernst du am liebsten? Visuell durch Bilder und Grafiken, auditiv durch Gespräche und Erklärungen, oder kinästhetisch durch praktische Übungen und Bewegung?»",
-                    
-                    visual: "«Wunderbar! Als visueller Lerntyp werden wir mit Bildern, Mindmaps und visuellen Übungen arbeiten. Lade mich ein, deine aktuelle Situation zu verstehen: Wie stellst du dir deinen Ruhestand vor? Male mir ein Bild mit Worten – was siehst du, wenn du an deine ideale Zukunft denkst?»",
-                    
-                    auditory: "«Ausgezeichnet! Als auditiver Lerntyp werden unsere Gespräche besonders wertvoll sein. Erzähle mir: Wenn du mit Freunden über deinen bevorstehenden Ruhestand sprichst – welche Gedanken und Gefühle kommen dabei hoch? Was hörst du in dir, wenn du an diese neue Lebensphase denkst?»",
-                    
-                    kinesthetic: "«Perfekt! Als kinästhetischer Lerntyp werden wir mit praktischen Übungen und körperlichen Metaphern arbeiten. Spüre einmal in dich hinein: Wenn du an den Ruhestand denkst – wo fühlst du das in deinem Körper? Ist da Aufregung, Nervosität, Vorfreude? Was bewegt sich in dir?»",
-                    
-                    phase1_general: "«Ich höre deine Gedanken zum Ruhestand. Das ist ein wichtiger Schritt, diese Überlegungen zu teilen. Lass uns tiefer gehen: Was ist das zentrale Gefühl, das dich beim Gedanken an den Ruhestand am meisten beschäftigt? Ist es Vorfreude, Unsicherheit, Erleichterung oder etwas ganz anderes?»",
-                    
-                    phase2_emotion: "«Dieses Gefühl, das du beschreibst, ist sehr wichtig. Es ist dein 'Schlüsselaffekt' für diese Lebensphase. Erzähle mir mehr darüber: Wann spürst du dieses Gefühl am stärksten? Was löst es aus, und wie zeigt es sich in deinem Alltag?»",
-                    
-                    phase3_vision: "«Jetzt, wo wir dein zentrales Gefühl erkundet haben, lass uns eine Vision entwickeln. Stell dir vor, es ist drei Jahre nach deinem Ruhestand und du blickst auf eine erfüllte Zeit zurück. Was hast du erlebt? Womit hast du deine Tage gefüllt? Was gibt dir Energie und Sinn?»",
-                    
-                    default: "«Das ist eine wertvolle Einsicht. Erzähle mir mehr darüber – was denkst du, wie sich das auf deinen Ruhestand auswirken könnte?»"
-                };
             }
 
             initElements() {
@@ -313,9 +325,9 @@
                 this.chatInput = document.getElementById('chatInput');
                 this.sendButton = document.getElementById('sendButton');
                 this.typingIndicator = document.getElementById('typingIndicator');
+                this.errorMessage = document.getElementById('errorMessage');
                 this.phaseIndicator = document.getElementById('phaseIndicator');
-                this.sessionInfo = document.getElementById('sessionInfo');
-                this.messageCountEl = document.getElementById('messageCount');
+                this.learningStyleSelector = document.getElementById('learningStyleSelector');
             }
 
             attachEventListeners() {
@@ -326,157 +338,196 @@
                         this.sendMessage();
                     }
                 });
+
+                // Auto-resize textarea
+                this.chatInput.addEventListener('input', () => {
+                    this.chatInput.style.height = 'auto';
+                    this.chatInput.style.height = Math.min(this.chatInput.scrollHeight, 120) + 'px';
+                });
+
+                // Learning style selection
+                document.querySelectorAll('.style-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        this.selectLearningStyle(e.target.closest('.style-option').dataset.style);
+                    });
+                });
             }
 
-            async startSession() {
-                // Erste Begrüßung mit Lernstil-Abfrage
-                await this.getCoachResponse("", true);
+            selectLearningStyle(style) {
+                this.learningStyle = style;
+                
+                // Update UI
+                document.querySelectorAll('.style-option').forEach(opt => opt.classList.remove('selected'));
+                document.querySelector(`[data-style="${style}"]`).classList.add('selected');
+                
+                // Hide selector after selection
+                setTimeout(() => {
+                    this.learningStyleSelector.style.display = 'none';
+                    this.sendLearningStyleToAI(style);
+                }, 500);
             }
 
-            addMessage(content, isUser = false) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${isUser ? 'user' : 'assistant'}`;
+            async sendLearningStyleToAI(style) {
+                const styleMessages = {
+                    visual: 'visuell',
+                    auditory: 'auditiv', 
+                    kinesthetic: 'kinästhetisch'
+                };
                 
-                const contentDiv = document.createElement('div');
-                contentDiv.className = 'message-content';
-                contentDiv.textContent = content;
-                
-                messageDiv.appendChild(contentDiv);
-                this.chatMessages.appendChild(messageDiv);
-                
-                this.scrollToBottom();
-                
-                if (!isUser) {
-                    this.messageCount++;
-                    this.updateStatus();
-                }
+                await this.sendMessageToAI(styleMessages[style]);
             }
 
-            showTyping() {
-                this.typingIndicator.style.display = 'block';
-                this.scrollToBottom();
-            }
-
-            hideTyping() {
-                this.typingIndicator.style.display = 'none';
-            }
-
-            scrollToBottom() {
-                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-            }
-
-            updateStatus() {
-                this.messageCountEl.textContent = `Nachrichten: ${this.messageCount}`;
+            startSession() {
+                this.addAIMessage('«Herzlich willkommen! Der Ruhestand eröffnet dir neue Möglichkeiten, dich selbst neu zu entdecken und deine Stärken einzubringen. Unser Coaching ist lösungsorientiert, vertraulich und auf deine Ziele ausgerichtet. Bist du bereit für den ersten Schritt?»');
                 
-                const phases = [
-                    "Phase 1: Standortbestimmung",
-                    "Phase 2: Emotionale Vertiefung", 
-                    "Phase 3: Zielvision",
-                    "Phase 4: Systemanalyse und Teufelskreislauf",
-                    "Phase 5: Komplementärkräfte und Ausbalancierung",
-                    "Phase 6: Erfolgsimagination",
-                    "Phase 7: Konkrete Schritte",
-                    "Phase 8: Integration und Abschluss"
-                ];
-                
-                if (this.currentPhase <= phases.length) {
-                    this.phaseIndicator.textContent = phases[this.currentPhase - 1];
-                }
+                // Show learning style selector
+                setTimeout(() => {
+                    this.learningStyleSelector.style.display = 'block';
+                }, 1000);
             }
 
             async sendMessage() {
                 const message = this.chatInput.value.trim();
-                if (!message) return;
+                if (!message || this.isTyping) return;
 
-                // User Message anzeigen
-                this.addMessage(message, true);
+                this.addUserMessage(message);
                 this.chatInput.value = '';
-                this.sendButton.disabled = true;
-
-                // Context für bessere Antworten sammeln
-                this.conversationContext += " " + message;
-
-                // Coach Response laden
-                await this.getCoachResponse(message);
+                this.chatInput.style.height = 'auto';
                 
-                this.sendButton.disabled = false;
-                this.chatInput.focus();
+                await this.sendMessageToAI(message);
             }
 
-            async getCoachResponse(userMessage, isInitial = false) {
-                this.showTyping();
+            async sendMessageToAI(message) {
+                this.showTyping(true);
+                this.hideError();
 
-                // Simuliere API-Delay für Realismus
-                await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+                try {
+                    const response = await fetch('/api/openai-simple', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            conversationHistory: this.conversationHistory,
+                            learningStyle: this.learningStyle
+                        }),
+                    });
 
-                this.hideTyping();
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
 
-                let response = "";
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
 
-                if (isInitial) {
-                    // Erste Begrüßung mit Lernstil-Abfrage
-                    response = this.coachingResponses.welcome;
-                } else {
-                    // Intelligente Antwort basierend auf Kontext
-                    response = this.getContextualResponse(userMessage);
+                    // Update conversation history
+                    this.conversationHistory = data.conversationHistory || [];
+                    
+                    // Add AI response
+                    this.addAIMessage(data.response);
+                    
+                    // Update phase indicator
+                    this.updatePhaseIndicator(data.response);
+
+                } catch (error) {
+                    console.error('API Error:', error);
+                    this.showError(`Verbindungsfehler: ${error.message}`);
+                    
+                    // Fallback response
+                    this.addAIMessage('Entschuldigung, ich hatte einen kurzen Aussetzer. Könntest du deine Nachricht bitte wiederholen?');
+                    
+                } finally {
+                    this.showTyping(false);
                 }
-
-                this.addMessage(response);
             }
 
-            getContextualResponse(userMessage) {
-                const msg = userMessage.toLowerCase();
+            addUserMessage(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message user-message';
+                messageDiv.textContent = message;
+                this.chatMessages.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+
+            addAIMessage(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message ai-message';
+                messageDiv.textContent = message;
+                this.chatMessages.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+
+            updatePhaseIndicator(response) {
+                const phases = [
+                    'Standortbestimmung',
+                    'Emotionale Vertiefung', 
+                    'Zielvision',
+                    'Systemanalyse',
+                    'Komplementärkräfte',
+                    'Erfolgsimagination',
+                    'Konkrete Schritte',
+                    'Integration'
+                ];
+
+                // Simple heuristic to detect phase progression
+                const phaseKeywords = [
+                    ['situation', 'aktuell', 'beschäftigt'],
+                    ['gefühl', 'emotion', 'empfindung'],
+                    ['vision', 'zukunft', 'vorstellung'],
+                    ['system', 'dynamik', 'muster'],
+                    ['balance', 'ausgleich', 'komplement'],
+                    ['erfolg', 'szenario', 'imagination'],
+                    ['schritte', 'aktivität', 'handlung'],
+                    ['integration', 'zusammenfassung', 'learnings']
+                ];
+
+                for (let i = 0; i < phaseKeywords.length; i++) {
+                    const keywords = phaseKeywords[i];
+                    if (keywords.some(keyword => response.toLowerCase().includes(keyword))) {
+                        this.currentPhase = Math.max(this.currentPhase, i);
+                        break;
+                    }
+                }
+
+                if (this.currentPhase < phases.length) {
+                    this.phaseIndicator.textContent = `Phase ${this.currentPhase + 1}: ${phases[this.currentPhase]}`;
+                }
+            }
+
+            showTyping(show) {
+                this.isTyping = show;
+                this.typingIndicator.style.display = show ? 'flex' : 'none';
+                this.sendButton.disabled = show;
                 
-                // Lernstil-Erkennung
-                if (msg.includes('visuell') || msg.includes('bild') || msg.includes('grafik') || msg.includes('sehen')) {
-                    this.learningStyle = 'visual';
-                    return this.coachingResponses.visual;
+                if (show) {
+                    this.scrollToBottom();
                 }
-                
-                if (msg.includes('auditiv') || msg.includes('hören') || msg.includes('gespräch') || msg.includes('sprechen')) {
-                    this.learningStyle = 'auditory';
-                    return this.coachingResponses.auditory;
-                }
-                
-                if (msg.includes('kinästhetisch') || msg.includes('praktisch') || msg.includes('bewegen') || msg.includes('fühlen') || msg.includes('spüren')) {
-                    this.learningStyle = 'kinesthetic';
-                    return this.coachingResponses.kinesthetic;
-                }
+            }
 
-                // Gefühls-Erkennung für Phase 2
-                if (msg.includes('angst') || msg.includes('unsicher') || msg.includes('nervös') || msg.includes('sorge')) {
-                    this.currentPhase = 2;
-                    this.updateStatus();
-                    return "«Ich spüre, dass da Unsicherheit mitschwingt. Das ist völlig normal beim Übergang in den Ruhestand. Diese Unsicherheit – wann bemerkst du sie am stärksten? Morgens beim Aufwachen, bei Gesprächen über die Zukunft, oder in ruhigen Momenten?»";
-                }
+            showError(message) {
+                document.getElementById('errorText').textContent = message;
+                this.errorMessage.style.display = 'block';
+                setTimeout(() => this.hideError(), 5000);
+            }
 
-                if (msg.includes('freude') || msg.includes('vorfreude') || msg.includes('aufregung') || msg.includes('begeister')) {
-                    this.currentPhase = 2;
-                    this.updateStatus();
-                    return "«Diese Vorfreude, die du ausstrahlst, ist wunderbar! Sie ist ein kraftvoller Motor für diese neue Lebensphase. Wo spürst du diese Vorfreude am intensivsten? Was nährt sie und lässt sie wachsen?»";
-                }
+            hideError() {
+                this.errorMessage.style.display = 'none';
+            }
 
-                // Vision-Entwicklung für Phase 3
-                if (this.currentPhase >= 2 && (msg.includes('zukunft') || msg.includes('träume') || msg.includes('wünsche') || msg.includes('vorstell'))) {
-                    this.currentPhase = 3;
-                    this.updateStatus();
-                    return this.coachingResponses.phase3_vision;
-                }
-
-                // Fallback-Antworten basierend auf Phase
-                if (this.currentPhase === 1) {
-                    return this.coachingResponses.phase1_general;
-                } else if (this.currentPhase === 2) {
-                    return this.coachingResponses.phase2_emotion;
-                } else {
-                    return this.coachingResponses.default;
-                }
+            scrollToBottom() {
+                setTimeout(() => {
+                    this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+                }, 100);
             }
         }
 
-        // Chat initialisieren wenn Seite geladen
+        // Initialize the coaching system when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            new CoachingChatDemo();
+            new AICoachingSystem();
         });
     </script>
 </body>
