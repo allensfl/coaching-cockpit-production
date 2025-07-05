@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Dashboard - KI-Online.Coach</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .welcome {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="welcome">🎉 Willkommen im Coach Dashboard!</div>
+        <p>Du hast dich erfolgreich registriert und das Dashboard funktioniert!</p>
+        <button class="btn" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>🚀 Quick Actions</h3>
+            <button class="btn" onclick="startSession()">Chat Session starten</button>
+            <button class="btn" onclick="alert('Klient einladen - kommt in Sprint 4!')">Klient einladen</button>
+        </div>
+
+        <div class="card">
+            <h3>📊 Übersicht</h3>
+            <p><strong>Status:</strong> Trial aktiv</p>
+            <p><strong>Klienten:</strong> 0</p>
+            <p><strong>Sessions:</strong> 0</p>
+        </div>
+
+        <div class="card">
+            <h3>🎯 Nächste Schritte</h3>
+            <p>✅ Registrierung abgeschlossen</p>
+            <p>✅ Dashboard funktioniert</p>
+            <p>🔄 Sprint 3 erfolgreich!</p>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const session = localStorage.getItem('coachSession');
+        if (!session) {
+            document.body.innerHTML = '<div style="padding:50px;text-align:center;"><h2>Keine Berechtigung</h2><p>Bitte erst registrieren!</p><a href="coach-registration.html">Zur Registrierung</a></div>';
+        }
+
+        function startSession() {
+            window.location.href = 'chat.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('coachSession');
+            window.location.href = 'main.html';
+        }
+
+        // Show user info
+        if (session) {
+            try {
+                const data = JSON.parse(session);
+                const firstName = data.firstName || 'Coach';
+                document.querySelector('.welcome').innerHTML = `🎉 Willkommen ${firstName}!`;
+            } catch (e) {
+                console.log('Session data parsing error');
+            }
+        }
+    </script>
+</body>
+</html>
