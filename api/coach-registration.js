@@ -1,4 +1,4 @@
-// api/coach-registration.js - FIXED für vorhandene Spalten
+// api/coach-registration.js - FIXED RESPONSE FORMAT
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -76,7 +76,7 @@ export default async function handler(req, res) {
 
     console.log('✅ Email is unique');
 
-    // Coach in Datenbank erstellen - NUR VORHANDENE SPALTEN
+    // Coach in Datenbank erstellen
     console.log('💾 Creating coach in database...');
     const { data: newCoach, error: dbError } = await supabase
       .from('coaches')
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
           experience: experience || null,
           specialization: specialization || null,
           goals: goals || null,
-          // challenges: challenges || null,  // DIESE SPALTE ENTFERNT
+          challenges: challenges || null,
           created_at: new Date().toISOString(),
           status: 'active',
           trial_start: new Date().toISOString(),
@@ -110,12 +110,13 @@ export default async function handler(req, res) {
 
     console.log('✅ Coach created successfully:', newCoach.id);
 
-    // EMAIL SENDING LOGIC
+    // EMAIL SENDING LOGIC - AUSFÜHRLICHE LOGS
     console.log('📧 STARTING EMAIL PROCESS...');
     console.log('📧 Target email:', email);
     console.log('📧 First name:', firstName);
     console.log('📧 Last name:', lastName);
 
+    let emailSent = false;
     try {
       const emailApiUrl = `${req.headers.origin || 'https://coaching-cockpit-live-v2.vercel.app'}/api/send-welcome-email`;
       console.log('📧 Email API URL:', emailApiUrl);
@@ -145,6 +146,7 @@ export default async function handler(req, res) {
         console.error('❌ Email API failed:', emailResult);
       } else {
         console.log('✅ Email API succeeded - EMAIL SENT!');
+        emailSent = true;
       }
 
     } catch (emailError) {
@@ -155,15 +157,20 @@ export default async function handler(req, res) {
     console.log('📧 EMAIL PROCESS COMPLETE');
     
     console.log('🎯 Sending response to client...');
+    
+    // KORREKTES RESPONSE FORMAT - DAS WAR DAS PROBLEM!
     return res.status(201).json({ 
       success: true, 
-      message: 'Registrierung erfolgreich! Prüfen Sie Ihr Email-Postfach.',
-      coach: {
+      message: emailSent ? 
+        'Registrierung erfolgreich! Prüfen Sie Ihr Email-Postfach.' : 
+        'Registrierung erfolgreich! Email wird nachgeliefert.',
+      data: {  // ← DAS FEHLTE!
         id: newCoach.id,
         firstName: newCoach.first_name,
         lastName: newCoach.last_name,
         email: newCoach.email,
-        trialEnd: newCoach.trial_end
+        trialEnd: newCoach.trial_end,
+        emailSent: emailSent
       },
       redirectUrl: '/coach-dashboard.html'
     });
@@ -176,4 +183,4 @@ export default async function handler(req, res) {
       details: error.message 
     });
   }
-}// Cache break Sa  5 Jul 2025 17:44:44 CEST
+}
