@@ -310,12 +310,20 @@
     </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
+<script>
+    // Warte bis Supabase geladen ist
+    window.addEventListener('DOMContentLoaded', function() {
+        // WICHTIG: Ersetze diese Werte mit deinen echten API Keys
         const SUPABASE_URL = 'https://xbdtbgqimwpjpfxuzsxt.supabase.co'
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZHRiZ3FpbXdwanBmeHV6c3h0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1MTY3MjQsImV4cCI6MjA2NzA5MjcyNH0.7EwZ5Eo61b4op-OZ2IN3YMv1NQ3CP_F8QegGLNDDbRg'
         
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-    </script>
+        // Supabase Client global verfügbar machen
+        window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+        
+        console.log('✅ Supabase initialized:', window.supabase)
+    })
+</script>
+
 </head>
 <body>
     <div class="registration-container">
