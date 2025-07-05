@@ -1,212 +1,179 @@
-// /api/coach-registration.js
-// Sprint 2 Finalisierung - Echte Supabase Integration
-
+// api/coach-registration.js - FIXED für vorhandene Spalten
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // Service role for server-side operations
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 export default async function handler(req, res) {
+  console.log('🚀 Registration API called');
+  
   // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    console.log('⚡ OPTIONS request');
+    return res.status(200).end();
   }
 
   if (req.method !== 'POST') {
+    console.log('❌ Method not allowed:', req.method);
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  console.log('🚀 Coach Registration API called');
-
   try {
-    // Validate environment variables
-    if (!supabaseUrl || !supabaseServiceKey) {
-      console.error('❌ Missing Supabase environment variables');
-      return res.status(500).json({ 
-        error: 'Server configuration error',
-        details: 'Supabase environment variables not configured'
-      });
-    }
-
-    // Extract registration data
-    const {
-      email,
-      password,
-      firstName,
-      lastName,
-      companyName = '',
-      coachingExperience = 0,
-      bio = '',
-      phone = '',
-      coachingStyle = 'balanced'
+    console.log('📝 Processing registration data...');
+    const { 
+      firstName, 
+      lastName, 
+      email, 
+      phone, 
+      company, 
+      experience, 
+      specialization, 
+      goals, 
+      challenges 
     } = req.body;
 
-    console.log('📝 Registration attempt for:', email);
+    console.log('📧 Email to register:', email);
 
-    // Validate required fields
-    if (!email || !password || !firstName || !lastName) {
-      return res.status(400).json({
-        error: 'Pflichtfelder fehlen',
-        details: 'Email, Passwort, Vor- und Nachname sind erforderlich'
+    // Validierung
+    if (!firstName || !lastName || !email) {
+      console.log('❌ Validation failed');
+      return res.status(400).json({ 
+        error: 'Vorname, Nachname und Email sind erforderlich' 
       });
     }
 
-    // Validate email format
+    // Email-Format prüfen
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({
-        error: 'Ungültige E-Mail-Adresse',
-        details: 'Bitte geben Sie eine gültige E-Mail-Adresse ein'
+      console.log('❌ Invalid email format');
+      return res.status(400).json({ 
+        error: 'Bitte geben Sie eine gültige Email-Adresse ein' 
       });
     }
 
-    // Validate password strength
-    if (password.length < 8) {
-      return res.status(400).json({
-        error: 'Passwort zu schwach',
-        details: 'Passwort muss mindestens 8 Zeichen lang sein'
-      });
-    }
+    console.log('✅ Validation passed');
 
-    console.log('✅ Input validation passed');
-
-    // Step 1: Create auth user (let Supabase handle email confirmation based on settings)
-    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-      email: email,
-      password: password,
-      // Remove email_confirm parameter - let Supabase settings decide
-      user_metadata: {
-        first_name: firstName,
-        last_name: lastName,
-        role: 'coach'
-      }
-    });
-
-    if (authError) {
-      console.error('❌ Auth user creation failed:', authError);
-      
-      // Handle specific auth errors
-      if (authError.message.includes('already registered')) {
-        return res.status(409).json({
-          error: 'E-Mail bereits registriert',
-          details: 'Ein Account mit dieser E-Mail-Adresse existiert bereits'
-        });
-      }
-      
-      return res.status(500).json({
-        error: 'Registrierung fehlgeschlagen',
-        details: authError.message
-      });
-    }
-
-    console.log('✅ Auth user created:', authData.user.id);
-
-    // Step 2: Create coach profile
-    const coachData = {
-      user_id: authData.user.id,
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      phone: phone,
-      company_name: companyName,
-      coaching_experience: parseInt(coachingExperience) || 0,
-      bio: bio,
-      coaching_style: coachingStyle,
-      subscription_status: 'trial',
-      trial_ends_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days from now
-      onboarding_completed: false,
-      timezone: 'Europe/Zurich',
-      language: 'de'
-    };
-
-    const { data: coachProfile, error: profileError } = await supabase
+    // Prüfen ob Email bereits existiert
+    console.log('🔍 Checking if email exists...');
+    const { data: existingCoach } = await supabase
       .from('coaches')
-      .insert([coachData])
+      .select('email')
+      .eq('email', email)
+      .single();
+
+    if (existingCoach) {
+      console.log('❌ Email already exists');
+      return res.status(409).json({ 
+        error: 'Ein Coach mit dieser Email-Adresse existiert bereits' 
+      });
+    }
+
+    console.log('✅ Email is unique');
+
+    // Coach in Datenbank erstellen - NUR VORHANDENE SPALTEN
+    console.log('💾 Creating coach in database...');
+    const { data: newCoach, error: dbError } = await supabase
+      .from('coaches')
+      .insert([
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          phone: phone || null,
+          company: company || null,
+          experience: experience || null,
+          specialization: specialization || null,
+          goals: goals || null,
+          // challenges: challenges || null,  // DIESE SPALTE ENTFERNT
+          created_at: new Date().toISOString(),
+          status: 'active',
+          trial_start: new Date().toISOString(),
+          trial_end: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString()
+        }
+      ])
       .select()
       .single();
 
-    if (profileError) {
-      console.error('❌ Coach profile creation failed:', profileError);
-      
-      // Cleanup: Delete auth user if profile creation fails
-      await supabase.auth.admin.deleteUser(authData.user.id);
-      
-      return res.status(500).json({
-        error: 'Profilerstellung fehlgeschlagen',
-        details: profileError.message
+    if (dbError) {
+      console.error('❌ Database error:', dbError);
+      return res.status(500).json({ 
+        error: 'Registrierung fehlgeschlagen',
+        details: dbError.message 
       });
     }
 
-    console.log('✅ Coach profile created:', coachProfile.id);
+    console.log('✅ Coach created successfully:', newCoach.id);
 
-    // Step 3: MANUALLY trigger confirmation email (since auto-emails don't work)
-    console.log('📧 Sending manual confirmation email...');
-    
-    const { data: emailData, error: emailError } = await supabase.auth.admin.inviteUserByEmail(email, {
-      redirectTo: `${process.env.VERCEL_URL || 'https://coaching-cockpit-live-v2.vercel.app'}/coach-dashboard.html?confirmed=true`,
-      data: {
-        first_name: firstName,
-        last_name: lastName,
-        role: 'coach',
-        coach_id: coachProfile.id
-      }
-    });
+    // EMAIL SENDING LOGIC
+    console.log('📧 STARTING EMAIL PROCESS...');
+    console.log('📧 Target email:', email);
+    console.log('📧 First name:', firstName);
+    console.log('📧 Last name:', lastName);
 
-    if (emailError) {
-      console.warn('⚠️ Manual email failed, but registration successful:', emailError);
-    } else {
-      console.log('✅ Manual confirmation email sent successfully');
-    }
+    try {
+      const emailApiUrl = `${req.headers.origin || 'https://coaching-cockpit-live-v2.vercel.app'}/api/send-welcome-email`;
+      console.log('📧 Email API URL:', emailApiUrl);
 
-    // Step 4: Generate session for immediate login (fallback)
-    const { data: sessionData, error: sessionError } = await supabase.auth.admin.generateLink({
-      type: 'signup',
-      email: email,
-      options: {
-        redirectTo: `${process.env.VERCEL_URL || 'https://coaching-cockpit-live-v2.vercel.app'}/coach-dashboard.html`
-      }
-    });
-
-    if (sessionError) {
-      console.warn('⚠️ Session generation failed, but registration successful:', sessionError);
-    }
-
-    console.log('🎉 Registration completed successfully');
-
-    // Return success response
-    return res.status(201).json({
-      success: true,
-      message: 'Registrierung erfolgreich!',
-      data: {
-        userId: authData.user.id,
-        coachId: coachProfile.id,
+      const emailPayload = {
         email: email,
         firstName: firstName,
-        lastName: lastName,
-        trialEndsAt: coachProfile.trial_ends_at,
-        onboardingCompleted: coachProfile.onboarding_completed
-      },
-      redirectUrl: '/coach-dashboard.html', // Where to redirect after registration
-      metadata: {
-        timestamp: new Date().toISOString(),
-        trialDays: 14
+        lastName: lastName
+      };
+      console.log('📧 Email payload:', JSON.stringify(emailPayload));
+
+      console.log('📧 Making fetch request...');
+      const emailResponse = await fetch(emailApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailPayload)
+      });
+
+      console.log('📧 Email API response status:', emailResponse.status);
+      
+      const emailResult = await emailResponse.json();
+      console.log('📧 Email API response body:', JSON.stringify(emailResult));
+
+      if (!emailResponse.ok) {
+        console.error('❌ Email API failed:', emailResult);
+      } else {
+        console.log('✅ Email API succeeded - EMAIL SENT!');
       }
+
+    } catch (emailError) {
+      console.error('❌ Email fetch error:', emailError);
+      console.error('❌ Error details:', emailError.message);
+    }
+
+    console.log('📧 EMAIL PROCESS COMPLETE');
+    
+    console.log('🎯 Sending response to client...');
+    return res.status(201).json({ 
+      success: true, 
+      message: 'Registrierung erfolgreich! Prüfen Sie Ihr Email-Postfach.',
+      coach: {
+        id: newCoach.id,
+        firstName: newCoach.first_name,
+        lastName: newCoach.last_name,
+        email: newCoach.email,
+        trialEnd: newCoach.trial_end
+      },
+      redirectUrl: '/coach-dashboard.html'
     });
 
   } catch (error) {
-    console.error('❌ Unexpected registration error:', error);
-    
-    return res.status(500).json({
-      error: 'Unerwarteter Fehler bei der Registrierung',
-      details: process.env.NODE_ENV === 'development' ? error.message : 'Bitte versuchen Sie es später erneut',
-      timestamp: new Date().toISOString()
+    console.error('❌ MAIN ERROR:', error);
+    console.error('❌ Error stack:', error.stack);
+    return res.status(500).json({ 
+      error: 'Ein unerwarteter Fehler ist aufgetreten',
+      details: error.message 
     });
   }
 }

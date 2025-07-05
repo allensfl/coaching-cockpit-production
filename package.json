@@ -1,5 +1,12 @@
 {
+  "name": "coaching-cockpit",
+  "version": "1.0.0",
+  "description": "KI-gestütztes Ruhestandscoaching System",
   "dependencies": {
-    "@supabase/supabase-js": "^2.50.3"
+    "@supabase/supabase-js": "^2.38.0",
+    "resend": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
