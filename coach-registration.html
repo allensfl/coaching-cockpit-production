@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coach Registrierung - KI-Online.Coach</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Supabase Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Warte bis Supabase geladen ist
+        window.addEventListener('DOMContentLoaded', function() {
+            // WICHTIG: Ersetze DEIN_ECHTER_ANON_KEY_HIER mit deinem echten anon key
+            const SUPABASE_URL = 'https://xbdtbgqimwpjpfxuzsxt.supabase.co'
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZHRiZ3FpbXdwanBmeHV6c3h0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1MTY3MjQsImV4cCI6MjA2NzA5MjcyNH0.7EwZ5Eo61b4op-OZ2IN3YMv1NQ3CP_F8QegGLNDDbRg'
+            
+            // Supabase Client global verfügbar machen
+            window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+            
+            console.log('✅ Supabase initialized:', window.supabase)
+        })
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -308,22 +325,6 @@
             }
         }
     </style>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-    // Warte bis Supabase geladen ist
-    window.addEventListener('DOMContentLoaded', function() {
-        // WICHTIG: Ersetze diese Werte mit deinen echten API Keys
-        const SUPABASE_URL = 'https://xbdtbgqimwpjpfxuzsxt.supabase.co'
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZHRiZ3FpbXdwanBmeHV6c3h0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1MTY3MjQsImV4cCI6MjA2NzA5MjcyNH0.7EwZ5Eo61b4op-OZ2IN3YMv1NQ3CP_F8QegGLNDDbRg'
-        
-        // Supabase Client global verfügbar machen
-        window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-        
-        console.log('✅ Supabase initialized:', window.supabase)
-    })
-</script>
-
 </head>
 <body>
     <div class="registration-container">
@@ -564,102 +565,179 @@
                 const formData = new FormData(this.form);
                 const userData = Object.fromEntries(formData.entries());
                 
-              try {
-    const result = await this.registerWithSupabase(userData);
-    
-    // Success
-    this.showSuccess(`Willkommen ${userData.firstName}! Bestätigungs-E-Mail wurde an ${userData.email} versendet.`);
-    
-    // Store basic info für Dashboard (ohne sensible Daten)
-    localStorage.setItem('coachSession', JSON.stringify({
-        id: result.coach.id,
-        firstName: result.coach.first_name,
-        lastName: result.coach.last_name,
-        email: result.coach.email,
-        coachingFocus: result.coach.coaching_focus,
-        trialEndsAt: result.coach.trial_ends_at,
-        subscriptionStatus: result.coach.subscription_status
-    }));
-    
-    // Redirect nach delay
-    setTimeout(() => {
-        window.location.href = 'coach-dashboard.html';
-    }, 3000);
-    
-} catch (error) {
-    this.showError(error.message);
-} finally {
-    this.hideLoading();
-}
-            
-            async registerWithSupabase(userData) {
-    try {
-        // 1. Auth Registrierung mit Supabase
-        const { data: authData, error: authError } = await supabase.auth.signUp({
-            email: userData.email,
-            password: userData.password,
-            options: {
-                data: {
-                    first_name: userData.firstName,
-                    last_name: userData.lastName
+                try {
+                    const result = await this.registerWithSupabase(userData);
+                    
+                    // Success
+                    this.showSuccess(`Willkommen ${userData.firstName}! Bestätigungs-E-Mail wurde an ${userData.email} versendet.`);
+                    
+                    // Store basic info für Dashboard (ohne sensible Daten)
+                    localStorage.setItem('coachSession', JSON.stringify({
+                        id: result.coach.id,
+                        firstName: result.coach.first_name,
+                        lastName: result.coach.last_name,
+                        email: result.coach.email,
+                        coachingFocus: result.coach.coaching_focus,
+                        trialEndsAt: result.coach.trial_ends_at,
+                        subscriptionStatus: result.coach.subscription_status
+                    }));
+                    
+                    // Redirect nach delay
+                    setTimeout(() => {
+                        window.location.href = 'coach-dashboard.html';
+                    }, 3000);
+                    
+                } catch (error) {
+                    this.showError(error.message);
+                } finally {
+                    this.hideLoading();
                 }
             }
-        })
+            
+            async registerWithSupabase(userData) {
+                try {
+                    // 1. Auth Registrierung mit Supabase
+                    const { data: authData, error: authError } = await window.supabase.auth.signUp({
+                        email: userData.email,
+                        password: userData.password,
+                        options: {
+                            data: {
+                                first_name: userData.firstName,
+                                last_name: userData.lastName
+                            }
+                        }
+                    });
 
-        if (authError) {
-            throw new Error(authError.message)
-        }
+                    if (authError) {
+                        throw new Error(authError.message);
+                    }
 
-        // 2. Coach-Profil in der coaches Tabelle erstellen
-        const { data: coachData, error: coachError } = await supabase
-            .from('coaches')
-            .insert([
-                {
-                    id: authData.user.id,  // Gleiche ID wie in auth.users
-                    first_name: userData.firstName,
-                    last_name: userData.lastName,
-                    email: userData.email,
-                    coaching_focus: userData.coachingFocus,
-                    experience: userData.experience || null,
-                    client_volume: userData.clientVolume || null,
-                    terms_accepted: userData.terms === 'on',
-                    newsletter_subscribed: userData.newsletter === 'on',
-                    password_hash: 'managed_by_supabase_auth' // Placeholder, da Supabase Auth das verwaltet
+                    // 2. Coach-Profil in der coaches Tabelle erstellen
+                    const { data: coachData, error: coachError } = await window.supabase
+                        .from('coaches')
+                        .insert([
+                            {
+                                id: authData.user.id,  // Gleiche ID wie in auth.users
+                                first_name: userData.firstName,
+                                last_name: userData.lastName,
+                                email: userData.email,
+                                coaching_focus: userData.coachingFocus,
+                                experience: userData.experience || null,
+                                client_volume: userData.clientVolume || null,
+                                terms_accepted: userData.terms === 'on',
+                                newsletter_subscribed: userData.newsletter === 'on',
+                                password_hash: 'managed_by_supabase_auth' // Placeholder, da Supabase Auth das verwaltet
+                            }
+                        ])
+                        .select();
+
+                    if (coachError) {
+                        console.error('Coach insert error:', coachError);
+                        throw new Error(coachError.message);
+                    }
+
+                    console.log('✅ Coach erfolgreich registriert:', coachData);
+                    
+                    return {
+                        success: true,
+                        user: authData.user,
+                        coach: coachData[0]
+                    };
+
+                } catch (error) {
+                    console.error('❌ Registrierung fehlgeschlagen:', error);
+                    
+                    // Benutzerfreundliche Fehlermeldungen
+                    let userMessage = 'Registrierung fehlgeschlagen. Bitte versuche es erneut.';
+                    
+                    if (error.message.includes('already registered')) {
+                        userMessage = 'Diese E-Mail-Adresse ist bereits registriert.';
+                    } else if (error.message.includes('Password')) {
+                        userMessage = 'Das Passwort entspricht nicht den Anforderungen.';
+                    } else if (error.message.includes('Invalid email')) {
+                        userMessage = 'Bitte gib eine gültige E-Mail-Adresse ein.';
+                    }
+                    
+                    throw new Error(userMessage);
                 }
-            ])
-            .select()
-
-        if (coachError) {
-            // Wenn Coach-Profil fehlschlägt, Auth-User auch löschen
-            await supabase.auth.admin.deleteUser(authData.user.id)
-            throw new Error(coachError.message)
+            }
+            
+            validateForm() {
+                const requiredFields = this.form.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!this.validateField(field)) {
+                        isValid = false;
+                    }
+                });
+                
+                return isValid;
+            }
+            
+            validateField(field) {
+                const value = field.value.trim();
+                let isValid = true;
+                let message = '';
+                
+                // Required field check
+                if (field.hasAttribute('required') && !value) {
+                    isValid = false;
+                    message = 'Dieses Feld ist erforderlich';
+                }
+                
+                // Email validation
+                if (field.type === 'email' && value) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(value)) {
+                        isValid = false;
+                        message = 'Bitte gib eine gültige E-Mail-Adresse ein';
+                    }
+                }
+                
+                // Password validation
+                if (field.type === 'password' && value) {
+                    if (value.length < 8) {
+                        isValid = false;
+                        message = 'Passwort muss mindestens 8 Zeichen haben';
+                    }
+                }
+                
+                // Visual feedback
+                if (isValid) {
+                    field.style.borderColor = '#e1e5e9';
+                } else {
+                    field.style.borderColor = '#e74c3c';
+                }
+                
+                return isValid;
+            }
+            
+            showLoading() {
+                this.loadingMsg.style.display = 'block';
+                this.registerBtn.disabled = true;
+            }
+            
+            hideLoading() {
+                this.loadingMsg.style.display = 'none';
+                this.registerBtn.disabled = false;
+            }
+            
+            showError(message) {
+                this.errorMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+                this.errorMsg.style.display = 'block';
+            }
+            
+            showSuccess(message) {
+                this.successMsg.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                this.successMsg.style.display = 'block';
+            }
+            
+            hideMessages() {
+                this.errorMsg.style.display = 'none';
+                this.successMsg.style.display = 'none';
+            }
         }
-
-        console.log('✅ Coach erfolgreich registriert:', coachData)
-        
-        return {
-            success: true,
-            user: authData.user,
-            coach: coachData[0]
-        }
-
-    } catch (error) {
-        console.error('❌ Registrierung fehlgeschlagen:', error)
-        
-        // Benutzerfreundliche Fehlermeldungen
-        let userMessage = 'Registrierung fehlgeschlagen. Bitte versuche es erneut.'
-        
-        if (error.message.includes('already registered')) {
-            userMessage = 'Diese E-Mail-Adresse ist bereits registriert.'
-        } else if (error.message.includes('Password')) {
-            userMessage = 'Das Passwort entspricht nicht den Anforderungen.'
-        } else if (error.message.includes('Invalid email')) {
-            userMessage = 'Bitte gib eine gültige E-Mail-Adresse ein.'
-        }
-        
-        throw new Error(userMessage)
-    }
-}
         
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', () => {
