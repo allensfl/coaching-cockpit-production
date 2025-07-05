@@ -77,11 +77,11 @@ export default async function handler(req, res) {
 
     console.log('✅ Input validation passed');
 
-    // Step 1: Create auth user
+    // Step 1: Create auth user (email confirmation required)
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email: email,
       password: password,
-      email_confirm: true, // Auto-confirm for now
+      email_confirm: false, // Require email confirmation for GDPR compliance
       user_metadata: {
         first_name: firstName,
         last_name: lastName,
