@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Registrierung - KI-Online.Coach</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .registration-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            max-width: 600px;
+            width: 100%;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .checkbox {
+            margin-top: 0.2rem;
+        }
+        
+        .checkbox-label {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+        
+        .checkbox-label a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+        
+        .benefits-list {
+            background: rgba(102, 126, 234, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        
+        .benefits-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        .benefit-icon {
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+        
+        .register-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.3rem 2rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .register-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .register-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+        
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .success-message {
+            background: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .registration-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://xbdtbgqimwpjpfxuzsxt.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZHRiZ3FpbXdwanBmeHV6c3h0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1MTY3MjQsImV4cCI6MjA2NzA5MjcyNH0.7EwZ5Eo61b4op-OZ2IN3YMv1NQ3CP_F8QegGLNDDbRg'
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    </script>
+</head>
+<body>
+    <div class="registration-container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-robot"></i> KI-Online.Coach
+            </div>
+            <div class="subtitle">Erweitere deine Coaching-Praxis mit KI-Power</div>
+            <div class="benefit-badge">
+                <i class="fas fa-star"></i> 14 Tage kostenlos testen
+            </div>
+        </div>
+
+        <form id="registrationForm">
+            <!-- Persönliche Informationen -->
+            <div class="form-section">
+                <div class="section-title">
+                    <i class="fas fa-user"></i>
+                    Persönliche Informationen
+                </div>
+                
+                <div class="two-column">
+                    <div class="input-group">
+                        <label class="input-label">Vorname *</label>
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" 
+                               class="form-input" 
+                               id="firstName" 
+                               name="firstName"
+                               required 
+                               placeholder="Dein Vorname">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Nachname *</label>
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" 
+                               class="form-input" 
+                               id="lastName" 
+                               name="lastName"
+                               required 
+                               placeholder="Dein Nachname">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">E-Mail-Adresse *</label>
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" 
+                           class="form-input" 
+                           id="email" 
+                           name="email"
+                           required 
+                           placeholder="deine@email.com">
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Passwort erstellen *</label>
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" 
+                           class="form-input" 
+                           id="password" 
+                           name="password"
+                           required 
+                           placeholder="Mindestens 8 Zeichen"
+                           minlength="8">
+                </div>
+            </div>
+
+            <!-- Coaching-Informationen -->
+            <div class="form-section">
+                <div class="section-title">
+                    <i class="fas fa-briefcase"></i>
+                    Deine Coaching-Praxis
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Coaching-Schwerpunkt *</label>
+                    <i class="fas fa-heart input-icon"></i>
+                    <select class="form-select" id="coachingFocus" name="coachingFocus" required>
+                        <option value="">Wähle deinen Schwerpunkt...</option>
+                        <option value="ruhestand">Ruhestandscoaching</option>
+                        <option value="karriere">Karrierecoaching</option>
+                        <option value="life">Life Coaching</option>
+                        <option value="business">Business Coaching</option>
+                        <option value="gesundheit">Gesundheitscoaching</option>
+                        <option value="beziehung">Beziehungscoaching</option>
+                        <option value="sonstiges">Sonstiges</option>
+                    </select>
+                </div>
+                
+                <div class="two-column">
+                    <div class="input-group">
+                        <label class="input-label">Jahre Erfahrung</label>
+                        <i class="fas fa-calendar input-icon"></i>
+                        <select class="form-select" id="experience" name="experience">
+                            <option value="">Wähle...</option>
+                            <option value="0-1">Neu im Coaching</option>
+                            <option value="1-3">1-3 Jahre</option>
+                            <option value="3-5">3-5 Jahre</option>
+                            <option value="5-10">5-10 Jahre</option>
+                            <option value="10+">10+ Jahre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Anzahl Klienten/Monat</label>
+                        <i class="fas fa-users input-icon"></i>
+                        <select class="form-select" id="clientVolume" name="clientVolume">
+                            <option value="">Wähle...</option>
+                            <option value="1-5">1-5 Klienten</option>
+                            <option value="6-15">6-15 Klienten</option>
+                            <option value="16-30">16-30 Klienten</option>
+                            <option value="30+">30+ Klienten</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vorteile für Coaches -->
+            <div class="benefits-list">
+                <div class="benefits-title">
+                    <i class="fas fa-crown"></i>
+                    Das bekommst du als Coach:
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-check benefit-icon"></i>
+                    KI-gestützte Session-Vorbereitung und Follow-ups
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-check benefit-icon"></i>
+                    Automatische Fortschritts-Dokumentation
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-check benefit-icon"></i>
+                    8-Phasen Ruhestandscoaching-System
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-check benefit-icon"></i>
+                    Klienten-Dashboard mit Analytics
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-check benefit-icon"></i>
+                    Unbegrenzte Klienten-Accounts
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-check benefit-icon"></i>
+                    DSGVO-konforme Datenverwaltung
+                </div>
+            </div>
+
+            <!-- Zustimmung -->
+            <div class="checkbox-group">
+                <input type="checkbox" 
+                       id="terms" 
+                       name="terms" 
+                       class="checkbox"
+                       required>
+                <label for="terms" class="checkbox-label">
+                    Ich stimme den <a href="#" target="_blank">Nutzungsbedingungen</a> und der 
+                    <a href="#" target="_blank">Datenschutzerklärung</a> zu. *
+                </label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" 
+                       id="newsletter" 
+                       name="newsletter" 
+                       class="checkbox">
+                <label for="newsletter" class="checkbox-label">
+                    Ich möchte Updates über neue Features und Coaching-Tipps erhalten (optional)
+                </label>
+            </div>
+
+            <button type="submit" class="register-button" id="registerBtn">
+                <i class="fas fa-rocket"></i>
+                Jetzt 14 Tage kostenlos starten
+            </button>
+            
+            <div class="loading" id="loadingMsg">
+                <div class="loading-spinner"></div>
+                Account wird erstellt...
+            </div>
+            
+            <div class="error-message" id="errorMsg"></div>
+            <div class="success-message" id="successMsg"></div>
+        </form>
+
+        <div class="login-link">
+            Bereits registriert? 
+            <a href="login.html">Hier einloggen</a>
+        </div>
+    </div>
+
+    <script>
+        class CoachRegistration {
+            constructor() {
+                this.form = document.getElementById('registrationForm');
+                this.loadingMsg = document.getElementById('loadingMsg');
+                this.errorMsg = document.getElementById('errorMsg');
+                this.successMsg = document.getElementById('successMsg');
+                this.registerBtn = document.getElementById('registerBtn');
+                
+                this.attachEventListeners();
+            }
+            
+            attachEventListeners() {
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                
+                // Real-time Validation
+                const inputs = this.form.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    input.addEventListener('blur', () => this.validateField(input));
+                });
+            }
+            
+            async handleSubmit(e) {
+                e.preventDefault();
+                
+                // Reset messages
+                this.hideMessages();
+                
+                // Validate form
+                if (!this.validateForm()) {
+                    return;
+                }
+                
+                // Show loading
+                this.showLoading();
+                
+                // Collect form data
+                const formData = new FormData(this.form);
+                const userData = Object.fromEntries(formData.entries());
+                
+              try {
+    const result = await this.registerWithSupabase(userData);
+    
+    // Success
+    this.showSuccess(`Willkommen ${userData.firstName}! Bestätigungs-E-Mail wurde an ${userData.email} versendet.`);
+    
+    // Store basic info für Dashboard (ohne sensible Daten)
+    localStorage.setItem('coachSession', JSON.stringify({
+        id: result.coach.id,
+        firstName: result.coach.first_name,
+        lastName: result.coach.last_name,
+        email: result.coach.email,
+        coachingFocus: result.coach.coaching_focus,
+        trialEndsAt: result.coach.trial_ends_at,
+        subscriptionStatus: result.coach.subscription_status
+    }));
+    
+    // Redirect nach delay
+    setTimeout(() => {
+        window.location.href = 'coach-dashboard.html';
+    }, 3000);
+    
+} catch (error) {
+    this.showError(error.message);
+} finally {
+    this.hideLoading();
+}
+            
+            async registerWithSupabase(userData) {
+    try {
+        // 1. Auth Registrierung mit Supabase
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+            email: userData.email,
+            password: userData.password,
+            options: {
+                data: {
+                    first_name: userData.firstName,
+                    last_name: userData.lastName
+                }
+            }
+        })
+
+        if (authError) {
+            throw new Error(authError.message)
+        }
+
+        // 2. Coach-Profil in der coaches Tabelle erstellen
+        const { data: coachData, error: coachError } = await supabase
+            .from('coaches')
+            .insert([
+                {
+                    id: authData.user.id,  // Gleiche ID wie in auth.users
+                    first_name: userData.firstName,
+                    last_name: userData.lastName,
+                    email: userData.email,
+                    coaching_focus: userData.coachingFocus,
+                    experience: userData.experience || null,
+                    client_volume: userData.clientVolume || null,
+                    terms_accepted: userData.terms === 'on',
+                    newsletter_subscribed: userData.newsletter === 'on',
+                    password_hash: 'managed_by_supabase_auth' // Placeholder, da Supabase Auth das verwaltet
+                }
+            ])
+            .select()
+
+        if (coachError) {
+            // Wenn Coach-Profil fehlschlägt, Auth-User auch löschen
+            await supabase.auth.admin.deleteUser(authData.user.id)
+            throw new Error(coachError.message)
+        }
+
+        console.log('✅ Coach erfolgreich registriert:', coachData)
+        
+        return {
+            success: true,
+            user: authData.user,
+            coach: coachData[0]
+        }
+
+    } catch (error) {
+        console.error('❌ Registrierung fehlgeschlagen:', error)
+        
+        // Benutzerfreundliche Fehlermeldungen
+        let userMessage = 'Registrierung fehlgeschlagen. Bitte versuche es erneut.'
+        
+        if (error.message.includes('already registered')) {
+            userMessage = 'Diese E-Mail-Adresse ist bereits registriert.'
+        } else if (error.message.includes('Password')) {
+            userMessage = 'Das Passwort entspricht nicht den Anforderungen.'
+        } else if (error.message.includes('Invalid email')) {
+            userMessage = 'Bitte gib eine gültige E-Mail-Adresse ein.'
+        }
+        
+        throw new Error(userMessage)
+    }
+}
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new CoachRegistration();
+        });
+    </script>
+</body>
+</html>
