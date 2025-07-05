@@ -76,18 +76,11 @@
     <script>
         // Check if user is logged in
         const session = localStorage.getItem('coachSession');
-        if (!session) {
-            document.body.innerHTML = '<div style="padding:50px;text-align:center;"><h2>Keine Berechtigung</h2><p>Bitte erst registrieren!</p><a href="coach-registration.html">Zur Registrierung</a></div>';
-        }
-
-        function startSession() {
-            window.location.href = 'chat.html';
-        }
-
-        function logout() {
-            localStorage.removeItem('coachSession');
-            window.location.href = 'main.html';
-        }
+if (!session) {
+    // Show message but don't block - maybe user is in Supabase auth
+    console.log('No localStorage session found');
+    // Don't redirect immediately, give Supabase a chance
+}
 
         // Show user info
         if (session) {
