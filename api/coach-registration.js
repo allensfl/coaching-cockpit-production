@@ -176,4 +176,4 @@ export default async function handler(req, res) {
       details: error.message 
     });
   }
-}
+}// Cache break Sa  5 Jul 2025 17:44:44 CEST
