@@ -434,21 +434,42 @@
             
             <form onsubmit="handleInviteSubmission(event)">
                 <div class="form-group">
-                    <label class="form-label">Name des Klienten</label>
+                    <label class="form-label">Name des Klienten *</label>
                     <input type="text" name="clientName" class="form-input" required 
                            placeholder="z.B. Max Mustermann">
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">E-Mail-Adresse</label>
+                    <label class="form-label">E-Mail-Adresse *</label>
                     <input type="email" name="clientEmail" class="form-input" required 
                            placeholder="max@example.com">
                 </div>
+
+                <div class="form-group">
+                    <label class="form-label">Telefonnummer *</label>
+                    <input type="tel" name="clientPhone" class="form-input" required 
+                           placeholder="+41 XX XXX XX XX">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Coaching-Ziel *</label>
+                    <select name="coachingGoal" class="form-input" required>
+                        <option value="">Bitte wählen...</option>
+                        <option value="ruhestand">Ruhestandsplanung</option>
+                        <option value="career-transition">Beruflicher Übergang</option>
+                        <option value="life-planning">Lebensplanung</option>
+                        <option value="financial">Finanzielle Vorbereitung</option>
+                        <option value="health-wellness">Gesundheit & Wohlbefinden</option>
+                        <option value="relationships">Beziehungen & Familie</option>
+                        <option value="purpose">Sinn & Erfüllung finden</option>
+                        <option value="other">Sonstiges</option>
+                    </select>
+                </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Notizen (optional)</label>
+                    <label class="form-label">Erstnotizen & Besonderheiten</label>
                     <textarea name="clientNotes" class="form-input form-textarea" 
-                              placeholder="Besondere Anliegen oder Coaching-Ziele..."></textarea>
+                              placeholder="Besondere Anliegen, Vorerfahrungen, wichtige Hintergrundinformationen..."></textarea>
                 </div>
                 
                 <div class="form-actions">
@@ -456,7 +477,7 @@
                         Abbrechen
                     </button>
                     <button type="submit" class="btn btn-primary">
-                        📤 Einladung senden
+                        📤 Klient hinzufügen
                     </button>
                 </div>
             </form>
@@ -466,6 +487,25 @@
     <script>
         // Dashboard data
         let clients = [];
+
+        // Load clients from localStorage on page load
+        function loadClients() {
+            const stored = localStorage.getItem('coachClients');
+            if (stored) {
+                try {
+                    clients = JSON.parse(stored);
+                    updateClientList();
+                    updateStats();
+                } catch (error) {
+                    console.error('Error loading clients:', error);
+                }
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadClients();
+        });
 
         // Show invite modal
         function inviteClient() {
@@ -490,10 +530,15 @@
             const clientData = {
                 name: formData.get('clientName'),
                 email: formData.get('clientEmail'),
+                phone: formData.get('clientPhone'),
+                coachingGoal: formData.get('coachingGoal'),
                 notes: formData.get('clientNotes') || '',
+                sessionNotes: [], // Array für Sitzungsnotizen
                 id: Date.now(),
                 status: 'pending',
-                invitedAt: new Date().toISOString()
+                invitedAt: new Date().toISOString(),
+                totalSessions: 0,
+                lastSession: null
             };
 
             // Add to clients array
@@ -501,9 +546,10 @@
             
             // Update UI
             updateClientList();
+            updateStats();
             
             // Show success message
-            showNotification('Klient erfolgreich eingeladen! 🎉');
+            showNotification(`${clientData.name} erfolgreich hinzugefügt! 🎉`);
             
             // Hide modal
             hideInviteModal();
@@ -535,20 +581,95 @@
                 const statusText = client.status === 'active' ? 'Aktiv' : 'Einladung ausstehend';
                 const statusClass = client.status === 'active' ? 'status-active' : 'status-pending';
                 
+                // Coaching-Ziel übersetzen
+                const goalTranslations = {
+                    'ruhestand': 'Ruhestandsplanung',
+                    'career-transition': 'Beruflicher Übergang', 
+                    'life-planning': 'Lebensplanung',
+                    'financial': 'Finanzielle Vorbereitung',
+                    'health-wellness': 'Gesundheit & Wohlbefinden',
+                    'relationships': 'Beziehungen & Familie',
+                    'purpose': 'Sinn & Erfüllung',
+                    'other': 'Sonstiges'
+                };
+                const goalText = goalTranslations[client.coachingGoal] || client.coachingGoal;
+                
                 return `
                     <div class="client-item">
-                        <div style="display: flex; align-items: center;">
+                        <div style="display: flex; align-items: center; flex: 1;">
                             <div class="client-avatar">${initials}</div>
-                            <div>
-                                <h4>${client.name}</h4>
-                                <p style="color: #718096; font-size: 14px;">📧 ${client.email}</p>
-                                ${client.notes ? `<p style="color: #718096; font-size: 12px;">📝 ${client.notes}</p>` : ''}
+                            <div style="flex: 1;">
+                                <h4 style="margin-bottom: 5px; color: #2d3748;">${client.name}</h4>
+                                <p style="color: #718096; font-size: 13px; margin-bottom: 3px;">📧 ${client.email}</p>
+                                <p style="color: #718096; font-size: 13px; margin-bottom: 3px;">📱 ${client.phone}</p>
+                                <p style="color: #667eea; font-size: 13px; font-weight: 600; margin-bottom: 3px;">🎯 ${goalText}</p>
+                                <p style="color: #718096; font-size: 12px;">📅 ${client.totalSessions} Sessions</p>
+                                ${client.notes ? `<p style="color: #718096; font-size: 12px; margin-top: 5px;">📝 ${client.notes}</p>` : ''}
                             </div>
                         </div>
-                        <span class="status-badge ${statusClass}">${statusText}</span>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                            <button class="btn btn-primary" style="padding: 8px 12px; font-size: 12px;" onclick="startSession('${client.id}')">
+                                💬 Session
+                            </button>
+                            <button class="btn btn-secondary" style="padding: 8px 12px; font-size: 12px;" onclick="addSessionNote('${client.id}')">
+                                📝 Notiz
+                            </button>
+                        </div>
                     </div>
                 `;
             }).join('');
+        }
+
+        // Update stats
+        function updateStats() {
+            const totalClients = clients.length;
+            const totalSessions = clients.reduce((sum, client) => sum + client.totalSessions, 0);
+            
+            document.querySelector('.stats-grid .stat-card:first-child .stat-number').textContent = totalClients;
+            document.querySelector('.stats-grid .stat-card:last-child .stat-number').textContent = totalSessions;
+        }
+
+        // Start session with client
+        function startSession(clientId) {
+            const client = clients.find(c => c.id == clientId);
+            if (client) {
+                // Update session count
+                client.totalSessions++;
+                client.lastSession = new Date().toISOString();
+                client.status = 'active'; // Mark as active after first session
+                
+                // Save to localStorage
+                localStorage.setItem('coachClients', JSON.stringify(clients));
+                
+                updateClientList();
+                updateStats();
+                
+                showNotification(`Session mit ${client.name} gestartet! 💬`);
+                
+                // TODO: Redirect to chat with client context
+                // window.location.href = '../chat.html?client=' + clientId;
+            }
+        }
+
+        // Add session note
+        function addSessionNote(clientId) {
+            const client = clients.find(c => c.id == clientId);
+            if (client) {
+                const note = prompt(`Sitzungsnotiz für ${client.name}:`, '');
+                if (note && note.trim()) {
+                    client.sessionNotes.push({
+                        note: note.trim(),
+                        date: new Date().toISOString(),
+                        id: Date.now()
+                    });
+                    
+                    // Save to localStorage
+                    localStorage.setItem('coachClients', JSON.stringify(clients));
+                    
+                    showNotification(`Notiz für ${client.name} hinzugefügt! 📝`);
+                }
+            }
         }
 
         // Show notification
