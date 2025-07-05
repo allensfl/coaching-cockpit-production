@@ -1,62 +1,5 @@
-// Alternative robust import for Vercel compatibility
-import { Configuration, OpenAIApi } from 'openai';
-
-// Fallback configuration
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
-
-// Alternative: Direct fetch if OpenAI package fails
-const makeOpenAIRequest = async (messages, retryWithFetch = false) => {
-  if (!retryWithFetch) {
-    try {
-      // Try with OpenAI package first
-      const completion = await openai.createChatCompletion({
-        model: 'gpt-4',
-        messages: messages,
-        temperature: 0.75,
-        max_tokens: 500,
-        presence_penalty: 0.1,
-        frequency_penalty: 0.4,
-        top_p: 0.9
-      });
-      return completion.data.choices[0].message.content;
-    } catch (packageError) {
-      console.log('📦 OpenAI package failed, trying direct fetch...', packageError.message);
-      return makeOpenAIRequest(messages, true);
-    }
-  }
-  
-  // Fallback: Direct fetch to OpenAI API
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: 'gpt-4',
-      messages: messages,
-      temperature: 0.75,
-      max_tokens: 500,
-      presence_penalty: 0.1,
-      frequency_penalty: 0.4,
-      top_p: 0.9
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
-  }
-
-  const data = await response.json();
-  return data.choices[0].message.content;
-};
-
-// Fallback System Instructions
-const FALLBACK_SYSTEM_INSTRUCTIONS = `Du bist ein achtsamer, tiefgründiger KI-Coach mit Spezialisierung auf den Übergang in den Ruhestand.
+// Minimal API using direct fetch to OpenAI - no external packages
+const SYSTEM_INSTRUCTIONS = `Du bist ein achtsamer, tiefgründiger KI-Coach mit Spezialisierung auf den Übergang in den Ruhestand.
 
 STIL UND TONALITÄT:
 - Respektvoll, empathisch, lösungsorientiert
@@ -79,6 +22,12 @@ COACHING-PHASEN (8-Phasen-System):
 
 ANTWORTLÄNGE: Maximal 200 Wörter pro Antwort
 
+LERNSTIL-ANPASSUNG:
+- Visuell: Nutze Metaphern und Bilder
+- Auditiv: Fokus auf Gespräch und Rhythmus  
+- Kinästhetisch: Praktische Übungen vorschlagen
+- Lesen/Schreiben: Strukturierte Listen und Reflexionsfragen
+
 SICHERHEITSMECHANISMEN:
 Bei Warnsignalen (Depression, Suizidalität, Trauma): Session unterbrechen und professionelle Hilfe empfehlen.`;
 
@@ -97,20 +46,21 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  console.log('🔧 Minimal API handler starting...');
+
   try {
-    console.log('🔧 Starting robust API handler...');
-    
-    // Check API key first
+    // Validate API key immediately
     if (!process.env.OPENAI_API_KEY) {
-      console.error('❌ OPENAI_API_KEY not found in environment variables');
+      console.error('❌ OPENAI_API_KEY missing');
       return res.status(500).json({ 
-        error: 'Server configuration error - API key missing',
-        details: 'Please check environment variables'
+        error: 'Server configuration error',
+        details: 'API key not configured'
       });
     }
 
-    console.log('✅ API key found, processing request...');
+    console.log('✅ API key validated');
 
+    // Extract request data
     const { 
       message, 
       conversationHistory = [], 
@@ -119,20 +69,21 @@ export default async function handler(req, res) {
     } = req.body;
 
     if (!message) {
+      console.error('❌ No message provided');
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    console.log('📝 Request data:', {
+    console.log('📝 Processing message:', {
       messageLength: message.length,
       historyLength: conversationHistory.length,
       hasSystemPrompt: !!systemPrompt,
       hasChatState: !!chatState
     });
 
-    // Use dynamic system prompt if available, otherwise fallback
-    const systemInstructions = systemPrompt || FALLBACK_SYSTEM_INSTRUCTIONS;
+    // Use dynamic system prompt or fallback
+    const systemInstructions = systemPrompt || SYSTEM_INSTRUCTIONS;
 
-    // Prepare messages for OpenAI
+    // Build messages array
     const messages = [
       {
         role: 'system',
@@ -140,8 +91,8 @@ export default async function handler(req, res) {
       }
     ];
 
-    // Add conversation history (limit to last 10 messages)
-    const recentHistory = conversationHistory.slice(-10);
+    // Add recent conversation history (last 8 messages for stability)
+    const recentHistory = conversationHistory.slice(-8);
     messages.push(...recentHistory);
 
     // Add current user message
@@ -150,51 +101,80 @@ export default async function handler(req, res) {
       content: message
     });
 
-    console.log('🚀 Sending request to OpenAI...');
-    console.log('📊 Messages count:', messages.length);
+    console.log('🚀 Making direct fetch to OpenAI API...');
+    console.log('📊 Total messages:', messages.length);
 
-    // Make robust OpenAI request
-    const response = await makeOpenAIRequest(messages);
+    // Direct fetch to OpenAI API
+    const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4',
+        messages: messages,
+        temperature: 0.7,
+        max_tokens: 400,
+        presence_penalty: 0.1,
+        frequency_penalty: 0.3,
+        top_p: 0.9
+      }),
+    });
 
-    console.log('✅ Response received from OpenAI');
-    console.log('📝 Response preview:', response.substring(0, 100) + '...');
+    console.log('📡 OpenAI response status:', openaiResponse.status);
 
+    if (!openaiResponse.ok) {
+      const errorText = await openaiResponse.text();
+      console.error('❌ OpenAI API error:', openaiResponse.status, errorText);
+      
+      throw new Error(`OpenAI API responded with ${openaiResponse.status}: ${errorText}`);
+    }
+
+    const openaiData = await openaiResponse.json();
+    const aiResponse = openaiData.choices[0].message.content;
+
+    console.log('✅ Response received successfully');
+    console.log('📝 Response preview:', aiResponse.substring(0, 100) + '...');
+
+    // Return successful response
     return res.status(200).json({
-      response: response,
+      response: aiResponse,
       conversationHistory: [
         ...recentHistory,
         { role: 'user', content: message },
-        { role: 'assistant', content: response }
+        { role: 'assistant', content: aiResponse }
       ],
       metadata: {
         systemPromptUsed: !!systemPrompt,
         chatStateProcessed: !!chatState,
+        tokensUsed: openaiData.usage?.total_tokens || 0,
         timestamp: new Date().toISOString(),
         status: 'success'
       }
     });
 
   } catch (error) {
-    console.error('❌ API Handler Error:', error);
-    console.error('❌ Error stack:', error.stack);
+    console.error('❌ Handler error:', error.message);
+    console.error('❌ Full error:', error);
     
-    // More detailed error handling
-    let errorMessage = 'Es gab ein technisches Problem. Können Sie Ihre Nachricht bitte wiederholen?';
+    // User-friendly error responses
+    let userMessage = 'Es gab ein technisches Problem. Können Sie Ihre Nachricht bitte wiederholen?';
     let statusCode = 500;
     
-    if (error.message?.includes('API key')) {
-      errorMessage = 'API-Schlüssel Problem. Bitte kontaktieren Sie den Support.';
+    if (error.message?.includes('401')) {
+      userMessage = 'API-Authentifizierung fehlgeschlagen. Bitte kontaktieren Sie den Support.';
       statusCode = 401;
-    } else if (error.message?.includes('rate limit')) {
-      errorMessage = 'Zu viele Anfragen. Bitte warten Sie einen Moment.';
+    } else if (error.message?.includes('429')) {
+      userMessage = 'Zu viele Anfragen. Bitte warten Sie einen Moment und versuchen es erneut.';
       statusCode = 429;
-    } else if (error.message?.includes('fetch')) {
-      errorMessage = 'Netzwerkproblem. Bitte versuchen Sie es erneut.';
+    } else if (error.message?.includes('quota')) {
+      userMessage = 'Service vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut.';
       statusCode = 503;
     }
     
     return res.status(statusCode).json({ 
-      error: errorMessage,
+      error: userMessage,
       details: process.env.NODE_ENV === 'development' ? error.message : undefined,
       timestamp: new Date().toISOString(),
       status: 'error'
