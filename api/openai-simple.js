@@ -1,18 +1,62 @@
-import OpenAI from 'openai';
+// Alternative robust import for Vercel compatibility
+import { Configuration, OpenAIApi } from 'openai';
 
-// Initialize OpenAI
-const openai = new OpenAI({
+// Fallback configuration
+const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Fallback System Instructions (falls kein dynamischer Prompt gesendet wird)
-const FALLBACK_SYSTEM_INSTRUCTIONS = `Du bist ein achtsamer, tiefgründiger KI-Coach mit Spezialisierung auf den Übergang in den Ruhestand.
+const openai = new OpenAIApi(configuration);
 
-LERNSTIL-ABFRAGE:
-Zu Beginn jeder Session frage nach dem bevorzugten Lernstil:
-"Wie lernst du am liebsten?"
-(Visuell – Bilder/Diagramme, Auditiv – Gespräche/Erklärungen, Kinästhetisch – Übungen/Bewegung)
-Passe Erklärungen, Metaphern und Beispiele während des gesamten Coachings an den Lernstil an.
+// Alternative: Direct fetch if OpenAI package fails
+const makeOpenAIRequest = async (messages, retryWithFetch = false) => {
+  if (!retryWithFetch) {
+    try {
+      // Try with OpenAI package first
+      const completion = await openai.createChatCompletion({
+        model: 'gpt-4',
+        messages: messages,
+        temperature: 0.75,
+        max_tokens: 500,
+        presence_penalty: 0.1,
+        frequency_penalty: 0.4,
+        top_p: 0.9
+      });
+      return completion.data.choices[0].message.content;
+    } catch (packageError) {
+      console.log('📦 OpenAI package failed, trying direct fetch...', packageError.message);
+      return makeOpenAIRequest(messages, true);
+    }
+  }
+  
+  // Fallback: Direct fetch to OpenAI API
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'gpt-4',
+      messages: messages,
+      temperature: 0.75,
+      max_tokens: 500,
+      presence_penalty: 0.1,
+      frequency_penalty: 0.4,
+      top_p: 0.9
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data.choices[0].message.content;
+};
+
+// Fallback System Instructions
+const FALLBACK_SYSTEM_INSTRUCTIONS = `Du bist ein achtsamer, tiefgründiger KI-Coach mit Spezialisierung auf den Übergang in den Ruhestand.
 
 STIL UND TONALITÄT:
 - Respektvoll, empathisch, lösungsorientiert
@@ -33,21 +77,10 @@ COACHING-PHASEN (8-Phasen-System):
 7. Konkrete Schritte: Schlage drei Aktivitäten vor
 8. Integration: Reflektiere Erfahrungen und plane nächste Schritte
 
-ANTWORTLÄNGE:
-- Erste Phasen: maximal 180 Wörter
-- Spätere Phasen: maximal 300 Wörter
+ANTWORTLÄNGE: Maximal 200 Wörter pro Antwort
 
 SICHERHEITSMECHANISMEN:
-Bei Warnsignalen (Depression, Suizidalität, Trauma, Substanzmissbrauch, schwere Angst):
-- Session sofort unterbrechen
-- Thema normalisieren und Grenzen kommunizieren
-- Ressourcen für professionelle Unterstützung anbieten
-
-WAS ICH NICHT TUE:
-- Keine finanziellen oder rechtlichen Ratschläge
-- Keine Therapie oder Behandlung psychischer Störungen
-- Keine therapeutischen Deutungen oder Diagnosen
-- Ersetze keinen menschlichen Kontakt, sondern ergänze und inspiriere`;
+Bei Warnsignalen (Depression, Suizidalität, Trauma): Session unterbrechen und professionelle Hilfe empfehlen.`;
 
 export default async function handler(req, res) {
   // CORS Headers
@@ -65,7 +98,19 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Enhanced parameter extraction
+    console.log('🔧 Starting robust API handler...');
+    
+    // Check API key first
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('❌ OPENAI_API_KEY not found in environment variables');
+      return res.status(500).json({ 
+        error: 'Server configuration error - API key missing',
+        details: 'Please check environment variables'
+      });
+    }
+
+    console.log('✅ API key found, processing request...');
+
     const { 
       message, 
       conversationHistory = [], 
@@ -77,14 +122,11 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    console.log('🎯 Processing enhanced request:', {
+    console.log('📝 Request data:', {
       messageLength: message.length,
       historyLength: conversationHistory.length,
       hasSystemPrompt: !!systemPrompt,
-      hasChatState: !!chatState,
-      currentPhase: chatState?.currentPhase || 'unknown',
-      learningStyle: chatState?.learningStyle || 'unknown',
-      emotionalState: chatState?.userProfile?.emotionalState || 'unknown'
+      hasChatState: !!chatState
     });
 
     // Use dynamic system prompt if available, otherwise fallback
@@ -98,8 +140,8 @@ export default async function handler(req, res) {
       }
     ];
 
-    // Add conversation history (limit to last 12 messages for better context)
-    const recentHistory = conversationHistory.slice(-12);
+    // Add conversation history (limit to last 10 messages)
+    const recentHistory = conversationHistory.slice(-10);
     messages.push(...recentHistory);
 
     // Add current user message
@@ -108,26 +150,15 @@ export default async function handler(req, res) {
       content: message
     });
 
-    console.log('🚀 Sending enhanced request to OpenAI...');
-    console.log('📊 System prompt preview:', systemInstructions.substring(0, 200) + '...');
+    console.log('🚀 Sending request to OpenAI...');
+    console.log('📊 Messages count:', messages.length);
 
-    // Enhanced OpenAI API call
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: messages,
-      temperature: 0.75,  // Optimiert für Kreativität und Konsistenz
-      max_tokens: 500,    // Angepasst für qualitative Antworten
-      presence_penalty: 0.1,   // Fördert neue Themen
-      frequency_penalty: 0.4,  // Reduziert Wiederholungen stark
-      top_p: 0.9         // Fokussierte aber kreative Antworten
-    });
+    // Make robust OpenAI request
+    const response = await makeOpenAIRequest(messages);
 
-    const response = completion.choices[0].message.content;
-
-    console.log('✅ Enhanced OpenAI response received');
+    console.log('✅ Response received from OpenAI');
     console.log('📝 Response preview:', response.substring(0, 100) + '...');
 
-    // Enhanced response with metadata
     return res.status(200).json({
       response: response,
       conversationHistory: [
@@ -138,28 +169,35 @@ export default async function handler(req, res) {
       metadata: {
         systemPromptUsed: !!systemPrompt,
         chatStateProcessed: !!chatState,
-        currentPhase: chatState?.currentPhase || null,
-        tokensUsed: completion.usage?.total_tokens || 0,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        status: 'success'
       }
     });
 
   } catch (error) {
-    console.error('❌ Enhanced API error:', error);
+    console.error('❌ API Handler Error:', error);
+    console.error('❌ Error stack:', error.stack);
     
-    // More helpful error messages
+    // More detailed error handling
     let errorMessage = 'Es gab ein technisches Problem. Können Sie Ihre Nachricht bitte wiederholen?';
+    let statusCode = 500;
     
     if (error.message?.includes('API key')) {
-      errorMessage = 'API-Konfigurationsproblem. Bitte kontaktieren Sie den Support.';
+      errorMessage = 'API-Schlüssel Problem. Bitte kontaktieren Sie den Support.';
+      statusCode = 401;
     } else if (error.message?.includes('rate limit')) {
       errorMessage = 'Zu viele Anfragen. Bitte warten Sie einen Moment.';
+      statusCode = 429;
+    } else if (error.message?.includes('fetch')) {
+      errorMessage = 'Netzwerkproblem. Bitte versuchen Sie es erneut.';
+      statusCode = 503;
     }
     
-    return res.status(500).json({ 
+    return res.status(statusCode).json({ 
       error: errorMessage,
       details: process.env.NODE_ENV === 'development' ? error.message : undefined,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      status: 'error'
     });
   }
 }
