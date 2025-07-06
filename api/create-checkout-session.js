@@ -8,3 +8,8 @@ export default async function handler(req, res) {
     timestamp: new Date().toISOString()
   });
 }
+
+// FORCE VERCEL UPDATE So  6 Jul 2025 19:33:48 CEST
+// Cache clear attempt 1751823228
+console.log('FORCED UPDATE');
+
