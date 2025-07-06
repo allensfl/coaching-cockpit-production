@@ -846,7 +846,7 @@
                 
                 console.log('🎯 Starte Checkout für Coach:', coachData);
                 
-                const response = await fetch('/api/create-checkout-session', {
+                const response = await fetch('/api/simple-checkout', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
