@@ -1,202 +1,177 @@
-// api/invite-client.js - Klient-Einladungs-API
+// /api/invite-client.js - Updated mit SendGrid Integration
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 export default async function handler(req, res) {
-  console.log('🎯 Client invitation API called');
-  
-  // CORS Headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
-  if (req.method === 'OPTIONS') {
-    console.log('⚡ OPTIONS request');
-    return res.status(200).end();
-  }
+    // CORS Headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method !== 'POST') {
-    console.log('❌ Method not allowed:', req.method);
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  try {
-    console.log('📝 Processing client invitation data...');
-    const { 
-      clientFirstName,
-      clientLastName, 
-      clientEmail, 
-      clientPhone,
-      clientAge,
-      clientSituation,
-      coachingGoals,
-      personalMessage
-    } = req.body;
-
-    console.log('📧 Client email to invite:', clientEmail);
-
-    // Validierung
-    if (!clientFirstName || !clientLastName || !clientEmail) {
-      console.log('❌ Validation failed - missing required fields');
-      return res.status(400).json({ 
-        error: 'Vorname, Nachname und Email sind erforderlich' 
-      });
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
     }
 
-    // Email-Format prüfen
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(clientEmail)) {
-      console.log('❌ Invalid email format');
-      return res.status(400).json({ 
-        error: 'Bitte geben Sie eine gültige Email-Adresse ein' 
-      });
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    console.log('✅ Validation passed');
-
-    // TODO: Coach ID aus Session/Auth holen
-    // Für jetzt nehmen wir den ersten Coach aus der DB
-    console.log('🔍 Finding coach...');
-    const { data: coach, error: coachError } = await supabase
-      .from('coaches')
-      .select('id, first_name, last_name, email')
-      .limit(1)
-      .single();
-
-    if (coachError || !coach) {
-      console.error('❌ Coach not found:', coachError);
-      return res.status(404).json({ 
-        error: 'Coach nicht gefunden' 
-      });
-    }
-
-    console.log('✅ Coach found:', coach.id);
-
-    // Prüfen ob Client-Email bereits existiert
-    console.log('🔍 Checking if client email exists...');
-    const { data: existingClient } = await supabase
-      .from('clients')
-      .select('email')
-      .eq('email', clientEmail)
-      .single();
-
-    if (existingClient) {
-      console.log('❌ Client email already exists');
-      return res.status(409).json({ 
-        error: 'Ein Klient mit dieser Email-Adresse existiert bereits' 
-      });
-    }
-
-    console.log('✅ Client email is unique');
-
-    // Client in Datenbank erstellen
-    console.log('💾 Creating client in database...');
-    const { data: newClient, error: dbError } = await supabase
-      .from('clients')
-      .insert([
-        {
-          coach_id: coach.id,
-          first_name: clientFirstName,
-          last_name: clientLastName,
-          email: clientEmail,
-          phone: clientPhone || null,
-          age: clientAge ? parseInt(clientAge) : null,
-          situation: clientSituation || null,
-          coaching_goals: coachingGoals || null,
-          personal_message: personalMessage || null,
-          status: 'invited',
-          created_at: new Date().toISOString()
-        }
-      ])
-      .select(`
-        *,
-        coaches:coach_id (
-          first_name,
-          last_name,
-          email
-        )
-      `)
-      .single();
-
-    if (dbError) {
-      console.error('❌ Database error:', dbError);
-      return res.status(500).json({ 
-        error: 'Klient-Einladung fehlgeschlagen',
-        details: dbError.message 
-      });
-    }
-
-    console.log('✅ Client created successfully:', newClient.id);
-
-    // Invitation Link generieren
-    const invitationLink = `https://coaching-cockpit-live-v2.vercel.app/client-dashboard.html?token=${newClient.invitation_token}`;
-    console.log('🔗 Invitation link generated:', invitationLink);
-
-    // EMAIL SENDING LOGIC (später aktivieren wenn Email funktioniert)
-    console.log('📧 EMAIL SENDING CURRENTLY DISABLED');
-    /*
     try {
-      console.log('📧 Sending invitation email...');
-      const emailResponse = await fetch(`${req.headers.origin}/api/send-client-invitation`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clientEmail: clientEmail,
-          clientName: `${clientFirstName} ${clientLastName}`,
-          coachName: `${coach.first_name} ${coach.last_name}`,
-          coachEmail: coach.email,
-          personalMessage: personalMessage,
-          sessionLink: invitationLink
-        })
-      });
+        const { first_name, last_name, email, phone, notes } = req.body;
 
-      const emailResult = await emailResponse.json();
-      console.log('📧 Email result:', emailResult);
-    } catch (emailError) {
-      console.error('❌ Email error (non-blocking):', emailError);
+        console.log('🎯 Client Invitation API aufgerufen');
+        console.log('🎯 Client Daten:', { first_name, last_name, email });
+
+        // Validierung
+        if (!first_name || !last_name || !email) {
+            return res.status(400).json({
+                error: 'Vorname, Nachname und Email sind erforderlich'
+            });
+        }
+
+        // Email-Format validieren
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({
+                error: 'Ungültiges Email-Format'
+            });
+        }
+
+        // Prüfen ob Email bereits existiert
+        const { data: existingClient, error: checkError } = await supabase
+            .from('clients')
+            .select('id, email, status')
+            .eq('email', email)
+            .single();
+
+        if (existingClient) {
+            console.log('⚠️ Client mit Email bereits vorhanden:', existingClient);
+            return res.status(409).json({
+                error: 'Ein Klient mit dieser Email-Adresse wurde bereits eingeladen',
+                status: existingClient.status
+            });
+        }
+
+        // Invitation Token generieren
+        const invitationToken = generateSecureToken();
+        
+        // TODO: Hier sollte die echte Coach-ID aus der Session kommen
+        // Für jetzt nehmen wir die bekannte Coach-ID
+        const coachId = '0db62df4-8471-46b9-a47c-37c86bfb61cd';
+
+        console.log('🎯 Erstelle Client in Database...');
+
+        // Client in Database erstellen
+        const { data: newClient, error: clientError } = await supabase
+            .from('clients')
+            .insert([
+                {
+                    coach_id: coachId,
+                    first_name: first_name.trim(),
+                    last_name: last_name.trim(),
+                    email: email.toLowerCase().trim(),
+                    phone: phone?.trim() || null,
+                    notes: notes?.trim() || null,
+                    invitation_token: invitationToken,
+                    status: 'invited'
+                }
+            ])
+            .select()
+            .single();
+
+        if (clientError) {
+            console.error('❌ Database Error:', clientError);
+            return res.status(500).json({
+                error: 'Fehler beim Erstellen des Klienten',
+                details: clientError.message
+            });
+        }
+
+        console.log('✅ Client erfolgreich erstellt:', newClient.id);
+
+        // Coach-Daten für Email holen
+        const { data: coach, error: coachError } = await supabase
+            .from('coaches')
+            .select('first_name, last_name, email')
+            .eq('id', coachId)
+            .single();
+
+        if (coachError) {
+            console.error('⚠️ Warnung: Coach-Daten nicht gefunden:', coachError);
+        }
+
+        const coachName = coach ? `${coach.first_name} ${coach.last_name}` : 'Ihr Coach';
+        const coachEmail = coach?.email || 'support@coaching-cockpit.com';
+
+        console.log('📧 Sende Einladungs-Email via SendGrid...');
+
+        // Email via SendGrid versenden
+        try {
+            const emailResponse = await fetch(`${req.headers.origin}/api/send-client-invitation-v2`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    clientEmail: email,
+                    clientName: first_name,
+                    coachName: coachName,
+                    coachEmail: coachEmail,
+                    invitationToken: invitationToken
+                })
+            });
+
+            const emailResult = await emailResponse.json();
+
+            if (emailResponse.ok) {
+                console.log('✅ Einladungs-Email erfolgreich versendet');
+            } else {
+                console.error('⚠️ Email-Versand fehlgeschlagen:', emailResult);
+                // Aber trotzdem Success zurückgeben, da Client erstellt wurde
+            }
+        } catch (emailError) {
+            console.error('⚠️ Email-Versand Fehler:', emailError);
+            // Nicht kritisch, Client wurde trotzdem erstellt
+        }
+
+        console.log('🎉 Client Invitation erfolgreich abgeschlossen');
+
+        return res.status(200).json({
+            success: true,
+            message: 'Klient erfolgreich eingeladen',
+            client: {
+                id: newClient.id,
+                name: `${first_name} ${last_name}`,
+                email: email,
+                status: 'invited'
+            },
+            invitationLink: `${req.headers.origin}/client-dashboard.html?token=${invitationToken}`,
+            debug: {
+                clientId: newClient.id,
+                token: invitationToken,
+                coachName: coachName
+            }
+        });
+
+    } catch (error) {
+        console.error('❌ Unerwarteter Fehler:', error);
+        return res.status(500).json({
+            error: 'Server-Fehler beim Einladen des Klienten',
+            details: error.message
+        });
     }
-    */
-    
-    console.log('🎯 Sending success response...');
-    
-    return res.status(201).json({ 
-      success: true, 
-      message: 'Klient erfolgreich eingeladen!',
-      data: {
-        client: {
-          id: newClient.id,
-          firstName: newClient.first_name,
-          lastName: newClient.last_name,
-          email: newClient.email,
-          phone: newClient.phone,
-          age: newClient.age,
-          situation: newClient.situation,
-          status: newClient.status,
-          invitationToken: newClient.invitation_token,
-          createdAt: newClient.created_at
-        },
-        coach: {
-          firstName: newClient.coaches.first_name,
-          lastName: newClient.coaches.last_name,
-          email: newClient.coaches.email
-        },
-        invitationLink: invitationLink,
-        emailSent: false // später auf true wenn Email funktioniert
-      }
-    });
+}
 
-  } catch (error) {
-    console.error('❌ MAIN ERROR:', error);
-    console.error('❌ Error stack:', error.stack);
-    return res.status(500).json({ 
-      error: 'Ein unerwarteter Fehler ist aufgetreten',
-      details: error.message 
-    });
-  }
+// Sichere Token-Generierung
+function generateSecureToken() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = '';
+    for (let i = 0; i < 32; i++) {
+        token += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return token;
 }

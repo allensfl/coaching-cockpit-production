@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mein Coaching - Coaching Cockpit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .client-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        .loading-state {
+            display: block;
+        }
+
+        .client-content {
+            display: none;
+        }
+
+        .error-state {
+            display: none;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .welcome-header {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .welcome-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .welcome-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .coach-info {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .coach-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 16px;
+        }
+
+        .coach-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .coach-title {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 16px;
+        }
+
+        .coach-experience {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .program-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .program-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .phase-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .phase-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+
+        .phase-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .start-button {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            border-radius: 12px;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .start-button:active {
+            transform: translateY(0);
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .client-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .welcome-header h1 {
+                font-size: 24px;
+            }
+            
+            .welcome-header p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="client-container">
+        <!-- Loading State -->
+        <div class="loading-state" id="loadingState">
+            <div class="logo">
+                🎯 <span>Coaching Cockpit</span>
+            </div>
+            <div class="spinner"></div>
+            <p style="color: white; opacity: 0.8;">Lade dein persönliches Coaching...</p>
+        </div>
+
+        <!-- Error State -->
+        <div class="error-state" id="errorState">
+            <div class="logo">
+                🎯 <span>Coaching Cockpit</span>
+            </div>
+            <div class="error-message" id="errorMessage">
+                Ungültiger oder abgelaufener Einladungs-Link.
+            </div>
+            <button class="back-button" onclick="window.history.back()">
+                ← Zurück
+            </button>
+        </div>
+
+        <!-- Client Content -->
+        <div class="client-content" id="clientContent">
+            <div class="logo">
+                🎯 <span>Coaching Cockpit</span>
+            </div>
+
+            <div class="welcome-header">
+                <h1>Willkommen <span id="clientName">...</span>! 👋</h1>
+                <p>Ihr persönliches Ruhestandscoaching wartet auf Sie</p>
+            </div>
+
+            <div class="coach-info">
+                <div class="coach-avatar" id="coachAvatar">MB</div>
+                <div class="coach-name" id="coachName">Max Mustermann</div>
+                <div class="coach-title" id="coachTitle">Zertifizierter Ruhestandscoach</div>
+                <div class="coach-experience" id="coachExperience">15+ Jahre Erfahrung</div>
+            </div>
+
+            <div class="program-info">
+                <h3 class="program-title">🎯 Ihr 8-Phasen Ruhestandsprogramm</h3>
+                <ul class="phase-list">
+                    <li class="phase-item">
+                        <span class="phase-number">1</span>
+                        <span>Standortbestimmung & Zielfindung</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">2</span>
+                        <span>Finanzplanung & Vorsorge</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">3</span>
+                        <span>Gesundheit & Lebensqualität</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">4</span>
+                        <span>Soziale Beziehungen & Netzwerk</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">5</span>
+                        <span>Sinnstiftende Aktivitäten</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">6</span>
+                        <span>Wohnsituation & Umfeld</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">7</span>
+                        <span>Rechtliche Absicherung</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">8</span>
+                        <span>Umsetzung & Erfolgskontrolle</span>
+                    </li>
+                </ul>
+            </div>
+
+            <a href="#" class="start-button" id="startCoachingBtn">
+                🚀 Coaching starten
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // URL Parameter lesen
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        console.log('🎯 Client Dashboard gestartet mit Token:', token);
+
+        // Elemente
+        const loadingState = document.getElementById('loadingState');
+        const errorState = document.getElementById('errorState');
+        const clientContent = document.getElementById('clientContent');
+        const startCoachingBtn = document.getElementById('startCoachingBtn');
+
+        // Beim Laden: Token validieren und Client-Info laden
+        document.addEventListener('DOMContentLoaded', async function() {
+            if (!token) {
+                showError('Kein Einladungs-Token gefunden.');
+                return;
+            }
+
+            try {
+                console.log('🎯 Validiere Token...');
+                
+                // Token validieren und Client-Info holen
+                const response = await fetch('/api/validate-client-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token })
+                });
+
+                const result = await response.json();
+                console.log('🎯 Token-Validation Result:', result);
+
+                if (response.ok && result.success) {
+                    // Client-Info anzeigen
+                    showClientContent(result.client, result.coach);
+                } else {
+                    showError(result.error || 'Ungültiger Einladungs-Link.');
+                }
+            } catch (error) {
+                console.error('❌ Token-Validation Error:', error);
+                showError('Fehler beim Laden der Coaching-Daten.');
+            }
+        });
+
+        function showClientContent(client, coach) {
+            console.log('🎯 Zeige Client Content:', client, coach);
+            
+            // Client-Info einsetzen
+            document.getElementById('clientName').textContent = client.first_name || 'Willkommen';
+            
+            // Coach-Info einsetzen
+            if (coach) {
+                document.getElementById('coachName').textContent = `${coach.first_name} ${coach.last_name}`;
+                document.getElementById('coachTitle').textContent = coach.title || 'Zertifizierter Ruhestandscoach';
+                document.getElementById('coachExperience').textContent = coach.experience || '15+ Jahre Erfahrung';
+                
+                // Coach Avatar (Initialen)
+                const initials = `${coach.first_name?.charAt(0) || ''}${coach.last_name?.charAt(0) || ''}`;
+                document.getElementById('coachAvatar').textContent = initials;
+            }
+
+            // Coaching-Start Button konfigurieren
+            startCoachingBtn.href = `chat.html?client_id=${client.id}&coach_id=${client.coach_id}&token=${token}`;
+            
+            // States umschalten
+            loadingState.style.display = 'none';
+            errorState.style.display = 'none';
+            clientContent.style.display = 'block';
+        }
+
+        function showError(message) {
+            console.error('❌ Fehler:', message);
+            document.getElementById('errorMessage').textContent = message;
+            
+            loadingState.style.display = 'none';
+            clientContent.style.display = 'none';
+            errorState.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
