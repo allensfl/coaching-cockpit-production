@@ -40,3 +40,6 @@ export default async function handler(req, res) {
     });
   }
 }
+[main f29d64e] PAYPAL: Simple 1 CHF PayPal integration - no dependencies
+ 2 files changed, 55 insertions(+), 13 deletions(-)
+ create mode 100644 api/create-paypal-payment.js
