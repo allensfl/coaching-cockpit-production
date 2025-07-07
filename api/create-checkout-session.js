@@ -6,40 +6,19 @@ export default async function handler(req, res) {
   try {
     const { coachId, email } = req.body;
     
-    if (!coachId || !email) {
-      return res.status(400).json({ error: 'Coach ID und Email sind erforderlich' });
-    }
+    console.log('💰 PAYPAL PAYMENT for:', email);
 
-    console.log('💰 Creating PayPal payment for:', email);
-
-    // PayPal 1 CHF Test-Payment
-    const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?` +
-      `cmd=_xclick` +
-      `&business=info@allenspach-coaching.ch` +
-      `&item_name=KI-Online.Coach Test Access` +
-      `&item_number=${coachId}` +
-      `&amount=1.00` +
-      `&currency_code=CHF` +
-      `&return=${req.headers.origin}/coach-dashboard.html?success=true&payment=paypal` +
-      `&cancel_return=${req.headers.origin}/coach-dashboard.html?canceled=true` +
-      `&notify_url=${req.headers.origin}/api/paypal-webhook`;
+    // PayPal 1 CHF Payment URL
+    const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=info@allenspach-coaching.ch&item_name=KI-Online.Coach Test&amount=1.00&currency_code=CHF&return=${req.headers.origin}/coach-dashboard.html?success=true`;
 
     return res.status(200).json({
       success: true,
       url: paypalUrl,
-      amount: '1.00 CHF',
       provider: 'PayPal',
-      message: 'PayPal payment ready!'
+      amount: '1.00 CHF'
     });
 
   } catch (error) {
-    console.error('❌ PayPal Error:', error);
-    return res.status(500).json({ 
-      error: 'PayPal payment konnte nicht erstellt werden',
-      details: error.message 
-    });
+    return res.status(500).json({ error: 'PayPal error' });
   }
 }
-[main f29d64e] PAYPAL: Simple 1 CHF PayPal integration - no dependencies
- 2 files changed, 55 insertions(+), 13 deletions(-)
- create mode 100644 api/create-paypal-payment.js
