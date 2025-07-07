@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mein Coaching Dashboard - KI-Online.Coach</title>
+    <title>Mein Coaching - Coaching Cockpit</title>
     <style>
         * {
             margin: 0;
@@ -12,584 +12,399 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
 
-        .header {
+        .client-container {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
             text-align: center;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
         }
 
-        .header h1 {
-            color: white;
-            font-size: 32px;
-            margin-bottom: 10px;
+        .loading-state {
+            display: block;
         }
 
-        .header .welcome {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 18px;
+        .client-content {
+            display: none;
         }
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+        .error-state {
+            display: none;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .card h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
+        .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .welcome-header {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .welcome-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .welcome-header p {
+            font-size: 18px;
+            opacity: 0.9;
         }
 
         .coach-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .coach-avatar {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
+            font-weight: bold;
             color: white;
+            margin: 0 auto 16px;
         }
 
-        .coach-details h3 {
+        .coach-name {
             font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .coach-details p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(76, 175, 80, 0.2);
-            border: 1px solid #4CAF50;
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-size: 14px;
-            color: #4CAF50;
-            margin-top: 15px;
-        }
-
-        .progress-section {
-            margin-top: 25px;
-        }
-
-        .progress-item {
-            margin-bottom: 20px;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
+            font-weight: 600;
+            color: white;
             margin-bottom: 8px;
+        }
+
+        .coach-title {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 16px;
+        }
+
+        .coach-experience {
             font-size: 14px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .phases-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .phase-card {
+            color: rgba(255, 255, 255, 0.7);
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .program-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .program-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
             text-align: center;
-            transition: all 0.3s ease;
         }
 
-        .phase-card.completed {
-            background: rgba(76, 175, 80, 0.2);
-            border-color: #4CAF50;
+        .phase-list {
+            list-style: none;
+            padding: 0;
         }
 
-        .phase-card.current {
-            background: rgba(255, 193, 7, 0.2);
-            border-color: #FFC107;
-            transform: scale(1.05);
+        .phase-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
         }
 
         .phase-number {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .phase-title {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
-        .action-buttons {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
             display: flex;
-            gap: 15px;
-            margin-top: 25px;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
         }
 
-        .btn {
-            flex: 1;
-            padding: 15px 25px;
+        .start-button {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
             border: none;
             border-radius: 12px;
-            font-size: 16px;
+            padding: 16px 32px;
+            font-size: 18px;
             font-weight: 600;
+            color: white;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
             text-decoration: none;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            display: inline-block;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, #4CAF50, #8BC34A);
-            color: white;
-        }
-
-        .btn-primary:hover {
+        .start-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
         }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        .start-button:active {
+            transform: translateY(0);
         }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .quick-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: bold;
-            color: #4CAF50;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .recent-activity {
-            margin-top: 20px;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-
-        .activity-icon {
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
         }
 
-        .activity-text {
-            flex: 1;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .activity-time {
-            font-size: 12px;
-            opacity: 0.7;
-        }
-
-        .next-steps {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.3);
+        .error-message {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
             border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
+            padding: 16px;
+            margin-bottom: 20px;
         }
 
-        .next-steps h3 {
-            color: #FFC107;
-            margin-bottom: 15px;
+        .back-button {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
         }
 
-        .next-steps ul {
-            list-style: none;
-        }
-
-        .next-steps li {
-            margin-bottom: 10px;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .next-steps li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #FFC107;
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
+            .client-container {
+                padding: 20px;
+                margin: 10px;
             }
             
-            .phases-grid {
-                grid-template-columns: repeat(4, 1fr);
+            .welcome-header h1 {
+                font-size: 24px;
             }
             
-            .quick-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .coach-info {
-                flex-direction: column;
-                text-align: center;
+            .welcome-header p {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>Willkommen zurück!</h1>
-            <div class="welcome">Ihr persönliches Coaching Dashboard</div>
+    <div class="client-container">
+        <!-- Loading State -->
+        <div class="loading-state" id="loadingState">
+            <div class="logo">
+                🎯 <span>Coaching Cockpit</span>
+            </div>
+            <div class="spinner"></div>
+            <p style="color: white; opacity: 0.8;">Lade dein persönliches Coaching...</p>
         </div>
 
-        <!-- Main Dashboard Grid -->
-        <div class="dashboard-grid">
-            <!-- Left Column: Profil & Übersicht -->
-            <div class="card">
-                <h2>👤 Ihr Coach & Status</h2>
-                
-                <div class="coach-info">
-                    <div class="coach-avatar">FA</div>
-                    <div class="coach-details">
-                        <h3 id="coach-name">Flavien Allenspach</h3>
-                        <p>Spezialist für Ruhestandscoaching</p>
-                        <p>📧 info@allenspach-coaching.ch</p>
-                    </div>
-                </div>
-
-                <div class="status-badge">
-                    <span>🟢</span>
-                    <span id="coaching-status">Aktives Coaching</span>
-                </div>
-
-                <div class="quick-stats">
-                    <div class="stat-item">
-                        <div class="stat-number" id="sessions-count">12</div>
-                        <div class="stat-label">Sessions</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="days-active">45</div>
-                        <div class="stat-label">Tage aktiv</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="completion-rate">75%</div>
-                        <div class="stat-label">Fortschritt</div>
-                    </div>
-                </div>
+        <!-- Error State -->
+        <div class="error-state" id="errorState">
+            <div class="logo">
+                🎯 <span>Coaching Cockpit</span>
             </div>
-
-            <!-- Right Column: Fortschritt -->
-            <div class="card">
-                <h2>📊 Ihr Coaching-Fortschritt</h2>
-                
-                <div class="progress-section">
-                    <div class="progress-item">
-                        <div class="progress-label">
-                            <span>Gesamtfortschritt</span>
-                            <span id="overall-progress">6/8 Phasen</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 75%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="phases-grid">
-                    <div class="phase-card completed">
-                        <div class="phase-number">1</div>
-                        <div class="phase-title">Ist-Analyse</div>
-                    </div>
-                    <div class="phase-card completed">
-                        <div class="phase-number">2</div>
-                        <div class="phase-title">Zieldefinition</div>
-                    </div>
-                    <div class="phase-card completed">
-                        <div class="phase-number">3</div>
-                        <div class="phase-title">Ressourcen</div>
-                    </div>
-                    <div class="phase-card completed">
-                        <div class="phase-number">4</div>
-                        <div class="phase-title">Planung</div>
-                    </div>
-                    <div class="phase-card completed">
-                        <div class="phase-number">5</div>
-                        <div class="phase-title">Umsetzung</div>
-                    </div>
-                    <div class="phase-card current">
-                        <div class="phase-number">6</div>
-                        <div class="phase-title">Anpassung</div>
-                    </div>
-                    <div class="phase-card">
-                        <div class="phase-number">7</div>
-                        <div class="phase-title">Integration</div>
-                    </div>
-                    <div class="phase-card">
-                        <div class="phase-number">8</div>
-                        <div class="phase-title">Abschluss</div>
-                    </div>
-                </div>
-
-                <div class="next-steps">
-                    <h3>🎯 Nächste Schritte</h3>
-                    <ul>
-                        <li>Reflexion der bisherigen Umsetzung</li>
-                        <li>Anpassung der Strategien</li>
-                        <li>Vorbereitung auf Phase 7</li>
-                    </ul>
-                </div>
+            <div class="error-message" id="errorMessage">
+                Ungültiger oder abgelaufener Einladungs-Link.
             </div>
+            <button class="back-button" onclick="window.history.back()">
+                ← Zurück
+            </button>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="card">
-            <h2>🚀 Ihr Coaching</h2>
-            <div class="action-buttons">
-                <a href="chat.html?client_id=demo&coach_id=flavien" class="btn btn-primary">
-                    💬 Coaching fortsetzen
-                </a>
-                <a href="#" class="btn btn-secondary" onclick="showSessionHistory()">
-                    📋 Session-Historie
-                </a>
-                <a href="#" class="btn btn-secondary" onclick="contactCoach()">
-                    📞 Coach kontaktieren
-                </a>
+        <!-- Client Content -->
+        <div class="client-content" id="clientContent">
+            <div class="logo">
+                🎯 <span>Coaching Cockpit</span>
             </div>
-        </div>
 
-        <!-- Recent Activity -->
-        <div class="card">
-            <h2>📅 Letzte Aktivitäten</h2>
-            <div class="recent-activity">
-                <div class="activity-item">
-                    <div class="activity-icon">💬</div>
-                    <div class="activity-text">
-                        <div>Coaching-Session abgeschlossen</div>
-                        <div class="activity-time">Vor 2 Tagen</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon">📝</div>
-                    <div class="activity-text">
-                        <div>Ziele für Phase 6 definiert</div>
-                        <div class="activity-time">Vor 5 Tagen</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon">🎯</div>
-                    <div class="activity-text">
-                        <div>Phase 5 erfolgreich abgeschlossen</div>
-                        <div class="activity-time">Vor 1 Woche</div>
-                    </div>
-                </div>
+            <div class="welcome-header">
+                <h1>Willkommen <span id="clientName">...</span>! 👋</h1>
+                <p>Ihr persönliches Ruhestandscoaching wartet auf Sie</p>
             </div>
+
+            <div class="coach-info">
+                <div class="coach-avatar" id="coachAvatar">MB</div>
+                <div class="coach-name" id="coachName">Max Mustermann</div>
+                <div class="coach-title" id="coachTitle">Zertifizierter Ruhestandscoach</div>
+                <div class="coach-experience" id="coachExperience">15+ Jahre Erfahrung</div>
+            </div>
+
+            <div class="program-info">
+                <h3 class="program-title">🎯 Ihr 8-Phasen Ruhestandsprogramm</h3>
+                <ul class="phase-list">
+                    <li class="phase-item">
+                        <span class="phase-number">1</span>
+                        <span>Standortbestimmung & Zielfindung</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">2</span>
+                        <span>Finanzplanung & Vorsorge</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">3</span>
+                        <span>Gesundheit & Lebensqualität</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">4</span>
+                        <span>Soziale Beziehungen & Netzwerk</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">5</span>
+                        <span>Sinnstiftende Aktivitäten</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">6</span>
+                        <span>Wohnsituation & Umfeld</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">7</span>
+                        <span>Rechtliche Absicherung</span>
+                    </li>
+                    <li class="phase-item">
+                        <span class="phase-number">8</span>
+                        <span>Umsetzung & Erfolgskontrolle</span>
+                    </li>
+                </ul>
+            </div>
+
+            <a href="#" class="start-button" id="startCoachingBtn">
+                🚀 Coaching starten
+            </a>
         </div>
     </div>
 
     <script>
-        // Load client data from URL parameters or localStorage
-        function loadClientData() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token');
-            const coachId = urlParams.get('coach');
-            
-            if (token) {
-                // Validate token and load real data
-                validateTokenAndLoadData(token);
-            } else {
-                // Load demo data
-                loadDemoData();
+        // URL Parameter lesen
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        console.log('🎯 Client Dashboard gestartet mit Token:', token);
+
+        // Elemente
+        const loadingState = document.getElementById('loadingState');
+        const errorState = document.getElementById('errorState');
+        const clientContent = document.getElementById('clientContent');
+        const startCoachingBtn = document.getElementById('startCoachingBtn');
+
+        // Beim Laden: Token validieren und Client-Info laden
+        document.addEventListener('DOMContentLoaded', async function() {
+            if (!token) {
+                showError('Kein Einladungs-Token gefunden.');
+                return;
             }
-        }
 
-        function validateTokenAndLoadData(token) {
-            fetch('/api/validate-client-token', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ token: token })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    updateDashboard(data.client, data.coach);
-                } else {
-                    showError('Ungültiger Zugangslink');
-                }
-            })
-            .catch(error => {
-                console.error('Token validation error:', error);
-                loadDemoData();
-            });
-        }
-
-        function loadDemoData() {
-            // Demo data for testing
-            const demoData = {
-                client: {
-                    name: 'Demo-Klient',
-                    currentPhase: 6,
-                    sessionsCount: 12,
-                    daysActive: 45,
-                    completionRate: 75
-                },
-                coach: {
-                    name: 'Flavien Allenspach',
-                    email: 'info@allenspach-coaching.ch',
-                    specialization: 'Ruhestandscoaching'
-                }
-            };
-            updateDashboard(demoData.client, demoData.coach);
-        }
-
-        function updateDashboard(client, coach) {
-            // Update coach info
-            document.getElementById('coach-name').textContent = coach.name;
-            
-            // Update client stats
-            document.getElementById('sessions-count').textContent = client.sessionsCount;
-            document.getElementById('days-active').textContent = client.daysActive;
-            document.getElementById('completion-rate').textContent = client.completionRate + '%';
-            document.getElementById('overall-progress').textContent = client.currentPhase + '/8 Phasen';
-            
-            // Update progress bar
-            const progressPercent = (client.currentPhase / 8) * 100;
-            document.querySelector('.progress-fill').style.width = progressPercent + '%';
-            
-            // Update phase cards
-            updatePhaseCards(client.currentPhase);
-        }
-
-        function updatePhaseCards(currentPhase) {
-            const phaseCards = document.querySelectorAll('.phase-card');
-            phaseCards.forEach((card, index) => {
-                const phaseNumber = index + 1;
-                card.classList.remove('completed', 'current');
+            try {
+                console.log('🎯 Validiere Token...');
                 
-                if (phaseNumber < currentPhase) {
-                    card.classList.add('completed');
-                } else if (phaseNumber === currentPhase) {
-                    card.classList.add('current');
+                // Token validieren und Client-Info holen
+                const response = await fetch('/api/validate-client-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token })
+                });
+
+                const result = await response.json();
+                console.log('🎯 Token-Validation Result:', result);
+
+                if (response.ok && result.success) {
+                    // Client-Info anzeigen
+                    showClientContent(result.client, result.coach);
+                } else {
+                    showError(result.error || 'Ungültiger Einladungs-Link.');
                 }
-            });
-        }
+            } catch (error) {
+                console.error('❌ Token-Validation Error:', error);
+                showError('Fehler beim Laden der Coaching-Daten.');
+            }
+        });
 
-        function showSessionHistory() {
-            alert('Session-Historie wird geladen...\n\nHier würden alle vergangenen Coaching-Sessions angezeigt werden.');
-        }
+        function showClientContent(client, coach) {
+            console.log('🎯 Zeige Client Content:', client, coach);
+            
+            // Client-Info einsetzen
+            document.getElementById('clientName').textContent = client.first_name || 'Willkommen';
+            
+            // Coach-Info einsetzen
+            if (coach) {
+                document.getElementById('coachName').textContent = `${coach.first_name} ${coach.last_name}`;
+                document.getElementById('coachTitle').textContent = coach.title || 'Zertifizierter Ruhestandscoach';
+                document.getElementById('coachExperience').textContent = coach.experience || '15+ Jahre Erfahrung';
+                
+                // Coach Avatar (Initialen)
+                const initials = `${coach.first_name?.charAt(0) || ''}${coach.last_name?.charAt(0) || ''}`;
+                document.getElementById('coachAvatar').textContent = initials;
+            }
 
-        function contactCoach() {
-            alert('Coach kontaktieren...\n\nHier würde eine sichere Nachrichtenfunktion geöffnet werden.');
+            // Coaching-Start Button konfigurieren
+            startCoachingBtn.href = `chat.html?client_id=${client.id}&coach_id=${client.coach_id}&token=${token}`;
+            
+            // States umschalten
+            loadingState.style.display = 'none';
+            errorState.style.display = 'none';
+            clientContent.style.display = 'block';
         }
 
         function showError(message) {
-            alert('Fehler: ' + message);
+            console.error('❌ Fehler:', message);
+            document.getElementById('errorMessage').textContent = message;
+            
+            loadingState.style.display = 'none';
+            clientContent.style.display = 'none';
+            errorState.style.display = 'block';
         }
-
-        // Initialize dashboard on page load
-        document.addEventListener('DOMContentLoaded', loadClientData);
     </script>
 </body>
 </html>
