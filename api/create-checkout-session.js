@@ -3,15 +3,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
   
-  return res.status(200).json({ 
-    message: "SIMPLE PAYMENT API WORKS!",
+  console.log("🚀 SIMPLE PAYMENT API - NO COACH CHECK");
+  
+  return res.status(200).json({
+    message: "PAYMENT API SUCCESS!",
+    success: true,
+    sessionId: "test_session_123",
+    url: "https://checkout.stripe.com/test",
     timestamp: new Date().toISOString()
   });
 }
-
-// FORCE VERCEL UPDATE So  6 Jul 2025 19:33:48 CEST
-// Cache clear attempt 1751823228
-console.log('FORCED UPDATE');
-
-// FORCE UPDATE So  6 Jul 2025 19:36:07 CEST
-// FORCE UPDATE So  6 Jul 2025 19:38:17 CEST
