@@ -395,13 +395,13 @@
 
     function updateDashboard(client, coach) {
         // Update coach info
-        document.getElementById('coach-name').textContent = coach.name;
+        document.getElementById('coachName').textContent = coach.name;
         
         // Update client stats
-        document.getElementById('sessions-count').textContent = client.sessionsCount;
-        document.getElementById('days-active').textContent = client.daysActive;
-        document.getElementById('completion-rate').textContent = client.completionRate + '%';
-        document.getElementById('overall-progress').textContent = client.currentPhase + '/8 Phasen';
+        document.getElementById('sessionsCount').textContent = client.sessionsCount;
+        document.getElementById('daysActive').textContent = client.daysActive;
+        document.getElementById('completionRate').textContent = client.completionRate + '%';
+        document.getElementById('overallProgress').textContent = client.currentPhase + '/8 Phasen';
         
         // Update progress bar
         const progressPercent = (client.currentPhase / 8) * 100;
