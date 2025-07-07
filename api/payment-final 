@@ -1,0 +1,19 @@
+# payment-final.js erstellen (falls nicht vorhanden)
+echo 'export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+  
+  console.log("🚀 PAYMENT-FINAL API WORKS!");
+  
+  return res.status(200).json({ 
+    message: "PAYMENT-FINAL API SUCCESS!",
+    sessionId: "test_session_final",
+    url: "https://checkout.stripe.com/test",
+    timestamp: new Date().toISOString()
+  });
+}' > api/payment-final.js
+
+git add .
+git commit -m "Create payment-final API for frontend"
+git push origin main
