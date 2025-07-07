@@ -19,7 +19,10 @@ export default async function handler(req, res) {
       'premium': 'KI-Online.Coach Premium - Unbegrenzte Klienten'
     };
 
-    // PayPal Payment URL mit gestaffelten Preisen
+    // Feste Base URL
+    const baseUrl = 'https://ki-online.coach';
+
+    // PayPal Payment URL mit korrekten Return-URLs
     const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?` +
       `cmd=_xclick` +
       `&business=info@allenspach-coaching.ch` +
@@ -27,10 +30,10 @@ export default async function handler(req, res) {
       `&item_number=${coachId}-${plan}` +
       `&amount=${amount}.00` +
       `&currency_code=CHF` +
-      `&return=${req.headers.origin}/coach-dashboard.html?success=true&plan=${plan}&amount=${amount}` +
-      `&cancel_return=${req.headers.origin}/upgrade.html?canceled=true` +
-      `&notify_url=${req.headers.origin}/api/paypal-webhook` +
-      `&custom=${JSON.stringify({ coachId, plan, email })}`;
+      `&return=${baseUrl}/coach-dashboard.html?success=true&plan=${plan}&amount=${amount}` +
+      `&cancel_return=${baseUrl}/upgrade.html?canceled=true` +
+      `&notify_url=${baseUrl}/api/paypal-webhook` +
+      `&custom=${encodeURIComponent(JSON.stringify({ coachId, plan, email }))}`;
 
     return res.status(200).json({
       success: true,
