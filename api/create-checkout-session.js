@@ -13,3 +13,4 @@ export default async function handler(req, res) {
     timestamp: new Date().toISOString()
   });
 }
+// Force deploy Mo  7 Jul 2025 07:43:03 CEST
