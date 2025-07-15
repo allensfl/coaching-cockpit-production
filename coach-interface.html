@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Interface - RuhestandSynth Coaching</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+            height: calc(100vh - 30px);
+        }
+
+        .main-chat {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .coach-guidance {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .guidance-header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .guidance-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.klient {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.coach {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%);
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.ai {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            margin: 20px auto;
+            max-width: 90%;
+            padding: 20px;
+        }
+
+        .message-label {
+            font-size: 0.85em;
+            opacity: 0.8;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .message-time {
+            font-size: 0.75em;
+            opacity: 0.7;
+            margin-top: 8px;
+        }
+
+        .input-area {
+            padding: 20px;
+            background: white;
+            border-top: 2px solid #e9ecef;
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .role-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .role-button {
+            padding: 8px 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: #f8f9fa;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.3s;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .role-button.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .role-button.klient.active {
+            background: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .role-button.coach.active {
+            background: #ffc107;
+            border-color: #ffc107;
+            color: #212529;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: none;
+            min-height: 50px;
+            max-height: 120px;
+            font-family: inherit;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .send-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            min-height: 50px;
+        }
+
+        .send-button:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        /* SYNC STATUS INDICATOR */
+        .sync-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            background: #28a745;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .sync-indicator.syncing {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .sync-indicator.error {
+            background: #dc3545;
+        }
+
+        /* COACH GUIDANCE STYLES */
+        .phase-info {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #28a745;
+        }
+
+        .phase-title {
+            font-weight: bold;
+            color: #1b5e20;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .guidance-step {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ffc107;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .step-title {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+
+        .step-content {
+            color: #6c757d;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+
+        .ki-prompt {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #ff6b35;
+        }
+
+        .ki-prompt-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .ki-prompt-content {
+            color: #856404;
+            font-size: 0.9em;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            height: 100%;
+            width: 20%;
+            transition: width 0.3s ease;
+        }
+
+        /* STATUS INDICATORS */
+        .status-bar {
+            background: #e9ecef;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85em;
+            color: #6c757d;
+            position: relative;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #28a745;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 300px;
+                height: calc(100vh - 30px);
+            }
+            
+            .coach-guidance {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .input-area {
+                flex-wrap: wrap;
+            }
+            
+            .role-selector {
+                flex-direction: row;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .role-button {
+                flex: 1;
+            }
+        }
+
+        /* LOADING STATE */
+        .typing-indicator {
+            display: none;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .typing-indicator.show {
+            display: block;
+        }
+
+        .typing-dots {
+            display: inline-block;
+        }
+
+        .typing-dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- MAIN CHAT AREA -->
+        <div class="main-chat">
+            <div class="chat-header">
+                <h1>🎯 Coach Interface</h1>
+                <p>Coaching Session + Sync mit Klient Interface</p>
+                <div class="sync-indicator" id="syncIndicator">🔄 Sync Aktiv</div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message klient">
+                    <div class="message-label">👤 Klient</div>
+                    <div>Hallo, ich bin bereit für unser Coaching-Gespräch.</div>
+                    <div class="message-time">14:30</div>
+                </div>
+
+                <div class="message coach">
+                    <div class="message-label">👨‍💼 Coach</div>
+                    <div>Herzlich willkommen! Schön, dass Sie hier sind. Lassen Sie uns gemeinsam Ihren Weg in den Ruhestand erkunden.</div>
+                    <div class="message-time">14:31</div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <span class="typing-dots">KI denkt nach</span>
+            </div>
+
+            <div class="input-area">
+                <div class="role-selector">
+                    <button class="role-button klient active" onclick="selectRole('klient')" id="roleKlient">
+                        👤 Klient
+                    </button>
+                    <button class="role-button coach" onclick="selectRole('coach')" id="roleCoach">
+                        👨‍💼 Coach
+                    </button>
+                </div>
+
+                <textarea 
+                    class="message-input" 
+                    id="messageInput" 
+                    placeholder="Nachricht eingeben... (Als Klient sprechend)"
+                    rows="2"
+                ></textarea>
+
+                <button class="send-button" onclick="sendMessage()">
+                    📤 Senden
+                </button>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span>Session aktiv</span>
+                </div>
+                <div class="status-item">
+                    <span>Thread: <span id="threadId">Nicht verbunden</span></span>
+                </div>
+                <div class="status-item">
+                    <span>Sync: <span id="syncStatus">Aktiv</span></span>
+                </div>
+                <div class="status-item">
+                    <span>Rolle: <span id="currentRole">Klient</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- COACH GUIDANCE PANEL -->
+        <div class="coach-guidance">
+            <div class="guidance-header">
+                <h2>📋 Coach Guidance</h2>
+                <p>Phase 1: Standortbestimmung</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="guidance-content" id="guidanceContent">
+                <div class="phase-info">
+                    <div class="phase-title">Phase 1: Erste Erfassung der Soll-Ist-Situation</div>
+                    <div>Aufbau einer positiven Arbeitsbeziehung und Problemerfassung</div>
+                </div>
+
+                <div class="guidance-step">
+                    <div class="step-title">1. Begrüßung & Beziehungsaufbau</div>
+                    <div class="step-content">
+                        Coach begrüßt Coachingpartner, macht etwas Small Talk und teilt dann den Bildschirm, um Coachee das Konzept und Verfahren des KI-Coachings vorzustellen. Coach achtet dabei insbesondere auf den Aufbau einer positiven Arbeitsbeziehung.
+                    </div>
+                </div>
+
+                <div class="guidance-step">
+                    <div class="step-title">2. Raum für Problempräsentation</div>
+                    <div class="step-content">
+                        In diesem Zusammenhang prüft Coachee, wie viel „medientechnisch ungestörten" Raum Coachee für die Präsentation seiner/ihrer Problematik braucht – oder wie hilfreich es ist, dass Coach die Präsentation der Problematik parallel mitprotokolliert.
+                    </div>
+                </div>
+
+                <div class="guidance-step">
+                    <div class="step-title">3. Aktives Zuhören</div>
+                    <div class="step-content">
+                        Coach regt Coachee an zu erzählen, wie die aktuell unbefriedigende IST-Situation ist und wie er/sie sich die SOLL-Situation vorstellt. Coach beschränkt sich dabei auf aktives Zuhören.
+                    </div>
+                </div>
+
+                <div class="guidance-step">
+                    <div class="step-title">4. Problemschilderung</div>
+                    <div class="step-content">
+                        <strong>→ Klient schildert Problem bzw. Coachingziel</strong><br>
+                        <em>Der Klient teilt nun seine Situation mit. Coach hört aktiv zu und macht sich Notizen.</em>
+                    </div>
+                </div>
+
+                <div class="ki-prompt">
+                    <div class="ki-prompt-title">🤖 KI-Auftrag für strukturierten Bericht:</div>
+                    <div class="ki-prompt-content">
+                        "Erstelle einen in Ich-Form geschriebenen „strukturierten Bericht meiner Coachingproblematik", in dem alle obigen Informationen zusammengefasst sind. Gliedere diesen Bericht in zwei Teile: IST-Situation und SOLL-Situation.
+
+                        Nimm in jedem Teil Bezug auf:
+                        • Äußere Rahmenbedingungen und Ressourcen (inkl. körperliche Bedingungen)
+                        • Psychische Prozesse (Gefühle, Motivation, Gedanken)
+                        • Beobachtbare Verhaltensweisen
+                        • Faktische Folgen bei Mitmenschen und mir selbst
+
+                        Rekonstruiere anschließend den Teufelskreislauf der Problematik und entwickle Hypothesen über den versteckten Gewinn, den ich habe, wenn ich in diesem Teufelskreislauf bleibe."
+                    </div>
+                </div>
+
+                <div class="guidance-step">
+                    <div class="step-title">5. Zusammenfassung & KI-Integration</div>
+                    <div class="step-content">
+                        Coach fasst die Beschreibung der Ist- und Soll-Situation schriftlich zusammen. Coach und Coachee fokussieren dabei insbesondere auf „Schlüsselsituation" und den entsprechenden „Schlüsselaffekt". Coach bespricht das Protokoll mit Coachee und teilt es der Coaching-KI mit.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ENHANCED SESSION MANAGEMENT WITH SYNC
+        let coachingSession = {
+            threadId: null,
+            currentRole: 'klient',
+            currentPhase: 1,
+            messageHistory: [],
+            guidanceSteps: {},
+            // 🚀 SYNC SYSTEM
+            sessionId: generateSessionId(),
+            syncActive: true
+        };
+
+        // 🚀 SYNC SYSTEM FUNCTIONS
+        function generateSessionId() {
+            return 'coach_session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function updateSyncStatus(status, message) {
+            const indicator = document.getElementById('syncIndicator');
+            const statusSpan = document.getElementById('syncStatus');
+            
+            indicator.className = 'sync-indicator ' + status;
+            
+            if (status === 'syncing') {
+                indicator.textContent = '🔄 Syncing...';
+                statusSpan.textContent = 'Syncing';
+            } else if (status === 'error') {
+                indicator.textContent = '❌ Sync Error';
+                statusSpan.textContent = 'Error';
+            } else {
+                indicator.textContent = '✅ Sync Aktiv';
+                statusSpan.textContent = 'Aktiv';
+            }
+        }
+
+        // 🚀 BROADCAST TO KLIENT INTERFACE
+        async function broadcastToKlient(message, messageType = 'COACHEE') {
+            if (!coachingSession.syncActive) return;
+            
+            updateSyncStatus('syncing');
+            
+            try {
+                console.log('📡 Broadcasting to klient:', message.substring(0, 50));
+                
+                const response = await fetch('/api/klient-message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sessionId: coachingSession.sessionId,
+                        message: message,
+                        type: messageType,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log('✅ Message broadcasted to klient');
+                    updateSyncStatus('active');
+                } else {
+                    console.error('❌ Failed to broadcast:', result.error);
+                    updateSyncStatus('error');
+                }
+                
+            } catch (error) {
+                console.error('❌ Broadcast error:', error);
+                updateSyncStatus('error');
+            }
+        }
+
+        // 🚀 BROADCAST AI RESPONSE TO KLIENT
+        async function broadcastAIResponseToKlient(aiResponse) {
+            try {
+                console.log('🤖 Broadcasting AI response to klient');
+                await broadcastToKlient(aiResponse, 'AI_RESPONSE');
+            } catch (error) {
+                console.error('❌ AI broadcast error:', error);
+            }
+        }
+
+        // ROLE SELECTION
+        function selectRole(role) {
+            coachingSession.currentRole = role;
+            
+            // Update UI
+            document.querySelectorAll('.role-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`role${role.charAt(0).toUpperCase() + role.slice(1)}`).classList.add('active');
+            
+            // Update placeholder
+            const input = document.getElementById('messageInput');
+            const placeholders = {
+                'klient': 'Als Klient: Ihre Gedanken, Gefühle, Situation...',
+                'coach': 'Als Coach: Fragen, Reflexionen, Zusammenfassungen...'
+            };
+            input.placeholder = placeholders[role];
+            
+            // Update status
+            document.getElementById('currentRole').textContent = role.charAt(0).toUpperCase() + role.slice(1);
+            
+            console.log('🎭 Role switched to:', role);
+        }
+
+        // ENHANCED MESSAGE SENDING WITH SYNC
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add message to coach chat
+            addMessageToChat(coachingSession.currentRole, message);
+            
+            // 🚀 NEW: Wenn als Klient geschrieben, an Klient-Interface senden
+            if (coachingSession.currentRole === 'klient') {
+                await broadcastToKlient(message, 'COACHEE');
+            }
+            
+            // Clear input
+            input.value = '';
+            
+            // Add to history
+            coachingSession.messageHistory.push({
+                role: coachingSession.currentRole,
+                content: message,
+                timestamp: new Date().toISOString()
+            });
+
+            // If klient message, trigger AI response
+            if (coachingSession.currentRole === 'klient') {
+                await triggerAIResponse(message);
+            }
+        }
+
+        // ADD MESSAGE TO CHAT
+        function addMessageToChat(role, content, isAI = false) {
+            const container = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            
+            const roleLabels = {
+                'klient': '👤 Klient',
+                'coach': '👨‍💼 Coach',
+                'ai': '🤖 RuhestandSynth'
+            };
+            
+            const currentTime = new Date().toLocaleTimeString('de-DE', {
+                hour: '2-digit', 
+                minute: '2-digit'
+            });
+            
+            if (isAI) {
+                messageDiv.className = 'message ai';
+                messageDiv.innerHTML = `
+                    <div class="message-label">${roleLabels.ai}</div>
+                    <div>${content}</div>
+                    <div class="message-time">${currentTime}</div>
+                `;
+            } else {
+                messageDiv.className = `message ${role}`;
+                messageDiv.innerHTML = `
+                    <div class="message-label">${roleLabels[role]}</div>
+                    <div>${content}</div>
+                    <div class="message-time">${currentTime}</div>
+                `;
+            }
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // ENHANCED TRIGGER AI RESPONSE WITH SYNC
+        async function triggerAIResponse(message) {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.classList.add('show');
+            
+            try {
+                const response = await fetch('/api/ruhestand-coach', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: message,
+                        currentPhase: coachingSession.currentPhase,
+                        messageHistory: coachingSession.messageHistory,
+                        threadId: coachingSession.threadId,
+                        trigger: "coach_proxy", // 🚀 WICHTIG: coach_proxy für Sync
+                        intent: "respond_to_client"
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Update session
+                    if (result.threadId) {
+                        coachingSession.threadId = result.threadId;
+                        updateThreadStatus(result.threadId);
+                    }
+                    
+                    // Add AI response to coach chat
+                    addMessageToChat('ai', result.response, true);
+                    
+                    // 🚀 NEW: AI Response auch an Klient senden
+                    await broadcastAIResponseToKlient(result.response);
+                    
+                    // Add to history
+                    coachingSession.messageHistory.push({
+                        role: 'ai',
+                        content: result.response,
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                    console.log('✅ AI response received and synced');
+                } else {
+                    addMessageToChat('ai', result.fallback || 'Entschuldigung, ich konnte nicht antworten.', true);
+                }
+                
+            } catch (error) {
+                console.error('❌ AI request error:', error);
+                addMessageToChat('ai', 'Es gab einen technischen Fehler. Bitte versuchen Sie es erneut.', true);
+            } finally {
+                typingIndicator.classList.remove('show');
+            }
+        }
+
+        // UPDATE THREAD STATUS
+        function updateThreadStatus(threadId) {
+            const shortId = threadId.substring(0, 12) + '...';
+            document.getElementById('threadId').textContent = shortId;
+        }
+
+        // ENTER KEY SUPPORT
+        document.getElementById('messageInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // AUTO-RESIZE TEXTAREA
+        document.getElementById('messageInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // INITIALIZATION WITH SYNC
+        window.addEventListener('load', function() {
+            console.log('🎯 Coach Interface mit Chat-Sync geladen');
+            console.log('📋 Coach Guidance Panel aktiv');
+            console.log('🔄 Sync System aktiv - Session ID:', coachingSession.sessionId);
+            
+            // Set initial role
+            selectRole('klient');
+            
+            // Initialize sync status
+            updateSyncStatus('active');
+        });
+    </script>
+</body>
+</html>

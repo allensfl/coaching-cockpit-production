@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klient Interface - RuhestandSynth Coaching</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .chat-header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        /* 🚀 SYNC STATUS INDICATOR */
+        .sync-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sync-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #28a745;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 🚀 NEW: Message animation for incoming sync messages */
+        .message.sync-received {
+            animation: syncReceived 0.5s ease-in;
+        }
+
+        @keyframes syncReceived {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-20px) scale(0.95);
+                box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+            }
+            50% {
+                transform: translateX(0) scale(1.02);
+                box-shadow: 0 0 25px rgba(0, 123, 255, 0.5);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateX(0) scale(1);
+                box-shadow: none;
+            }
+        }
+
+        .message.klient {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.coach {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%);
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.ai {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            margin: 20px auto;
+            max-width: 95%;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .message-label {
+            font-size: 0.85em;
+            opacity: 0.8;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .message-time {
+            font-size: 0.75em;
+            opacity: 0.7;
+            margin-top: 8px;
+        }
+
+        .input-area {
+            padding: 25px;
+            background: white;
+            border-top: 2px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            font-size: 16px;
+            resize: none;
+            min-height: 60px;
+            max-height: 120px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .send-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            min-height: 60px;
+            font-size: 16px;
+        }
+
+        .send-button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .send-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(0,0,0,0.05);
+            border-radius: 12px;
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .typing-indicator.show {
+            display: block;
+        }
+
+        .typing-dots {
+            display: inline-block;
+        }
+
+        .typing-dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        .status-bar {
+            background: #e9ecef;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #28a745;
+        }
+
+        /* 🚀 SYNC NOTIFICATION */
+        .sync-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            transform: translateX(300px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sync-notification.show {
+            transform: translateX(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .chat-container {
+                height: calc(100vh - 20px);
+            }
+            
+            .input-area {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .send-button {
+                width: 100%;
+            }
+        }
+
+        /* WELCOME MESSAGE */
+        .welcome-message {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #28a745;
+            text-align: center;
+        }
+
+        .welcome-title {
+            font-weight: bold;
+            color: #1b5e20;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .welcome-text {
+            color: #2e7d32;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>🎯 RuhestandSynth Coaching</h1>
+            <p>Ihr persönlicher KI-gestützter Coaching-Begleiter</p>
+            <!-- 🚀 SYNC STATUS DISPLAY -->
+            <div class="sync-status" id="syncStatus">
+                <div class="sync-dot"></div>
+                <span>Live-Sync aktiv</span>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+                <div class="welcome-title">Willkommen zu Ihrem Coaching-Gespräch!</div>
+                <div class="welcome-text">
+                    Teilen Sie Ihre Gedanken, Gefühle und Fragen zum Ruhestand mit mir. 
+                    Ihr Coach ist ebenfalls anwesend und wird Sie durch das Gespräch begleiten.
+                    <br><br>
+                    <strong>🔄 Live-Synchronisation aktiv:</strong> Alle Nachrichten werden in Echtzeit mit Ihrem Coach geteilt.
+                </div>
+            </div>
+
+            <div class="message coach">
+                <div class="message-label">👨‍💼 Ihr Coach</div>
+                <div>Herzlich willkommen zu unserem Coaching-Gespräch! Ich freue mich, Sie auf diesem wichtigen Weg zu begleiten. Erzählen Sie mir gerne, was Sie aktuell zum Thema Ruhestand beschäftigt.</div>
+                <div class="message-time">14:30</div>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <span class="typing-dots">RuhestandSynth denkt nach</span>
+        </div>
+
+        <div class="input-area">
+            <textarea 
+                class="message-input" 
+                id="messageInput" 
+                placeholder="Teilen Sie Ihre Gedanken zum Ruhestand mit... Was beschäftigt Sie?"
+                rows="2"
+            ></textarea>
+
+            <button class="send-button" onclick="sendMessage()" id="sendButton">
+                📤<br>Senden
+            </button>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-dot"></div>
+                <span>Coaching-Session aktiv</span>
+            </div>
+            <div class="status-item">
+                <span>Sync-Status: <span id="syncStatusText">Verbunden</span></span>
+            </div>
+            <div class="status-item">
+                <span>Nachrichten: <span id="messageCount">0</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚀 SYNC NOTIFICATION -->
+    <div class="sync-notification" id="syncNotification">
+        📥 Neue Nachricht erhalten
+    </div>
+
+    <script>
+        // 🚀 ENHANCED KLIENT SESSION WITH REAL-TIME SYNC
+        let klientSession = {
+            threadId: null,
+            messageHistory: [],
+            // SYNC SYSTEM
+            sessionId: null,
+            pollInterval: null,
+            isPolling: false,
+            lastMessageCount: 0
+        };
+
+        // 🚀 MESSAGE POLLING SYSTEM
+        function startMessagePolling() {
+            if (klientSession.isPolling) return;
+            
+            klientSession.isPolling = true;
+            console.log('🔄 Starting real-time message polling...');
+            updateSyncStatus('active', 'Live-Sync aktiv');
+            
+            klientSession.pollInterval = setInterval(async () => {
+                await pollForNewMessages();
+            }, 1500); // Alle 1.5 Sekunden prüfen für responsivere Experience
+        }
+
+        function stopMessagePolling() {
+            if (klientSession.pollInterval) {
+                clearInterval(klientSession.pollInterval);
+                klientSession.pollInterval = null;
+                klientSession.isPolling = false;
+                updateSyncStatus('disconnected', 'Sync getrennt');
+            }
+        }
+
+        // 🚀 POLL FOR NEW MESSAGES FROM COACH
+        async function pollForNewMessages() {
+            try {
+                const response = await fetch('/api/klient-message?type=coach_poll', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const result = await response.json();
+                
+                if (result.success && result.messages.length > 0) {
+                    console.log('📥 Received', result.messages.length, 'new synced messages');
+                    
+                    // Show sync notification
+                    showSyncNotification('📥 Neue Nachricht vom Coach');
+                    
+                    // Process each new message
+                    result.messages.forEach(msg => {
+                        if (msg.type === 'COACHEE') {
+                            // Klient-Message vom Coach (Proxy)
+                            addMessageToChat('klient', msg.content, false, true);
+                        } else if (msg.type === 'AI_RESPONSE') {
+                            // AI-Antwort
+                            addMessageToChat('ai', msg.content, true, true);
+                        }
+                        
+                        // Add to history
+                        klientSession.messageHistory.push({
+                            role: msg.type === 'AI_RESPONSE' ? 'ai' : 'klient',
+                            content: msg.content,
+                            timestamp: msg.timestamp
+                        });
+                    });
+                    
+                    // Update message count
+                    updateMessageCount();
+                    updateSyncStatus('received', 'Nachricht erhalten');
+                    
+                    // Reset to active after short delay
+                    setTimeout(() => {
+                        updateSyncStatus('active', 'Live-Sync aktiv');
+                    }, 2000);
+                }
+                
+            } catch (error) {
+                console.error('❌ Polling error:', error);
+                updateSyncStatus('error', 'Sync-Fehler');
+            }
+        }
+
+        // 🚀 SYNC STATUS MANAGEMENT
+        function updateSyncStatus(status, message) {
+            const syncStatus = document.getElementById('syncStatus');
+            const syncStatusText = document.getElementById('syncStatusText');
+            const syncDot = syncStatus.querySelector('.sync-dot');
+            
+            // Update text
+            syncStatus.querySelector('span').textContent = message;
+            syncStatusText.textContent = message;
+            
+            // Update visual indicators
+            syncDot.style.background = {
+                'active': '#28a745',
+                'received': '#007bff', 
+                'error': '#dc3545',
+                'disconnected': '#6c757d'
+            }[status] || '#28a745';
+            
+            console.log('🔄 Sync status updated:', status, message);
+        }
+
+        // 🚀 SYNC NOTIFICATION
+        function showSyncNotification(message) {
+            const notification = document.getElementById('syncNotification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // 🚀 UPDATE MESSAGE COUNT
+        function updateMessageCount() {
+            const count = klientSession.messageHistory.length;
+            document.getElementById('messageCount').textContent = count;
+        }
+
+        // ENHANCED SEND MESSAGE WITH SYNC SUPPORT
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Generate session ID on first message
+            if (!klientSession.sessionId) {
+                klientSession.sessionId = 'klient_session_' + Date.now();
+                console.log('🔑 Generated session ID:', klientSession.sessionId);
+            }
+            
+            // Disable send button
+            sendButton.disabled = true;
+            
+            // Add klient message to chat
+            addMessageToChat('klient', message);
+            
+            // Clear input
+            input.value = '';
+            
+            // Add to history
+            klientSession.messageHistory.push({
+                role: 'klient',
+                content: message,
+                timestamp: new Date().toISOString()
+            });
+
+            // Update message count
+            updateMessageCount();
+
+            // Trigger AI response
+            await triggerAIResponse(message);
+            
+            // Re-enable send button
+            sendButton.disabled = false;
+        }
+
+        // ENHANCED ADD MESSAGE TO CHAT WITH SYNC ANIMATION
+        function addMessageToChat(role, content, isAI = false, isFromSync = false) {
+            const container = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            
+            const roleLabels = {
+                'klient': '👤 Sie',
+                'coach': '👨‍💼 Ihr Coach',
+                'ai': '🤖 RuhestandSynth'
+            };
+            
+            const currentTime = new Date().toLocaleTimeString('de-DE', {
+                hour: '2-digit', 
+                minute: '2-digit'
+            });
+            
+            if (isAI) {
+                messageDiv.className = 'message ai';
+                if (isFromSync) messageDiv.classList.add('sync-received');
+                messageDiv.innerHTML = `
+                    <div class="message-label">${roleLabels.ai}</div>
+                    <div>${content}</div>
+                    <div class="message-time">${currentTime}</div>
+                `;
+            } else {
+                messageDiv.className = `message ${role}`;
+                if (isFromSync) messageDiv.classList.add('sync-received');
+                messageDiv.innerHTML = `
+                    <div class="message-label">${roleLabels[role]}</div>
+                    <div>${content}</div>
+                    <div class="message-time">${currentTime}</div>
+                `;
+            }
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // TRIGGER AI RESPONSE (unchanged but optimized)
+        async function triggerAIResponse(message) {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.classList.add('show');
+            
+            try {
+                const response = await fetch('/api/ruhestand-coach', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: message,
+                        currentPhase: 1, // Default to phase 1 for klient
+                        messageHistory: klientSession.messageHistory,
+                        threadId: klientSession.threadId,
+                        trigger: "automatic",
+                        intent: "respond_to_client"
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Update session
+                    if (result.threadId) {
+                        klientSession.threadId = result.threadId;
+                    }
+                    
+                    // Add AI response to chat
+                    addMessageToChat('ai', result.response, true);
+                    
+                    // Add to history
+                    klientSession.messageHistory.push({
+                        role: 'ai',
+                        content: result.response,
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                    // Update message count
+                    updateMessageCount();
+                    
+                    console.log('✅ AI response received');
+                } else {
+                    addMessageToChat('ai', result.fallback || '«Entschuldigung, ich konnte nicht antworten. Können Sie Ihre Frage anders formulieren?»', true);
+                }
+                
+            } catch (error) {
+                console.error('❌ AI request error:', error);
+                addMessageToChat('ai', '«Es gab einen technischen Fehler. Bitte versuchen Sie es erneut.»', true);
+            } finally {
+                typingIndicator.classList.remove('show');
+            }
+        }
+
+        // ENTER KEY SUPPORT
+        document.getElementById('messageInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // AUTO-RESIZE TEXTAREA
+        document.getElementById('messageInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // 🚀 ENHANCED INITIALIZATION WITH SYNC
+        window.addEventListener('load', function() {
+            console.log('👤 Klient Chat Interface mit Real-time Sync geladen');
+            document.getElementById('messageInput').focus();
+            
+            // Start real-time message polling
+            startMessagePolling();
+            
+            // Initialize message count
+            updateMessageCount();
+            
+            console.log('🔄 Real-time sync system active');
+        });
+
+        // 🚀 CLEANUP ON PAGE UNLOAD
+        window.addEventListener('beforeunload', function() {
+            stopMessagePolling();
+        });
+    </script>
+</body>
+</html>
